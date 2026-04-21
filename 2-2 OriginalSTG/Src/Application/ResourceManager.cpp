@@ -1,0 +1,20 @@
+#include "ResourceManager.h"
+
+void ResourceManager::LoadAll()
+{
+    m_tex[TexName::kPlayer].Load("Texture/player.png");
+    m_tex[TexName::kEnemy].Load("Texture/Enemy/enemy.png");
+    m_tex[TexName::kBullet].Load("Texture/attackEffect1.png");
+}
+
+void ResourceManager::ReleaseAll()
+{
+    m_tex.clear();
+}
+
+KdTexture* ResourceManager::GetTex(const std::string &name)
+{
+    auto it = m_tex.find(name);
+    if (it == m_tex.end()) return nullptr;
+    return &it->second;
+}
