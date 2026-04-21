@@ -38,6 +38,7 @@ public:
 
     float GetRadius() const { return kRadius; }
     bool IsAlive() const { return m_state != State::Dead; }
+    bool IsInvincible() const { return m_state == State::Invincible; }
 
 private:
     

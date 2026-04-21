@@ -11,6 +11,7 @@ void CollisionManager::CheckAll(Player* player,
     for (auto& enemy : enemies)
     {
         if (!enemy->IsAlive()) continue;
+        if (player->IsInvincible())continue;
 
         if (IsHit(player->GetPos(), player->GetRadius(),
             enemy->GetPos(), enemy->GetRadius()))

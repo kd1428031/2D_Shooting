@@ -3,6 +3,7 @@
 EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
     :Character(pos, scale), m_state(State::Alive)
 {
+    m_hp = 3;
 }
 
 void EnemyBase::Draw()
