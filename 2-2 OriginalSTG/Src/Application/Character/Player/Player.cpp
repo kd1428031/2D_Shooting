@@ -15,6 +15,8 @@ void Player::Init()
     
     m_state = State::Alive;
 
+    m_alpha = 1.0f;
+
     m_animFrame = {};
     
     m_invincibleTimer = 0.0f;
@@ -40,13 +42,8 @@ void Player::Update(float dt)
 
     // ’e”­ŽËˆ—
     Shot(dt);
-
-    // –³“GŽžŠÔˆ—
-    if (m_invincibleTimer > 0.0f)
-    {
-        m_invincibleTimer -= dt;
-    }
-
+  
+    UpdateInvincible(dt);
     UpdateAnim(dt);
     UpdateMatrix();
 }
@@ -56,7 +53,7 @@ void Player::Draw()
     if (m_state == State::Dead) return;
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
-    SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{ (int)m_animFrame.x * kTexFrameSize, 0, kTexFrameSize, kTexFrameSize }, 1.0f);
+    SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{ (int)m_animFrame.x * kTexFrameSize, 0, kTexFrameSize, kTexFrameSize }, m_alpha);
 }
 
 void Player::Move(float dt)
@@ -96,6 +93,21 @@ void Player::UpdateAnim(float dt)
     }
 }
 
+void Player::UpdateInvincible(float dt)
+{
+    if (m_state == State::Invincible)
+    {
+        m_invincibleTimer -= dt;
+        m_alpha = 0.5f;
+
+        if (m_invincibleTimer <= 0.0f)
+        {
+            m_state = State::Alive;
+            m_alpha = 1.0f;
+        }
+    }
+}
+
 void Player::Shot(float dt)
 {
     // ’e”­ŽË
@@ -129,9 +141,11 @@ void Player::NormalShot()
 
 void Player::TakeDamage(float damage)
 {
-    if (m_invincibleTimer <= 0)
+    if (m_state != State::Invincible)
     {
         m_invincibleTimer = kInvincibleTime;
+        m_state = State::Invincible;
+
         Character::TakeDamage(damage);
         if (m_hp <= 0) m_state = State::Dying;
     }
@@ -139,5 +153,5 @@ void Player::TakeDamage(float damage)
 
 void Player::Death(float dt)
 {
-
+    m_state = State::Dead;
 }

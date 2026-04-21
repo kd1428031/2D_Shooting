@@ -13,9 +13,10 @@ public:
     // ó‘ÔŠÇ——p
     enum class State
     {
-        Alive,  // ¶‘¶
-        Dying,  // €–S‰‰o
-        Dead    // €–S
+        Alive,      // ¶‘¶
+        Invincible, // –³“GŠÔ
+        Dying,      // €–S‰‰o
+        Dead        // €–S
     };
 
     Player() = default;
@@ -27,6 +28,7 @@ public:
     void Move(float dt);
     void UpdateMatrix();
     void UpdateAnim(float dt);
+    void UpdateInvincible(float dt);
 
     void Shot(float dt);
     void NormalShot();

@@ -28,6 +28,8 @@ protected:
     float m_angle;
     float m_radius;
 
+    float m_alpha;
+
     // HPEó‘Ô
     int   m_hp;
     float m_invincibleTimer;
