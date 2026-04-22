@@ -31,7 +31,7 @@ private:
     // 状態
     bool  m_isAlive = true;
     float m_invincibleTimer = 0.0f;
-
+    float m_angle;
     int m_damage = 1;
 
     // テクスチャ
@@ -39,6 +39,7 @@ private:
 
     // 行列
     Math::Matrix m_scaleMat;
+    Math::Matrix m_rotMat;
     Math::Matrix m_transMat;
     Math::Matrix m_mat;
 

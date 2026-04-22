@@ -28,6 +28,8 @@ void Player::Init()
     m_shotType = ShotType::NormalShot;
 
     m_isShooting = false;
+
+    m_angle = 270.0f;
 }
 
 void Player::Update(float dt)
@@ -78,7 +80,7 @@ void Player::Move(float dt)
 void Player::UpdateMatrix()
 {
     m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-    m_rotMat = Math::Matrix::CreateRotationZ(m_angle);
+    m_rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_angle));
     m_scaleMat = Math::Matrix::CreateScale(m_scale, m_scale, 1);
     m_mat = m_scaleMat * m_rotMat * m_transMat;
 }

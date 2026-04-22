@@ -13,6 +13,7 @@ void Bullet::Init()
 
     m_isAlive = true;
     m_invincibleTimer = 0.0f;
+    m_angle = 0.0f;
 }
 
 void Bullet::Update(float dt)
@@ -36,6 +37,7 @@ void Bullet::Update(float dt)
     }
 
     m_scaleMat = Math::Matrix::CreateScale(m_scale);
+    m_rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_angle));
     m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
     m_mat = m_scaleMat * m_transMat;
 }
