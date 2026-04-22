@@ -1,6 +1,5 @@
 #pragma once
-
-class Bullet;
+#include"Bullet.h"
 
 class BulletManager
 {
@@ -21,13 +20,13 @@ public:
 	void Draw();
 
 	// íeÇê∂ê¨Ç∑ÇÈ
-	void CreateBullet(Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color = { 1,1,1,1 });
+	void CreateBullet(BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color = { 1,1,1,1 });
 
 	// ÉQÉbÉ^Å[
-	Bullet* GetBullet(int i);
-	std::vector<Bullet*> GetBullet() { return m_bullet; }
+	Bullet* GetBullet(int i) const;
+	std::vector<Bullet*> GetBullet() const { return m_bullet; }
 
-	const int& GetBulletNum() { return m_bullet.size(); }
+	const int& GetBulletNum() const { return m_bullet.size(); }
 
 private:
 

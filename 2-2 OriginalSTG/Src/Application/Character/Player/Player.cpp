@@ -140,7 +140,7 @@ void Player::Shot(float dt)
 void Player::NormalShot()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
-    BULLETMANAGER.CreateBullet(spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, Math::Color(1, 0, 0, 1));
+    BULLETMANAGER.CreateBullet(BulletType::Penetrat, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);
 }
 
 void Player::TakeDamage(float damage)

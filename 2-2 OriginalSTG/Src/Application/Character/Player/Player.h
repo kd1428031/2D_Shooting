@@ -51,26 +51,28 @@ private:
     bool     m_isShooting;
     float    m_shotTimer;
 
-    // 定数：初期値
+    // 定数
+    // 初期値
     static constexpr float kInitPosX = -500.0f;
     static constexpr float kInitPosY = 0.0f;
     static constexpr float kInitSpeed = 800.0f;
     static constexpr int   kInitHp = 3;
 
-    // 定数：当たり判定
+    // 当たり判定
     static constexpr float kRadius = 32.0f;
 
-    // 定数：状態
+    // 状態
     static constexpr float kInvincibleTime = 2.0f;
 
-    // 定数：アニメーション
+    // アニメーション
     static constexpr int   kMaxAnimFrame = 4;
     static constexpr float kAnimSpeed = 15.0f;
     static constexpr int   kTexFrameSize = 64;
 
-    // 定数：弾
-    static constexpr float kShotInterval = 0.05f;   // 発射間隔
-    static constexpr float kBulletOffsetX = 30.0f;  // 発射位置
-    static constexpr float kBulletSpeed = 750.0f;   // 速さ
-    static constexpr float kBulletScale = 2.0f;     // サイズ
+    // 弾
+    static constexpr float kShotInterval = 0.05f;               // 発射間隔
+    static constexpr float kBulletOffsetX = 30.0f;              // 発射位置
+    static constexpr float kBulletSpeed = 1300.0f;              // 速さ
+    static constexpr float kBulletScale = 2.0f;                 // サイズ
+    const Math::Color kBulletColor = {0.0f,1.0f,0.0f,1.0f};     // 色
 };

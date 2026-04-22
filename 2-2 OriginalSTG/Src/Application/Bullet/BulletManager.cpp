@@ -1,5 +1,4 @@
 #include "BulletManager.h"
-#include"Bullet.h"
 #include "Application/Scene.h"
 
 BulletManager::~BulletManager()
@@ -44,15 +43,15 @@ void BulletManager::Draw()
 	}
 }
 
-void BulletManager::CreateBullet(Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
+void BulletManager::CreateBullet(BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
 {
 	// ’e¶¬
-	Bullet* bullet = new Bullet(pos, velocity, scale, color);
+	Bullet* bullet = new Bullet(type, pos, velocity, scale, color);
 	bullet->Init();
 	m_bullet.push_back(bullet);
 }
 
-Bullet* BulletManager::GetBullet(int i)
+Bullet* BulletManager::GetBullet(int i) const
 {
 	if (i < 0 || i >= (int)m_bullet.size()) return nullptr;
 	return m_bullet[i];

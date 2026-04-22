@@ -8,16 +8,18 @@ void CollisionManager::CheckAll(Player* player,
     std::vector<Bullet*>& bullets)
 {
     // Ž©‹@ vs “G
-    for (auto& enemy : enemies)
+    if (!player->IsInvincible())
     {
-        if (!enemy->IsAlive()) continue;
-        if (player->IsInvincible())continue;
-
-        if (IsHit(player->GetPos(), player->GetRadius(),
-            enemy->GetPos(), enemy->GetRadius()))
+        for (auto& enemy : enemies)
         {
-            player->TakeDamage(1);
-            enemy->TakeDamage(1);
+            if (!enemy->IsAlive()) continue;
+
+            if (IsHit(player->GetPos(), player->GetRadius(),
+                enemy->GetPos(), enemy->GetRadius()))
+            {
+                player->TakeDamage(1);
+                enemy->TakeDamage(1);
+            }
         }
     }
 
@@ -33,8 +35,19 @@ void CollisionManager::CheckAll(Player* player,
             if (IsHit(enemy->GetPos(), enemy->GetRadius(),
                 bullet->GetPos(), bullet->GetRadius()))
             {
-                enemy->TakeDamage(bullet->GetDamage());
-                bullet->Destroy();
+                if (!bullet->IsAlreadyHit(enemy))
+                {
+                    enemy->TakeDamage(bullet->GetDamage());
+
+                    if (!bullet->IsPenetrat())
+                    {
+                        bullet->Destroy();
+                    }
+                    else
+                    {
+                        bullet->AddHitEnemy(enemy);
+                    }
+                }
             }
         }
     }
