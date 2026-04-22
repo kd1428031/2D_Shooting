@@ -44,6 +44,8 @@ private:
     
     State m_state;
 
+    float m_speed;
+
     // ’e
     ShotType m_shotType;
     bool     m_isShooting;

@@ -11,6 +11,8 @@ void Player::Init()
     
     m_velocity = { 0,0 };
 
+    m_speed = kInitSpeed;
+
     m_hp = kInitHp;
     
     m_state = State::Alive;
@@ -63,10 +65,10 @@ void Player::Move(float dt)
     m_velocity = { 0.0f, 0.0f };
 
     // à⁄ìÆèàóù
-    if (GetAsyncKeyState(VK_UP) & 0x8000) m_velocity.y = kInitSpeed;
-    if (GetAsyncKeyState(VK_DOWN) & 0x8000) m_velocity.y = -kInitSpeed;
-    if (GetAsyncKeyState(VK_LEFT) & 0x8000) m_velocity.x = -kInitSpeed;
-    if (GetAsyncKeyState(VK_RIGHT) & 0x8000) m_velocity.x = kInitSpeed;
+    if (GetAsyncKeyState(VK_UP) & 0x8000) m_velocity.y = m_speed;
+    if (GetAsyncKeyState(VK_DOWN) & 0x8000) m_velocity.y = -m_speed;
+    if (GetAsyncKeyState(VK_LEFT) & 0x8000) m_velocity.x = -m_speed;
+    if (GetAsyncKeyState(VK_RIGHT) & 0x8000) m_velocity.x = m_speed;
 
     m_pos += m_velocity * dt;
 
