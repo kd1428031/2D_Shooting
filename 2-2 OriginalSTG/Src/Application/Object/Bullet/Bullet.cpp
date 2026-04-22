@@ -39,7 +39,6 @@ void Bullet::Draw()
 
 void Bullet::Move(float dt)
 {
-    // 移動
     m_pos += m_velocity * dt;
 
     // 画面外チェック

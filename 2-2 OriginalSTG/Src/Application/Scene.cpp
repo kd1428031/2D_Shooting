@@ -3,9 +3,9 @@
 #include "ResourceManager.h"
 #include "CollisionManager.h"
 #include "TimeManager.h"
-#include "Character/Player/Player.h"
-#include "Character/Enemy/EnemyManager.h"
-#include "Bullet/BulletManager.h"
+#include "Object/Character/Player/Player.h"
+#include "Object/Character/Enemy/EnemyManager.h"
+#include "Object/Bullet/BulletManager.h"
 
 void Scene::Draw2D()
 {

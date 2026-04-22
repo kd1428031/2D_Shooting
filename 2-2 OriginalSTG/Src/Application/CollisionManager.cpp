@@ -1,7 +1,7 @@
 #include "CollisionManager.h"
-#include "Application/Character/Player/Player.h"
-#include "Application/Character/Enemy/EnemyBase.h"
-#include "Application/Bullet/Bullet.h"
+#include "Application/Object/Character/Player/Player.h"
+#include "Application/Object/Character/Enemy/EnemyBase.h"
+#include "Application/Object/Bullet/Bullet.h"
 
 void CollisionManager::CheckAll(Player* player,
     std::vector<EnemyBase*>& enemies,

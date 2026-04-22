@@ -43,16 +43,19 @@
     <Filter Include="Src\System\Audio">
       <UniqueIdentifier>{667d1cb1-5ae5-476f-acd5-14b7d294a95a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Bullet">
+    <Filter Include="Src\Application\Object">
+      <UniqueIdentifier>{417419a6-342f-4f9c-bbf7-07521126f73b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Bullet">
       <UniqueIdentifier>{4cb31dd3-2631-4fd8-a083-c26ddc14c851}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Character">
+    <Filter Include="Src\Application\Object\Character">
       <UniqueIdentifier>{021a10f2-fdf6-4b84-8fe9-117ffead541b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Character\Player">
+    <Filter Include="Src\Application\Object\Character\Player">
       <UniqueIdentifier>{f4739af2-1e61-49c2-917d-e21191097f7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Character\Enemy">
+    <Filter Include="Src\Application\Object\Character\Enemy">
       <UniqueIdentifier>{e86013d1-f9d6-44f8-b5ba-74b31077b7f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -153,32 +156,32 @@
     <ClInclude Include="Src\Application\TimeManager.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Bullet\Bullet.h">
-      <Filter>Src\Application\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Bullet\BulletManager.h">
-      <Filter>Src\Application\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Character\Player\Player.h">
-      <Filter>Src\Application\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Character\Enemy\EnemyBase.h">
-      <Filter>Src\Application\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Character\Character.h">
-      <Filter>Src\Application\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Character\Enemy\Enemy.h">
-      <Filter>Src\Application\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Character\Enemy\EnemyManager.h">
-      <Filter>Src\Application\Character\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\ResourceManager.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\CollisionManager.h">
       <Filter>Src\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Bullet\Bullet.h">
+      <Filter>Src\Application\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Bullet\BulletManager.h">
+      <Filter>Src\Application\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Character\Character.h">
+      <Filter>Src\Application\Object\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Character\Player\Player.h">
+      <Filter>Src\Application\Object\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Character\Enemy\Enemy.h">
+      <Filter>Src\Application\Object\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Character\Enemy\EnemyBase.h">
+      <Filter>Src\Application\Object\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Character\Enemy\EnemyManager.h">
+      <Filter>Src\Application\Object\Character\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -248,32 +251,32 @@
     <ClCompile Include="Src\Application\TimeManager.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Bullet\Bullet.cpp">
-      <Filter>Src\Application\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Bullet\BulletManager.cpp">
-      <Filter>Src\Application\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Character\Player\Player.cpp">
-      <Filter>Src\Application\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Character\Enemy\EnemyBase.cpp">
-      <Filter>Src\Application\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Character\Character.cpp">
-      <Filter>Src\Application\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Character\Enemy\Enemy.cpp">
-      <Filter>Src\Application\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Character\Enemy\EnemyManager.cpp">
-      <Filter>Src\Application\Character\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\ResourceManager.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\CollisionManager.cpp">
       <Filter>Src\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Bullet\Bullet.cpp">
+      <Filter>Src\Application\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Bullet\BulletManager.cpp">
+      <Filter>Src\Application\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Character\Character.cpp">
+      <Filter>Src\Application\Object\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Character\Player\Player.cpp">
+      <Filter>Src\Application\Object\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Character\Enemy\EnemyBase.cpp">
+      <Filter>Src\Application\Object\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Character\Enemy\EnemyManager.cpp">
+      <Filter>Src\Application\Object\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Character\Enemy\Enemy.cpp">
+      <Filter>Src\Application\Object\Character\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

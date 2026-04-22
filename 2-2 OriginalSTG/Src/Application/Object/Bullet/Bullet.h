@@ -30,14 +30,18 @@ public:
     bool IsAlive() const { return m_isAlive; }
     bool IsPenetrat() const { return m_type == BulletType::Penetrat; }
 
+    // その敵はヒット済かどうか
     bool IsAlreadyHit(EnemyBase* enemy) const;
+
+    // 敵をヒット済リストに追加
     void AddHitEnemy(EnemyBase* enemy);
 
 private:
 
     BulletType m_type;
 
-    std::vector<EnemyBase*> m_hitEnemies;  // ヒット済み敵リスト
+    // ヒット済み敵リスト
+    std::vector<EnemyBase*> m_hitEnemies; 
 
     // 座標・移動
     Math::Vector2 m_pos;

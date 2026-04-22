@@ -1,5 +1,5 @@
 #pragma once
-#include "Application/Character/Enemy/EnemyBase.h"
+#include "Application/Object/Character/Enemy/EnemyBase.h"
 
 class Enemy : public EnemyBase
 {
