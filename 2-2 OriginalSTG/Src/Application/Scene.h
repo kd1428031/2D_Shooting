@@ -14,6 +14,8 @@ public:
 	const int screenWidth = 640;
 	const int screenHeight = 360;
 
+	bool testKey = false;
+
 	// ‰Šúİ’è
 	void Init();
 

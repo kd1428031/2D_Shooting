@@ -33,7 +33,7 @@ void CollisionManager::CheckAll(Player* player,
             if (IsHit(enemy->GetPos(), enemy->GetRadius(),
                 bullet->GetPos(), bullet->GetRadius()))
             {
-                enemy->Destroy();
+                enemy->TakeDamage(bullet->GetDamage());
                 bullet->Destroy();
             }
         }

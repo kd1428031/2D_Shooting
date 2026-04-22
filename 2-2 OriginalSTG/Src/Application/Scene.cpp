@@ -22,7 +22,16 @@ void Scene::Update()
 
 	player->Update(dt);
 
-	if(GetAsyncKeyState('U')&0x8000)ENEMYMANAGER.CreateEnemy({0,0});
+	if (GetAsyncKeyState('U') & 0x8000)
+	{
+		if (!testKey)
+		{
+			ENEMYMANAGER.CreateEnemy({ 0,0 });
+			testKey = true;
+		}
+	}
+	else testKey = false;
+
 	ENEMYMANAGER.Update(dt);
 	BULLETMANAGER.Update(dt);
 	COLLISIONMANAGER.CheckAll(player, ENEMYMANAGER.GetEnemy(),BULLETMANAGER.GetBullet());

@@ -12,6 +12,7 @@ void Enemy::Init()
 	m_tex = RESOURCEMANAGER.GetTex(TexName::kEnemy);
 	m_velocity = { -200,0 };
 	m_radius = 32.0f;
+	m_hp = 3;
 }
 
 void Enemy::UpdateImpl(float dt)
@@ -21,4 +22,5 @@ void Enemy::UpdateImpl(float dt)
 
 void Enemy::Death(float dt)
 {
+	m_state = State::Dead;
 }
