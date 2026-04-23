@@ -8,25 +8,24 @@ class CollisionManager
 {
 public:
 
-	~CollisionManager(){}
+    ~CollisionManager() {}
 
-	// インスタンス取得用
-	static CollisionManager& GetInstance()
-	{
-		static CollisionManager instance;
-		return instance;
-	}
+    static CollisionManager& GetInstance()
+    {
+        static CollisionManager instance;
+        return instance;
+    }
 
-	void CheckAll(Player* player,
-		std::vector<EnemyBase*>& enemies,
-		std::vector<Bullet*>& bullets);
+    void CheckAll(Player* player,
+        const std::vector<std::unique_ptr<EnemyBase>>& enemies,
+        const std::vector<std::unique_ptr<Bullet>>& bullets);
 
 private:
 
-	CollisionManager(){}
+    CollisionManager() {}
 
-	bool IsHit(Math::Vector2 posA, float radiusA,
-		Math::Vector2 posB, float radiusB);
+    bool IsHit(Math::Vector2 posA, float radiusA,
+        Math::Vector2 posB, float radiusB);
 };
 
 #define COLLISIONMANAGER CollisionManager::GetInstance()

@@ -4,8 +4,8 @@
 #include "Application/GameObject/Bullet/Bullet.h"
 
 void CollisionManager::CheckAll(Player* player,
-    std::vector<EnemyBase*>& enemies,
-    std::vector<Bullet*>& bullets)
+    const std::vector<std::unique_ptr<EnemyBase>>& enemies,
+    const std::vector<std::unique_ptr<Bullet>>& bullets)
 {
     // Ž©‹@ vs “G
     if (!player->IsInvincible())
@@ -35,8 +35,7 @@ void CollisionManager::CheckAll(Player* player,
             if (IsHit(enemy->GetPos(), enemy->GetRadius(),
                 bullet->GetPos(), bullet->GetRadius()))
             {
-                // ’e‚Í1‘Ì‚Ì“G‚É1‰ñ‚µ‚©“–‚½‚ç‚È‚¢
-                if (!bullet->IsAlreadyHit(enemy))
+                if (!bullet->IsAlreadyHit(enemy.get()))
                 {
                     enemy->TakeDamage(bullet->GetDamage());
 
@@ -46,7 +45,7 @@ void CollisionManager::CheckAll(Player* player,
                     }
                     else
                     {
-                        bullet->AddHitEnemy(enemy);
+                        bullet->AddHitEnemy(enemy.get());
                     }
                 }
             }

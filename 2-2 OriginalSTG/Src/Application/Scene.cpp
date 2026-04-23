@@ -38,7 +38,6 @@ void Scene::Update()
 	BULLETMANAGER.Update(dt);
 	COLLISIONMANAGER.CheckAll(player, ENEMYMANAGER.GetEnemy(),BULLETMANAGER.GetBullet());
 	UIMANAGER.Update(dt);
-	UIMANAGER.CreateUi(UiType::Score());
 }
 
 void Scene::Init()
@@ -47,6 +46,7 @@ void Scene::Init()
 
 	player = new Player();  
 	player->Init();
+	UIMANAGER.CreateUi(UiType::Score);
 }
 
 void Scene::Release()

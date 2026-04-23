@@ -1,13 +1,11 @@
 #pragma once
 #include "UiBase.h"
 
-class UiBase;
-
 class UiManager
 {
 public:
 
-	~UiManager();
+	~UiManager() = default;
 
 	// インスタンス取得用
 	static UiManager& GetInstance()
@@ -25,6 +23,6 @@ public:
 
 private:
 
-	std::vector<UiBase*>m_ui;
+	std::vector<std::unique_ptr<UiBase>> m_ui;
 };
 #define UIMANAGER UiManager::GetInstance()

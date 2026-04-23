@@ -1,58 +1,46 @@
 #include "BulletManager.h"
 #include "Application/Scene.h"
 
-BulletManager::~BulletManager()
-{
-	// I—¹Žž‘Sƒƒ‚ƒŠE—v‘f‰ð•ú
-	for (auto& p : m_bullet) delete p;
-	m_bullet.clear();
-}
-
 void BulletManager::Init()
 {
 }
 
 void BulletManager::Update(float dt)
 {
-	// ˆêŠ‡ˆ—
-	for (int i = m_bullet.size() - 1; i >= 0; --i)
-	{
-		if (m_bullet[i] != nullptr)
-		{
-			m_bullet[i]->Update(dt);
+    for (int i = m_bullet.size() - 1; i >= 0; --i)
+    {
+        if (m_bullet[i] != nullptr)
+        {
+            m_bullet[i]->Update(dt);
 
-			// Ž€‚ñ‚Å‚½‚çíœ
-			if (!m_bullet[i]->IsAlive())
-			{
-				delete m_bullet[i];
-				m_bullet.erase(m_bullet.begin() + i);
-			}
-		}
-	}
+            if (!m_bullet[i]->IsAlive())
+            {
+                m_bullet.erase(m_bullet.begin() + i);
+            }
+        }
+    }
 }
 
 void BulletManager::Draw()
 {
-	// ˆêŠ‡•`‰æ
-	for (auto& p : m_bullet)
-	{
-		if (p != nullptr)
-		{
-			p->Draw();
-		}
-	}
+    for (auto& p : m_bullet)
+    {
+        if (p != nullptr)
+        {
+            p->Draw();
+        }
+    }
 }
 
 void BulletManager::CreateBullet(BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
 {
-	// ’e¶¬
-	Bullet* bullet = new Bullet(type, pos, velocity, scale, color);
-	bullet->Init();
-	m_bullet.push_back(bullet);
+    auto bullet = std::make_unique<Bullet>(type, pos, velocity, scale, color);
+    bullet->Init();
+    m_bullet.emplace_back(std::move(bullet));
 }
 
 Bullet* BulletManager::GetBullet(int i) const
 {
-	if (i < 0 || i >= (int)m_bullet.size()) return nullptr;
-	return m_bullet[i];
+    if (i < 0 || i >= (int)m_bullet.size()) return nullptr;
+    return m_bullet[i].get();
 }

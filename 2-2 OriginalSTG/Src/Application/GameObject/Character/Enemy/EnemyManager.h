@@ -1,12 +1,11 @@
 #pragma once
-
-class EnemyBase;
+#include "EnemyBase.h"
 
 class EnemyManager
 {
 public:
 
-	~EnemyManager();
+	~EnemyManager() = default;
 
 	static EnemyManager& GetInstance()
 	{
@@ -20,12 +19,12 @@ public:
 
 	void CreateEnemy(Math::Vector2 pos, float scale = 1.0f);
 
-	std::vector<EnemyBase*> GetEnemy() { return m_enemy; }
+	const std::vector < std::unique_ptr<EnemyBase>> &GetEnemy() const { return m_enemy; }
 
 private:
 
 	EnemyManager() = default;
-	std::vector<EnemyBase*>m_enemy;
+	std::vector < std::unique_ptr<EnemyBase>>m_enemy;
 
 };
 #define ENEMYMANAGER EnemyManager::GetInstance()
