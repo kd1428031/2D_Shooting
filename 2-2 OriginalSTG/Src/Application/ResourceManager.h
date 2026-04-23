@@ -11,8 +11,6 @@ class ResourceManager
 {
 public:
 
-	~ResourceManager() { ReleaseAll(); }
-
 	// インスタンス取得用
 	static ResourceManager& GetInstance()
 	{
@@ -20,12 +18,15 @@ public:
 		return instance;
 	}
 
+	~ResourceManager() { ReleaseAll(); }
+
 	void LoadAll();
-	void ReleaseAll();
 
 	KdTexture *GetTex(const std::string &name);
 
 private:
+
+	void ReleaseAll();
 
 	std::map<std::string, KdTexture>m_tex;
 

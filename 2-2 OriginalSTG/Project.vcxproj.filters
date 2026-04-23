@@ -61,6 +61,9 @@
     <Filter Include="Src\Application\Ui">
       <UniqueIdentifier>{ce4b4c66-5f12-4894-982d-df3f82cd1c34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Input">
+      <UniqueIdentifier>{c58939c4-0adf-42b9-b32e-181204aebb89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -198,6 +201,9 @@
     <ClInclude Include="Src\Application\Ui\UiManager.h">
       <Filter>Src\Application\Ui</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Input\InputManager.h">
+      <Filter>Src\Application\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -304,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Ui\UiManager.cpp">
       <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Input\InputManager.cpp">
+      <Filter>Src\Application\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,13 +8,13 @@ class CollisionManager
 {
 public:
 
-    ~CollisionManager() {}
-
     static CollisionManager& GetInstance()
     {
         static CollisionManager instance;
         return instance;
     }
+
+    ~CollisionManager() {}
 
     void CheckAll(Player* player,
         const std::vector<std::unique_ptr<EnemyBase>>& enemies,

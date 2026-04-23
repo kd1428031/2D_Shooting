@@ -5,13 +5,13 @@ class BulletManager
 {
 public:
 
-    ~BulletManager() = default;
-
     static BulletManager& GetInstance()
     {
         static BulletManager instance;
         return instance;
     }
+
+    ~BulletManager() = default;
 
     void Init();
     void Update(float dt);

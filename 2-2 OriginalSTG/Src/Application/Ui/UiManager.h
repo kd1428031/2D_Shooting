@@ -5,14 +5,14 @@ class UiManager
 {
 public:
 
-	~UiManager() = default;
-
 	// インスタンス取得用
 	static UiManager& GetInstance()
 	{
 		static UiManager instance;
 		return instance;
 	}
+
+	~UiManager() = default;
 
 	// 基本処理
 	void Init();

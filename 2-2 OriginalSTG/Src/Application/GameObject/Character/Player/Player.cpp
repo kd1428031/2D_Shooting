@@ -2,6 +2,7 @@
 #include "Application/GameObject/Bullet/BulletManager.h"
 #include "Application/Scene.h"
 #include "Application/ResourceManager.h"
+#include "Application/Input/InputManager.h";
 
 void Player::Init()
 {
@@ -65,10 +66,10 @@ void Player::Move(float dt)
     m_velocity = { 0.0f, 0.0f };
 
     // à⁄ìÆèàóù(ãtï˚å¸ÇìØéûâüÇµÇµÇΩÇÁí‚é~Ç∑ÇÈÇÊÇ§Ç…)
-    bool up    = GetAsyncKeyState(VK_UP) & 0x8000    || GetAsyncKeyState('W') & 0x8000;
-    bool down  = GetAsyncKeyState(VK_DOWN) & 0x8000  || GetAsyncKeyState('S') & 0x8000;
-    bool left  = GetAsyncKeyState(VK_LEFT) & 0x8000  || GetAsyncKeyState('A') & 0x8000;
-    bool right = GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState('D') & 0x8000;
+    bool up     = INPUT.IsKeyHeld(VK_UP)    || INPUT.IsKeyHeld('W');
+    bool down   = INPUT.IsKeyHeld(VK_DOWN)  || INPUT.IsKeyHeld('S');
+    bool left   = INPUT.IsKeyHeld(VK_LEFT)  || INPUT.IsKeyHeld('A');
+    bool right  = INPUT.IsKeyHeld(VK_RIGHT) || INPUT.IsKeyHeld('D');
 
     if (up    && !down)  m_velocity.y = m_speed;
     if (down  && !up)    m_velocity.y = -m_speed;
@@ -112,7 +113,7 @@ void Player::UpdateInvincible(float dt)
 void Player::Shot(float dt)
 {
     // íeî≠éÀ
-    m_isShooting = GetAsyncKeyState('Z') & 0x8000;
+    m_isShooting = INPUT.IsKeyHeld(VK_SPACE);
 
     // íeî≠éÀä‘äuèàóù
     m_shotTimer -= dt;
