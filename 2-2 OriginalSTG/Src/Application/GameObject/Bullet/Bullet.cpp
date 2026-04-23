@@ -48,14 +48,6 @@ void Bullet::Move(float dt)
     }
 }
 
-void Bullet::UpdateMatrix()
-{
-    m_scaleMat = Math::Matrix::CreateScale(m_scale);
-    m_rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_angle));
-    m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-    m_mat = m_scaleMat * m_rotMat * m_transMat;
-}
-
 void Bullet::Destroy()
 {
     m_isAlive = false;

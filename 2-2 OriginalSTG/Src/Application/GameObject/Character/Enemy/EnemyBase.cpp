@@ -26,14 +26,6 @@ void EnemyBase::Update(float dt)
     UpdateMatrix();
 }
 
-void EnemyBase::UpdateMatrix()
-{
-    m_scaleMat = Math::Matrix::CreateScale(m_scale, m_scale, 1);
-    m_rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_angle));
-    m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-    m_mat = m_scaleMat  * m_rotMat * m_transMat;
-}
-
 void EnemyBase::Move(float dt)
 {
     m_pos += m_velocity * dt;

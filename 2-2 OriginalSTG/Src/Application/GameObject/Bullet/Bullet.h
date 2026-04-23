@@ -20,7 +20,6 @@ public:
     void Update(float dt)override;
     void Draw()override;
     void Move(float dt);
-    void UpdateMatrix();
 
     void Destroy();
 

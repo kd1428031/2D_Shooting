@@ -1,0 +1,21 @@
+#include "UiBase.h"
+
+UiBase::UiBase()
+    : m_scale(1.0f), m_angle(0.0f), m_alpha(1.0f), m_tex(nullptr)
+
+{
+}
+
+void UiBase::Draw()
+{
+    SHADER.m_spriteShader.SetMatrix(m_mat);
+    SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{ (int)m_animFrame.x * m_texFrameSize,(int)m_animFrame.y * m_texFrameSize, m_texFrameSize, m_texFrameSize }, m_alpha);
+}
+
+void UiBase::UpdateMatrix()
+{
+    m_scaleMat = Math::Matrix::CreateScale(m_scale, m_scale, 1);
+    m_rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_angle));
+    m_transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
+    m_mat = m_scaleMat * m_rotMat * m_transMat;
+}

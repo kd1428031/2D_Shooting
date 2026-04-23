@@ -11,6 +11,7 @@ public:
     virtual void Init() = 0;
     virtual void Update(float dt) = 0;
     virtual void Draw() = 0;
+    void UpdateMatrix();
 
     virtual bool IsAlive() const = 0;
 
@@ -27,8 +28,8 @@ protected:
     float m_angle;
     float m_radius;
 
+    // 色・透明度
     float m_alpha;
-
     Math::Color m_color = { 1,1,1,1 };
 
     // アニメーション（x:横フレーム, y:縦フレーム）

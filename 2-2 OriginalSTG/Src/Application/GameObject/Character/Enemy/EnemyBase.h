@@ -17,10 +17,9 @@ public:
     virtual ~EnemyBase() = default;
 
     virtual void Init() = 0;
-    void Update(float dt);
+    void Update(float dt)override;
     void Draw() override;
     void Move(float dt);
-    void UpdateMatrix();
 
     // 敵ごとの固有行動（移動パターン・射撃など）
     virtual void UpdateImpl(float dt) = 0;
@@ -36,7 +35,7 @@ public:
     float GetRadius() const { return m_radius; }
 
     void Destroy(){ m_state = State::Dead; }
-    bool IsAlive() const { return m_state != State::Dead; };
+    bool IsAlive() const override{ return m_state != State::Dead; };
 
 protected:
 
