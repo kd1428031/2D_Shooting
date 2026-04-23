@@ -1,22 +1,35 @@
 #pragma once
 
+enum class UiType
+{
+	Score,
+};
+
 class UiBase
 {
 public:
 
 	UiBase();
-	~UiBase();
+	virtual ~UiBase() = default;
 
 	virtual void Init() = 0;
-	virtual void Update(float dt) = 0;
+	virtual void Update(float dt);
 	virtual void Draw();
 	void UpdateMatrix();
+
+	virtual void UpdateImpl(float dt) {};
+	virtual void DrawImpl() {};
+
+	bool IsAlive() const { return m_isAlive; }
 
 protected:
 
 	// 座標
 	Math::Vector2 m_pos;
 
+	// 状態
+	bool m_isAlive;
+	
 	// サイズ
 	float m_scale = 1.0f;
 	float m_angle;

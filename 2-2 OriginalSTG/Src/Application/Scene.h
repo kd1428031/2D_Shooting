@@ -16,6 +16,8 @@ public:
 
 	bool testKey = false;
 
+	int m_score;
+
 	// ‰Šúİ’è
 	void Init();
 
@@ -27,6 +29,10 @@ public:
 
 	// •`‰æˆ—
 	void Draw2D();
+
+	int GetScore() const { return m_score; }
+
+	void AddScore(int score) { m_score += score; }
 
 	// GUIˆ—
 	void ImGuiUpdate();

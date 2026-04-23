@@ -192,6 +192,12 @@
     <ClInclude Include="Src\Application\Ui\UiBase.h">
       <Filter>Src\Application\Ui</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Ui\ScoreDisplay.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Ui\UiManager.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -291,6 +297,12 @@
       <Filter>Src\Application\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Ui\UiBase.cpp">
+      <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Ui\ScoreDisplay.cpp">
+      <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Ui\UiManager.cpp">
       <Filter>Src\Application\Ui</Filter>
     </ClCompile>
   </ItemGroup>

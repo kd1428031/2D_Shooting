@@ -6,12 +6,14 @@
 #include "GameObject/Character/Player/Player.h"
 #include "GameObject/Character/Enemy/EnemyManager.h"
 #include "GameObject/Bullet/BulletManager.h"
+#include "Ui/UiManager.h"
 
 void Scene::Draw2D()
 {
 	player->Draw();
 	ENEMYMANAGER.Draw();
 	BULLETMANAGER.Draw();
+	UIMANAGER.Draw();
 }
 
 void Scene::Update()
@@ -35,6 +37,8 @@ void Scene::Update()
 	ENEMYMANAGER.Update(dt);
 	BULLETMANAGER.Update(dt);
 	COLLISIONMANAGER.CheckAll(player, ENEMYMANAGER.GetEnemy(),BULLETMANAGER.GetBullet());
+	UIMANAGER.Update(dt);
+	UIMANAGER.CreateUi(UiType::Score());
 }
 
 void Scene::Init()

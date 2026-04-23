@@ -1,0 +1,30 @@
+#pragma once
+#include "UiBase.h"
+
+class UiBase;
+
+class UiManager
+{
+public:
+
+	~UiManager();
+
+	// インスタンス取得用
+	static UiManager& GetInstance()
+	{
+		static UiManager instance;
+		return instance;
+	}
+
+	// 基本処理
+	void Init();
+	void Update(float dt);
+	void Draw();
+
+	void CreateUi(UiType type);
+
+private:
+
+	std::vector<UiBase*>m_ui;
+};
+#define UIMANAGER UiManager::GetInstance()

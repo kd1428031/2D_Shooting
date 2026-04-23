@@ -1,15 +1,27 @@
 #include "UiBase.h"
 
 UiBase::UiBase()
-    : m_scale(1.0f), m_angle(0.0f), m_alpha(1.0f), m_tex(nullptr)
+    : m_isAlive(true), m_scale(1.0f), m_angle(0.0f), m_alpha(1.0f), m_tex(nullptr)
 
 {
 }
 
+void UiBase::Update(float dt)
+{
+    if (!m_isAlive)return;
+
+    UpdateImpl(dt);
+    UpdateMatrix();
+}
+
 void UiBase::Draw()
 {
+    if (!m_isAlive)return;
+
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{ (int)m_animFrame.x * m_texFrameSize,(int)m_animFrame.y * m_texFrameSize, m_texFrameSize, m_texFrameSize }, m_alpha);
+
+    DrawImpl();
 }
 
 void UiBase::UpdateMatrix()
