@@ -1,7 +1,7 @@
 #include "CollisionManager.h"
-#include "Application/Object/Character/Player/Player.h"
-#include "Application/Object/Character/Enemy/EnemyBase.h"
-#include "Application/Object/Bullet/Bullet.h"
+#include "Application/GameObject/Character/Player/Player.h"
+#include "Application/GameObject/Character/Enemy/EnemyBase.h"
+#include "Application/GameObject/Bullet/Bullet.h"
 
 void CollisionManager::CheckAll(Player* player,
     std::vector<EnemyBase*>& enemies,
@@ -35,6 +35,7 @@ void CollisionManager::CheckAll(Player* player,
             if (IsHit(enemy->GetPos(), enemy->GetRadius(),
                 bullet->GetPos(), bullet->GetRadius()))
             {
+                // ’e‚Í1‘Ì‚Ì“G‚É1‰ñ‚µ‚©“–‚½‚ç‚È‚¢
                 if (!bullet->IsAlreadyHit(enemy))
                 {
                     enemy->TakeDamage(bullet->GetDamage());

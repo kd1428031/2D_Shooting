@@ -1,5 +1,5 @@
 #pragma once
-#include "Application/Object/Character/Character.h"
+#include "Application/GameObject/Character/Character.h"
 
 enum class ShotType
 {

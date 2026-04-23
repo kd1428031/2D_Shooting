@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Application/Object/Bullet/BulletManager.h"
+#include "Application/GameObject/Bullet/BulletManager.h"
 #include "Application/Scene.h"
 #include "Application/ResourceManager.h"
 
@@ -64,11 +64,16 @@ void Player::Move(float dt)
 {
     m_velocity = { 0.0f, 0.0f };
 
-    // ˆÚ“®ˆ—
-    if (GetAsyncKeyState(VK_UP) & 0x8000) m_velocity.y = m_speed;
-    if (GetAsyncKeyState(VK_DOWN) & 0x8000) m_velocity.y = -m_speed;
-    if (GetAsyncKeyState(VK_LEFT) & 0x8000) m_velocity.x = -m_speed;
-    if (GetAsyncKeyState(VK_RIGHT) & 0x8000) m_velocity.x = m_speed;
+    // ˆÚ“®ˆ—(‹t•ûŒü‚ğ“¯‰Ÿ‚µ‚µ‚½‚ç’â~‚·‚é‚æ‚¤‚É)
+    bool up    = GetAsyncKeyState(VK_UP) & 0x8000    || GetAsyncKeyState('W') & 0x8000;
+    bool down  = GetAsyncKeyState(VK_DOWN) & 0x8000  || GetAsyncKeyState('S') & 0x8000;
+    bool left  = GetAsyncKeyState(VK_LEFT) & 0x8000  || GetAsyncKeyState('A') & 0x8000;
+    bool right = GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState('D') & 0x8000;
+
+    if (up    && !down)  m_velocity.y = m_speed;
+    if (down  && !up)    m_velocity.y = -m_speed;
+    if (left  && !right) m_velocity.x = -m_speed;
+    if (right && !left)  m_velocity.x = m_speed;
 
     m_pos += m_velocity * dt;
 

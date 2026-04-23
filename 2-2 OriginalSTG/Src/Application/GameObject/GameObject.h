@@ -1,46 +1,43 @@
 #pragma once
 
-class Character
+class GameObject
 {
 public:
 
-    Character() = default;
-    Character(Math::Vector2 pos, float scale);
-    virtual ~Character() {};
+	GameObject() = default;
+    GameObject(Math::Vector2 pos, float scale);
+    virtual ~GameObject() = default;
 
     virtual void Init() = 0;
     virtual void Update(float dt) = 0;
     virtual void Draw() = 0;
 
-    virtual void TakeDamage(float damage);
     virtual bool IsAlive() const = 0;
 
     Math::Vector2 GetPos() const { return m_pos; }
 
 protected:
 
-    // À•WEˆÚ“®
+    // åº§æ¨™ãƒ»ç§»å‹•
     Math::Vector2 m_pos;
     Math::Vector2 m_velocity;
 
-    // ƒTƒCƒY
+    // ã‚µã‚¤ã‚º
     float m_scale = 1.0f;
     float m_angle;
     float m_radius;
 
     float m_alpha;
 
-    // HPEó‘Ô
-    int   m_hp;
-    float m_invincibleTimer;
+    Math::Color m_color = { 1,1,1,1 };
 
-    // ƒAƒjƒ[ƒVƒ‡ƒ“ix:‰¡ƒtƒŒ[ƒ€, y:cƒtƒŒ[ƒ€j
+    // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ï¼ˆx:æ¨ªãƒ•ãƒ¬ãƒ¼ãƒ , y:ç¸¦ãƒ•ãƒ¬ãƒ¼ãƒ ï¼‰
     Math::Vector2 m_animFrame;
 
-    // ƒeƒNƒXƒ`ƒƒ
-    KdTexture *m_tex;
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£
+    KdTexture* m_tex;
 
-    // s—ñ
+    // è¡Œåˆ—
     Math::Matrix m_transMat;
     Math::Matrix m_rotMat;
     Math::Matrix m_scaleMat;

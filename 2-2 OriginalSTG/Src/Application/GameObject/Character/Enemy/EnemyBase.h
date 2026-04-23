@@ -1,5 +1,5 @@
 #pragma once
-#include "Application/Object/Character/Character.h"
+#include "Application/GameObject/Character/Character.h"
 
 class EnemyBase : public Character
 {
@@ -41,8 +41,6 @@ public:
 protected:
 
     State m_state;
-
-    float m_radius;
 
     // Œ‚”jŠl“¾ƒXƒRƒA
     int   m_score;

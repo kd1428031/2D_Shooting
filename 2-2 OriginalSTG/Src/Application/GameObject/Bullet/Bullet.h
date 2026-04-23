@@ -1,4 +1,5 @@
 #pragma once
+#include "Application/GameObject/GameObject.h"
 
 enum class BulletType
 {
@@ -8,16 +9,16 @@ enum class BulletType
 
 class EnemyBase;
 
-class Bullet
+class Bullet : public GameObject
 {
 public:
 
     Bullet(BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color= { 1,1,1,1 });
     ~Bullet();
 
-    void Init();
-    void Update(float dt);
-    void Draw();
+    void Init()override;
+    void Update(float dt)override;
+    void Draw()override;
     void Move(float dt);
     void UpdateMatrix();
 
@@ -27,7 +28,7 @@ public:
     Math::Vector2 GetPos() const { return m_pos; }
     int GetDamage() const { return m_damage; }
 
-    bool IsAlive() const { return m_isAlive; }
+    bool IsAlive() const override { return m_isAlive; }
     bool IsPenetrat() const { return m_type == BulletType::Penetrat; }
 
     // その敵はヒット済かどうか
@@ -43,28 +44,9 @@ private:
     // ヒット済み敵リスト
     std::vector<EnemyBase*> m_hitEnemies; 
 
-    // 座標・移動
-    Math::Vector2 m_pos;
-    Math::Vector2 m_velocity;
-
-    // サイズ
-    float m_scale = 1.0f;
-
     // 状態
     bool  m_isAlive = true;
-    float m_angle;
     int m_damage = 1;
-
-    // テクスチャ
-    KdTexture *m_tex;
-
-    // 行列
-    Math::Matrix m_scaleMat;
-    Math::Matrix m_rotMat;
-    Math::Matrix m_transMat;
-    Math::Matrix m_mat;
-
-    Math::Color m_color = { 1,1,1,1 };
 
     // 定数
     static constexpr float kRadius = 32.0f;

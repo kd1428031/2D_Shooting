@@ -3,21 +3,20 @@
 #include "Application/ResourceManager.h"
 
 Bullet::Bullet(BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
-    : m_type(type), m_pos(pos), m_velocity(velocity), m_scale(scale),m_color(color)
+    : GameObject(pos, scale), m_type(type), m_isAlive(true)
 {
+    m_radius = kRadius;
+    m_velocity = velocity;
+    m_color = color;
 }
 
 Bullet::~Bullet()
 {
-
 }
 
 void Bullet::Init()
 {
     m_tex = RESOURCEMANAGER.GetTex(TexName::kBullet);
-
-    m_isAlive = true;
-    m_angle = 0.0f;
 }
 
 void Bullet::Update(float dt)

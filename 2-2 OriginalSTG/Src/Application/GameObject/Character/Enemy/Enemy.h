@@ -1,5 +1,5 @@
 #pragma once
-#include "Application/Object/Character/Enemy/EnemyBase.h"
+#include "Application/GameObject/Character/Enemy/EnemyBase.h"
 
 class Enemy : public EnemyBase
 {
@@ -14,5 +14,7 @@ public:
     void Death(float dt)override;
 
 private:
+
+    static constexpr float kRadius = 32.0f;
 
 };
