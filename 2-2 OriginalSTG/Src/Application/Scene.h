@@ -45,6 +45,8 @@ public:
 
 	float GetScrollSpeed() const { return m_scrollSpeed; }
 
+	Player* GetPlayer() const { return m_player.get(); }
+
 	// GUIˆ—
 	void ImGuiUpdate();
 

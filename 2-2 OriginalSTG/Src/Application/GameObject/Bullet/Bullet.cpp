@@ -3,7 +3,8 @@
 #include "Application/ResourceManager.h"
 
 Bullet::Bullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
-    : GameObject(pos, scale), m_owner(owner), m_type(type), m_isAlive(true)
+    : GameObject(pos, scale), m_owner(owner), m_type(type), m_isAlive(true),
+    m_lifeTimer(kLifeTimer),m_damage(1),m_spinAngle(0.0f)
 {
     m_radius = kRadius;
     m_velocity = velocity;
@@ -26,6 +27,9 @@ void Bullet::Update(float dt)
     Move(dt);
 
     UpdateMatrix();
+
+    m_lifeTimer -= dt;
+    if (m_lifeTimer <= 0)m_isAlive = false;
 }
 
 void Bullet::Draw()
@@ -38,6 +42,11 @@ void Bullet::Draw()
 
 void Bullet::Move(float dt)
 {
+    if (m_type == BulletType::Rotate)
+    {
+        UpdateRotate(dt);
+    }
+
     m_pos += m_velocity * dt;
 
     // 画面外チェック
@@ -46,11 +55,18 @@ void Bullet::Move(float dt)
     {
         m_isAlive = false;
     }
+}
 
-    if (m_type == BulletType::Rotate)
+void Bullet::UpdateRotate(float dt)
+{
+    m_spinAngle += 300 * dt;
+    if (m_spinAngle > 360)
     {
-        
+        m_spinAngle -= 360;
     }
+
+    m_velocity.x = cos(DirectX::XMConvertToRadians(m_spinAngle)) * 300;
+    m_velocity.y = sin(DirectX::XMConvertToRadians(m_spinAngle)) * 300;
 }
 
 void Bullet::Destroy()

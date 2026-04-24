@@ -27,6 +27,13 @@ public:
     // 敵ごとの追加描画処理
     virtual void DrawImpl() {}
 
+    void ShotStraight();        // 直線弾 
+    void ShotNWay(int num);     // Way弾 
+    void ShotAimed();           // 自機狙い弾 
+    void ShotRotate(float dt);  // 回転弾
+
+    float GetAngleDeg(Math::Vector2 src, Math::Vector2 dest);
+
     // 死亡時の演出処理（エフェクト・アニメーションなど）
     virtual void Death(float dt) = 0;
 
@@ -40,12 +47,21 @@ public:
 protected:
 
     State m_state;
-
+    
     // 撃破時獲得スコア
     int   m_score;
 
+    float       m_shotInterval;
+    float       m_bulletOffset;
+    float       m_bulletSpeed;
+    float       m_bulletScale;
+    Math::Color m_bulletColor;
+
     // 次弾発射までの残り時間
     float m_shotTimer;
+
+    float   m_bulletAngle;
+    float   m_bulletAngleSpeed;
 
     // 画像サイズ
     int m_texFrameSize = 64;

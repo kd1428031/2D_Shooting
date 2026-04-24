@@ -33,16 +33,16 @@ void Scene::Update()
 	{
 		if (!testKey)
 		{
-			ENEMYMANAGER.CreateEnemy({ 640,0 });
+			ENEMYMANAGER.CreateEnemy({ 320,0 });
 			testKey = true;
 		}
 	}
 	else testKey = false;
 
-	if (rand() % 10 < 1)
+	/*if (rand() % 10 < 1)
 	{
 		ENEMYMANAGER.CreateEnemy({ 640, (float)(rand() % 720 - 360) });
-	}
+	}*/
 
 	ENEMYMANAGER.Update(dt);
 	BULLETMANAGER.Update(dt);
