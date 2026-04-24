@@ -71,6 +71,9 @@ private:
     // “–‚½‚è”»’è
     static constexpr float kRadius = 32.0f;
 
+    // ƒqƒbƒg
+    static constexpr float kHitStopFrames = 3.0f;
+
     // ó‘Ô
     static constexpr float kInvincibleTime = 2.0f;
 

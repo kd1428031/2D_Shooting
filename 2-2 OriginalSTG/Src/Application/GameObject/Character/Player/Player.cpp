@@ -3,6 +3,7 @@
 #include "Application/Scene.h"
 #include "Application/ResourceManager.h"
 #include "Application/Input/InputManager.h";
+#include "Application/TimeManager.h";
 
 void Player::Init()
 {
@@ -181,6 +182,8 @@ void Player::TakeDamage(float damage)
 
         Character::TakeDamage(damage);
         if (m_hp <= 0) m_state = State::Dying;
+
+        TIMEMANAGER.HitStop(kHitStopFrames);
     }
 }
 

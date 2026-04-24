@@ -12,3 +12,11 @@ void TimeManager::Update()
         m_timeScale = 1.0f;  // ストップ終了後に自動リセット
     }
 }
+
+void TimeManager::HitStop(int frames)
+{
+    if (frames > m_stopFrames)
+    {
+        m_stopFrames = frames;
+    }
+}

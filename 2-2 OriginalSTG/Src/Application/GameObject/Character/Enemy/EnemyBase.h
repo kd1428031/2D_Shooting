@@ -52,4 +52,7 @@ protected:
 
     // 画面外削除の余白距離
     static constexpr float kDeleteMargin = 500.0f;
+
+    // ヒット時
+    static constexpr float kHitStopFrames = 0.05f;
 };

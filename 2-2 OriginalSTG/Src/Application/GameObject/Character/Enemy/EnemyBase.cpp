@@ -1,5 +1,6 @@
 #include "EnemyBase.h"
 #include "Application/Scene.h"
+#include "Application/TimeManager.h"
 
 EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
     :Character(pos, scale), m_state(State::Alive), m_score(0), m_shotTimer(0.0f)
@@ -31,7 +32,6 @@ void EnemyBase::Update(float dt)
 void EnemyBase::Move(float dt)
 {
     m_pos += m_velocity * dt;
-    m_pos.x -= SCENE.GetScrollSpeed() * dt;
 
     // 画面外チェック
     if (m_pos.x > SCENE.screenWidth + kDeleteMargin || m_pos.y > SCENE.screenHeight + kDeleteMargin ||
@@ -44,6 +44,7 @@ void EnemyBase::Move(float dt)
 void EnemyBase::TakeDamage(float damage)
 {
     Character::TakeDamage(damage);
+    TIMEMANAGER.HitStop(kHitStopFrames);
     if (m_hp <= 0)
     {
         m_state = State::Dying;
