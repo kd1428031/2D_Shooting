@@ -31,6 +31,7 @@ void EnemyBase::Update(float dt)
 void EnemyBase::Move(float dt)
 {
     m_pos += m_velocity * dt;
+    m_pos.x -= SCENE.GetScrollSpeed() * dt;
 
     // 画面外チェック
     if (m_pos.x > SCENE.screenWidth + kDeleteMargin || m_pos.y > SCENE.screenHeight + kDeleteMargin ||

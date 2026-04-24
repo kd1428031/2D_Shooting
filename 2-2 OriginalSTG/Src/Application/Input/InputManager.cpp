@@ -9,9 +9,9 @@ bool InputManager::IsKeyHeld(int key) const
 
 POINT InputManager::GetMousePos()
 {
-	POINT mousePos;	//戻り値用
+	POINT mousePos;
 
-	GetCursorPos(&mousePos);	//←POINT型のアドレスを渡す
+	GetCursorPos(&mousePos);
 
 	//指定のウィンドウ基準のマウス座標に変換（実行画面の左上が(0,0)）
 	ScreenToClient(APP.m_window.GetWndHandle(), &mousePos);

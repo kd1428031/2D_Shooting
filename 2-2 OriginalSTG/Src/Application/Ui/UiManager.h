@@ -23,6 +23,7 @@ public:
 
 private:
 
+	UiManager() = default;
 	std::vector<std::unique_ptr<UiBase>> m_ui;
 };
 #define UIMANAGER UiManager::GetInstance()

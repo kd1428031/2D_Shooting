@@ -13,7 +13,7 @@ public:
     virtual void Draw() = 0;
     void UpdateMatrix();
 
-    virtual bool IsAlive() const = 0;
+    virtual bool IsAlive() const { return true; };
 
     Math::Vector2 GetPos() const { return m_pos; }
 

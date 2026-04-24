@@ -3,7 +3,8 @@
 
 enum class ShotType
 {
-    NormalShot
+    NormalShot,
+    PenetratShot
 };
 
 class Player : public Character
@@ -31,12 +32,14 @@ public:
 
     void Shot(float dt);
     void NormalShot();
+    void PenetratShot();
 
     void TakeDamage(float damage)override;
     void Death(float dt);
 
     float GetRadius() const { return kRadius; }
-    bool IsAlive() const { return m_state != State::Dead; }
+    float GetSpeed() const { return m_speed; }
+    bool IsAlive() const override{ return m_state != State::Dead; }
     bool IsInvincible() const { return m_state == State::Invincible; }
 
 private:
@@ -44,6 +47,10 @@ private:
     State m_state;
 
     float m_speed;
+
+    float m_animSpeed = kAnimSpeed;
+    static constexpr float kBlinkInterval = 3.0f;  // Ç‹ÇŒÇΩÇ´ä‘äu
+    float m_blinkTimer = kBlinkInterval;
 
     // íe
     ShotType m_shotType;
@@ -54,8 +61,12 @@ private:
     // èâä˙íl
     static constexpr float kInitPosX = -500.0f;
     static constexpr float kInitPosY = 0.0f;
-    static constexpr float kInitSpeed = 800.0f;
+    static constexpr float kInitSpeed = 400.0f;
     static constexpr int   kInitHp = 3;
+
+    // ë¨ìx
+    static constexpr float kLowSpeed = 200;
+    static constexpr float kHighSpeed = 600;
 
     // ìñÇΩÇËîªíË
     static constexpr float kRadius = 32.0f;
@@ -65,8 +76,8 @@ private:
 
     // ÉAÉjÉÅÅ[ÉVÉáÉì
     static constexpr int   kMaxAnimFrame = 4;
-    static constexpr float kAnimSpeed = 15.0f;
-    static constexpr int   kTexFrameSize = 64;
+    static constexpr float kAnimSpeed = 7.5f;
+    static constexpr int   kTexFrameSize = 81;
 
     // íe
     static constexpr float kShotInterval = 0.05f;               // î≠éÀä‘äu

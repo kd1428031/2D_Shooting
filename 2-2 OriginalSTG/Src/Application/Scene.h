@@ -1,14 +1,22 @@
 #pragma once
-
-class Player;
+#include "GameObject/Character/Player/Player.h"
+#include "GameObject/Background/Background.h"
 
 class Scene
 {
 private:
 
-	Player *player;
-
+	std::unique_ptr<Player> m_player;
+	std::unique_ptr<Background> m_background;
 	
+	float m_scrollSpeed = kDefaultScrollSpeed;
+
+
+	static constexpr float kDefaultScrollSpeed = 300.0f;
+	static constexpr float kMinScrollSpeed = 250.0f;
+	static constexpr float kMaxScrollSpeed = 700.0f;
+
+
 public:
 
 	const int screenWidth = 640;
@@ -30,9 +38,13 @@ public:
 	// ï`âÊèàóù
 	void Draw2D();
 
+	void ScrollSpeedChange(float dt);
+
 	int GetScore() const { return m_score; }
 
 	void AddScore(int score) { m_score += score; }
+
+	float GetScrollSpeed() const { return m_scrollSpeed; }
 
 	// GUIèàóù
 	void ImGuiUpdate();

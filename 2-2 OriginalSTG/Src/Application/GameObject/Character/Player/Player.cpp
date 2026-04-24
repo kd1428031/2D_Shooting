@@ -32,7 +32,7 @@ void Player::Init()
 
     m_isShooting = false;
 
-    m_angle = 270.0f;
+    m_angle = 0.0f;
 }
 
 void Player::Update(float dt)
@@ -65,6 +65,16 @@ void Player::Move(float dt)
 {
     m_velocity = { 0.0f, 0.0f };
 
+    // 低速・高速切り替え
+    if(INPUT.IsKeyHeld(VK_SHIFT))
+    {
+        m_speed = kLowSpeed;
+    }
+    else
+    {
+        m_speed = kHighSpeed;
+    }
+
     // 移動処理(逆方向を同時押ししたら停止するように)
     bool up     = INPUT.IsKeyHeld(VK_UP)    || INPUT.IsKeyHeld('W');
     bool down   = INPUT.IsKeyHeld(VK_DOWN)  || INPUT.IsKeyHeld('S');
@@ -87,11 +97,23 @@ void Player::Move(float dt)
 
 void Player::UpdateAnim(float dt)
 {
-    // アニメーション
-    m_animFrame.x += kAnimSpeed * dt;
-    if (m_animFrame.x > kMaxAnimFrame)
+    m_blinkTimer -= dt;
+
+    if (m_blinkTimer <= 0.0f)
     {
-        m_animFrame.x = 0;
+        m_animFrame.x += m_animSpeed * dt;
+
+        if (m_animFrame.x >= kMaxAnimFrame)
+        {
+            m_animFrame.x = kMaxAnimFrame;
+            m_animSpeed = -kAnimSpeed;
+        }
+        if (m_animFrame.x <= 0.0f)
+        {
+            m_animFrame.x = 0.0f;
+            m_animSpeed = kAnimSpeed;
+            m_blinkTimer = kBlinkInterval;
+        }
     }
 }
 
@@ -129,6 +151,7 @@ void Player::Shot(float dt)
             switch (m_shotType)
             {
             case ShotType::NormalShot: NormalShot(); break;
+            case ShotType::PenetratShot: PenetratShot(); break;
             default:break;
             }
         }
@@ -136,6 +159,12 @@ void Player::Shot(float dt)
 }
 
 void Player::NormalShot()
+{
+    Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
+    BULLETMANAGER.CreateBullet(BulletType::Normal, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);
+}
+
+void Player::PenetratShot()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
     BULLETMANAGER.CreateBullet(BulletType::Penetrat, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);

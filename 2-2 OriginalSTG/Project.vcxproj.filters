@@ -64,6 +64,9 @@
     <Filter Include="Src\Application\Input">
       <UniqueIdentifier>{c58939c4-0adf-42b9-b32e-181204aebb89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Background">
+      <UniqueIdentifier>{bccc154f-2f4c-4a66-8a3b-7589d0dfaad5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -204,6 +207,9 @@
     <ClInclude Include="Src\Application\Input\InputManager.h">
       <Filter>Src\Application\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Background\Background.h">
+      <Filter>Src\Application\GameObject\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -313,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Input\InputManager.cpp">
       <Filter>Src\Application\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Background\Background.cpp">
+      <Filter>Src\Application\GameObject\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

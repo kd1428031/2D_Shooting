@@ -2,9 +2,12 @@
 
 namespace TexName
 {
-	constexpr char kPlayer[] = "player";
-	constexpr char kEnemy[] = "enemy";
-	constexpr char kBullet[] = "bullet";
+	constexpr char kPlayer[]	= "player";
+	constexpr char kEnemy[]		= "enemy";
+	constexpr char kBullet[]	= "bullet";
+	constexpr char kBgTitle[]	= "bg_title";
+	constexpr char kBgGame[]	= "bg_game";
+	constexpr char kBgResult[]	= "bg_result";
 }
 
 class ResourceManager
@@ -26,10 +29,11 @@ public:
 
 private:
 
+	ResourceManager() = default;
+
 	void ReleaseAll();
 
 	std::map<std::string, KdTexture>m_tex;
 
-	ResourceManager(){}
 };
 #define RESOURCEMANAGER ResourceManager::GetInstance()

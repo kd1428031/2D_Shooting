@@ -160,6 +160,7 @@
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
     <ClInclude Include="Src\Application\CollisionManager.h" />
+    <ClInclude Include="Src\Application\GameObject\Background\Background.h" />
     <ClInclude Include="Src\Application\GameObject\Bullet\Bullet.h" />
     <ClInclude Include="Src\Application\GameObject\Bullet\BulletManager.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Character.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Src\Application\CollisionManager.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Background\Background.cpp" />
     <ClCompile Include="Src\Application\GameObject\Bullet\Bullet.cpp" />
     <ClCompile Include="Src\Application\GameObject\Bullet\BulletManager.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Character.cpp" />
