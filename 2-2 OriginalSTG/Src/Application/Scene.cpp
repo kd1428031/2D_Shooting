@@ -39,6 +39,11 @@ void Scene::Update()
 	}
 	else testKey = false;
 
+	if (rand() % 10 < 1)
+	{
+		ENEMYMANAGER.CreateEnemy({ 640, (float)(rand() % 720 - 360) });
+	}
+
 	ENEMYMANAGER.Update(dt);
 	BULLETMANAGER.Update(dt);
 	COLLISIONMANAGER.CheckAll(m_player.get(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet());
@@ -48,6 +53,8 @@ void Scene::Update()
 
 void Scene::Init()
 {
+	srand((unsigned int)time(nullptr));
+
 	RESOURCEMANAGER.LoadAll();
 
 	m_player = std::make_unique<Player>();  

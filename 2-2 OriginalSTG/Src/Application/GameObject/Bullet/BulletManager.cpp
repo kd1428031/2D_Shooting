@@ -32,9 +32,9 @@ void BulletManager::Draw()
     }
 }
 
-void BulletManager::CreateBullet(BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
+void BulletManager::CreateBullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
 {
-    auto bullet = std::make_unique<Bullet>(type, pos, velocity, scale, color);
+    auto bullet = std::make_unique<Bullet>(owner, type, pos, velocity, scale, color);
     bullet->Init();
     m_bullet.emplace_back(std::move(bullet));
 }

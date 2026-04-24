@@ -4,7 +4,14 @@
 enum class BulletType
 {
     Normal,
-    Penetrat
+    Penetrat,
+    Rotate
+};
+
+enum class BulletOwner
+{
+    Player,  // é©ã@íe
+    Enemy    // ìGíe
 };
 
 class EnemyBase;
@@ -13,7 +20,7 @@ class Bullet : public GameObject
 {
 public:
 
-    Bullet(BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color= { 1,1,1,1 });
+    Bullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color= { 1,1,1,1 });
     ~Bullet();
 
     void Init()override;
@@ -23,6 +30,7 @@ public:
 
     void Destroy();
 
+    BulletOwner GetBulletOwner() const { return m_owner; }
     float GetRadius() const { return kRadius; }
     Math::Vector2 GetPos() const { return m_pos; }
     int GetDamage() const { return m_damage; }
@@ -38,6 +46,7 @@ public:
 
 private:
 
+    BulletOwner m_owner;
     BulletType m_type;
 
     // ÉqÉbÉgçœÇ›ìGÉäÉXÉg

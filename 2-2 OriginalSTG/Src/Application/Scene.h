@@ -11,7 +11,6 @@ private:
 	
 	float m_scrollSpeed = kDefaultScrollSpeed;
 
-
 	static constexpr float kDefaultScrollSpeed = 300.0f;
 	static constexpr float kMinScrollSpeed = 250.0f;
 	static constexpr float kMaxScrollSpeed = 700.0f;

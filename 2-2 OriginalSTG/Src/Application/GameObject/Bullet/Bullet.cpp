@@ -2,8 +2,8 @@
 #include "Application/Scene.h"
 #include "Application/ResourceManager.h"
 
-Bullet::Bullet(BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
-    : GameObject(pos, scale), m_type(type), m_isAlive(true)
+Bullet::Bullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
+    : GameObject(pos, scale), m_owner(owner), m_type(type), m_isAlive(true)
 {
     m_radius = kRadius;
     m_velocity = velocity;
@@ -46,6 +46,11 @@ void Bullet::Move(float dt)
         m_pos.x < -SCENE.screenWidth - kDeleteMargin || m_pos.y < -SCENE.screenHeight - kDeleteMargin)
     {
         m_isAlive = false;
+    }
+
+    if (m_type == BulletType::Rotate)
+    {
+        
     }
 }
 

@@ -7,23 +7,36 @@ void CollisionManager::CheckAll(Player* player,
     const std::vector<std::unique_ptr<EnemyBase>>& enemies,
     const std::vector<std::unique_ptr<Bullet>>& bullets)
 {
-    // Ž©‹@ vs “G
-    if (!player->IsInvincible())
-    {
-        for (auto& enemy : enemies)
-        {
-            if (!enemy->IsAlive()) continue;
+    // “G vs Ž©‹@’e
+    CheckEnemyVsPlayerBullet(enemies, bullets);
 
-            if (IsHit(player->GetPos(), player->GetRadius(),
-                enemy->GetPos(), enemy->GetRadius()))
-            {
-                player->TakeDamage(1);
-                enemy->TakeDamage(1);
-            }
+    // ˆÈ‰ºŽ©‹@ŠÖŒW
+    if (!player->IsAlive() || player->IsInvincible()) return;
+
+    // Ž©‹@ vs “G
+    CheckPlayerVsEnemy(player, enemies);
+
+    // Ž©‹@ vs “G’e
+    CheckPlayerVsEnemyBullet(player, bullets);
+}
+
+void CollisionManager::CheckPlayerVsEnemy(Player* player, const std::vector<std::unique_ptr<EnemyBase>>& enemies)
+{
+    for (auto& enemy : enemies)
+    {
+        if (!enemy->IsAlive()) continue;
+
+        if (IsHit(player->GetPos(), player->GetRadius(),
+            enemy->GetPos(), enemy->GetRadius()))
+        {
+            player->TakeDamage(1);
+            enemy->TakeDamage(1);
         }
     }
+}
 
-    // “G vs Ž©‹@’e
+void CollisionManager::CheckEnemyVsPlayerBullet(const std::vector<std::unique_ptr<EnemyBase>>& enemies, const std::vector<std::unique_ptr<Bullet>>& bullets)
+{
     for (auto& enemy : enemies)
     {
         if (!enemy->IsAlive()) continue;
@@ -31,6 +44,7 @@ void CollisionManager::CheckAll(Player* player,
         for (auto& bullet : bullets)
         {
             if (!bullet->IsAlive()) continue;
+            if (bullet->GetBulletOwner() == BulletOwner::Enemy) continue;
 
             if (IsHit(enemy->GetPos(), enemy->GetRadius(),
                 bullet->GetPos(), bullet->GetRadius()))
@@ -49,6 +63,22 @@ void CollisionManager::CheckAll(Player* player,
                     }
                 }
             }
+        }
+    }
+}
+
+void CollisionManager::CheckPlayerVsEnemyBullet(Player* player, const std::vector<std::unique_ptr<Bullet>>& bullets)
+{
+    for (auto& bullet : bullets)
+    {
+        if (!bullet->IsAlive()) continue;
+        if (bullet->GetBulletOwner() == BulletOwner::Player) continue;
+
+        if (IsHit(player->GetPos(), player->GetRadius(),
+            bullet->GetPos(), bullet->GetRadius()))
+        {
+            player->TakeDamage(1);
+            bullet->Destroy();
         }
     }
 }

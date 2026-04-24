@@ -43,6 +43,8 @@ void Player::Update(float dt)
         return;
     }
     
+    if (m_state == State::Dead) return;
+
     Move(dt);
 
     // íeî≠éÀèàóù
@@ -161,13 +163,13 @@ void Player::Shot(float dt)
 void Player::NormalShot()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
-    BULLETMANAGER.CreateBullet(BulletType::Normal, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);
+    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Normal, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);
 }
 
 void Player::PenetratShot()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
-    BULLETMANAGER.CreateBullet(BulletType::Penetrat, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);
+    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Penetrat, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);
 }
 
 void Player::TakeDamage(float damage)
