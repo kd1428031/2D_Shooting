@@ -6,7 +6,7 @@ void ResourceManager::LoadAll()
     m_tex[TexName::kEnemy].Load("Texture/Enemy/enemy.png");
     m_tex[TexName::kBullet].Load("Texture/attackEffect1.png");
     m_tex[TexName::kBgGame].Load("Texture/Background/Background1.png");
-    m_tex[TexName::kNumber].Load("Texture/Ui/number1.png");
+    m_tex[TexName::kNumber].Load("Texture/Ui/number.png");
 }
 
 void ResourceManager::ReleaseAll()

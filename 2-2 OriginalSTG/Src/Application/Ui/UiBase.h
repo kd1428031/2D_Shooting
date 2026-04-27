@@ -45,7 +45,7 @@ protected:
 	KdTexture* m_tex;
 
 	// 画像サイズ
-	Math::Vector2 m_texFrameSize = {};
+	int m_texFrameSize = 64;
 
 	// 行列
 	Math::Matrix m_transMat;

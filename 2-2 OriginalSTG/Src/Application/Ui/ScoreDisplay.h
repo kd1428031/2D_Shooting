@@ -11,14 +11,13 @@ public:
 	void Init();
 
 	void UpdateImpl(float dt)override;
-	void DrawImpl()override;
-
+	void Draw() override;
+	Math::Matrix CreateMatrix(Math::Vector2 offset);
 
 private:
 
-	Math::Vector2 m_digitIndex;
-	int m_scoreDisplay;
-
-	const Math::Vector2 kInitPos = { -600, 250 };
-	static constexpr float kInitScale = 1.0f;
+	const Math::Vector2 kInitPos = { 400, 250 };
+	static constexpr int   kTexFrameSize = 128;
+	static constexpr float kInitScale = 0.5f;
+	static constexpr int kTexFrameOffSet = -(kTexFrameSize / 1.5f);
 };

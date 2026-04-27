@@ -2,7 +2,6 @@
 
 UiBase::UiBase()
     : m_isAlive(true), m_scale(1.0f), m_angle(0.0f), m_alpha(1.0f), m_tex(nullptr)
-
 {
 }
 
@@ -20,8 +19,8 @@ void UiBase::Draw()
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{ 
-        (int)(m_animFrame.x * m_texFrameSize.x),(int)(m_animFrame.y * m_texFrameSize.y), 
-        (int)m_texFrameSize.x, (int)m_texFrameSize.y }, m_alpha);
+        (int)m_animFrame.x * m_texFrameSize,(int)m_animFrame.y * m_texFrameSize, 
+        m_texFrameSize, m_texFrameSize }, m_alpha);
 
     DrawImpl();
 }
