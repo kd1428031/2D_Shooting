@@ -31,10 +31,11 @@ public:
     void UpdateRotate(float dt);
     void Destroy();
 
-    BulletOwner GetBulletOwner()        const           { return m_owner; }
-    float GetRadius()                   const           { return kRadius; }
-    Math::Vector2 GetPos()              const           { return m_pos; }
-    int GetDamage()                     const           { return m_damage; }
+    BulletOwner     GetBulletOwner()    const           { return m_owner; }
+    float           GetRadius()         const           { return kRadius; }
+    float           GetHitRadius()      const           { return kRadius / 4; }
+    Math::Vector2   GetPos()            const           { return m_pos; }
+    int             GetDamage()         const           { return m_damage; }
 
     bool IsAlive()                      const override  { return m_isAlive; }
     bool IsPenetrat()                   const           { return m_type == BulletType::Penetrat; }

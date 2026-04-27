@@ -47,7 +47,7 @@ void CollisionManager::CheckEnemyVsPlayerBullet(const std::vector<std::unique_pt
             if (bullet->GetBulletOwner() == BulletOwner::Enemy) continue;
 
             if (IsHit(enemy->GetPos(), enemy->GetRadius(),
-                bullet->GetPos(), bullet->GetRadius()))
+                bullet->GetPos(), bullet->GetHitRadius()))
             {
                 if (!bullet->IsAlreadyHit(enemy.get()))
                 {
@@ -75,7 +75,7 @@ void CollisionManager::CheckPlayerVsEnemyBullet(Player* player, const std::vecto
         if (bullet->GetBulletOwner() == BulletOwner::Player) continue;
 
         if (IsHit(player->GetPos(), player->GetRadius(),
-            bullet->GetPos(), bullet->GetRadius()))
+            bullet->GetPos(), bullet->GetHitRadius()))
         {
             player->TakeDamage(1);
             bullet->Destroy();

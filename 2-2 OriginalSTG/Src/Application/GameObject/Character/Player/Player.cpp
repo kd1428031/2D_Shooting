@@ -175,6 +175,9 @@ void Player::PenetratShot()
 
 void Player::TakeDamage(float damage)
 {
+    if (m_state == State::Dying)return;
+    if (m_state == State::Dead)return;
+
     if (m_state != State::Invincible)
     {
         m_invincibleTimer = kInvincibleTime;
@@ -189,5 +192,6 @@ void Player::TakeDamage(float damage)
 
 void Player::Death(float dt)
 {
-    m_state = State::Dead;
+    m_alpha -= dt;
+    if(m_alpha<=0)m_state = State::Dead;
 }

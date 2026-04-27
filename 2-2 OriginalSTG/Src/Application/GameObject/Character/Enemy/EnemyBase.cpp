@@ -1,14 +1,16 @@
 #include "EnemyBase.h"
 #include "Application/Scene.h"
+#include "Application/Score/ScoreManager.h"
 #include "Application/TimeManager.h"
 #include "Application/GameObject/Bullet/BulletManager.h"
+#include "Application/GameObject/Character/Player/PlayerManager.h"
 
 EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
     :Character(pos, scale), m_state(State::Alive), m_score(0), m_shotTimer(0.0f),
-    m_bulletAngle(0.0f), m_bulletAngleSpeed(300.0f),
-    m_bulletSpeed(300.0f), m_shotInterval(1.0f), m_bulletOffset(30.0f),
-    m_bulletScale(2.0f), m_bulletColor(1,0,0,1) 
-{
+    m_shotInterval(1.0f), m_bulletOffset(30.0f), m_bulletSpeed(300.0f), 
+    m_bulletScale(2.0f), m_bulletColor(1, 0, 0, 1),
+    m_bulletAngle(0.0f), m_bulletAngleSpeed(300.0f)
+{    
 }
 
 void EnemyBase::Draw()
@@ -77,7 +79,7 @@ void EnemyBase::ShotAimed()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(-m_bulletOffset, 0);
 
-    float deg = GetAngleDeg(m_pos, SCENE.GetPlayer()->GetPos());
+    float deg = GetAngleDeg(m_pos, PLAYERMANAGER.GetPlayer()->GetPos());
     Math::Vector2 velocity =
     {
         cos(DirectX::XMConvertToRadians(deg)) * m_bulletSpeed,
@@ -120,6 +122,6 @@ void EnemyBase::TakeDamage(float damage)
     if (m_hp <= 0)
     {
         m_state = State::Dying;
-        SCENE.AddScore(m_score);
+        SCOREMANAGER.AddScore(m_score);
     }
 }

@@ -51,17 +51,15 @@ protected:
     // 撃破時獲得スコア
     int   m_score;
 
+    // 弾
+    float       m_shotTimer;
     float       m_shotInterval;
     float       m_bulletOffset;
     float       m_bulletSpeed;
     float       m_bulletScale;
     Math::Color m_bulletColor;
-
-    // 次弾発射までの残り時間
-    float m_shotTimer;
-
-    float   m_bulletAngle;
-    float   m_bulletAngleSpeed;
+    float       m_bulletAngle;
+    float       m_bulletAngleSpeed;
 
     // 画像サイズ
     int m_texFrameSize = 64;
