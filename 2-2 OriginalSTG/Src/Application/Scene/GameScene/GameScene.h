@@ -8,7 +8,7 @@ class GameScene : public BaseScene
 public:
 
 	GameScene() { Init(); }
-	~GameScene() {}
+	~GameScene() override {}
 
 	void Init()				override;
 	void Update(float dt)	override;

@@ -8,7 +8,7 @@ class TitleScene : public BaseScene
 public:
 
 	TitleScene() { Init(); }
-	~TitleScene() {}
+	~TitleScene() override{}
 
 	void Init()				override;
 	void Update(float dt)	override;

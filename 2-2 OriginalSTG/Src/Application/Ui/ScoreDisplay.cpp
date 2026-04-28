@@ -16,6 +16,7 @@ void ScoreDisplay::Init()
 	m_pos = kInitPos;
 	m_scale = kInitScale;
 	m_animFrame = {};
+	m_color = kInitColor;
 }
 
 void ScoreDisplay::UpdateImpl(float dt)
@@ -34,8 +35,8 @@ void ScoreDisplay::Draw()
 		float srcX = m_texFrameSize * digitIndex;
 
 		SHADER.m_spriteShader.SetMatrix(CreateMatrix({(float)(i * (m_texFrameSize + kTexFrameOffSet)), 0 }));
-		SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{
-			(int)srcX, 0, m_texFrameSize, m_texFrameSize }, m_alpha);
+		SHADER.m_spriteShader.DrawTex_Color(m_tex, Math::Rectangle{
+			(int)srcX, 0, m_texFrameSize, m_texFrameSize }, m_color);
 	}
 }
 

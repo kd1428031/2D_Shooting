@@ -21,7 +21,7 @@ class Bullet : public GameObject
 public:
 
     Bullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color= { 1,1,1,1 });
-    ~Bullet();
+    ~Bullet()override;
 
     void Init()             override;
     void Update(float dt)   override;
