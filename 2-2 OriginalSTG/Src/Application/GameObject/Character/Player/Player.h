@@ -78,9 +78,10 @@ private:
     static constexpr float kInvincibleTime = 2.0f;
 
     // アニメーション
-    static constexpr int   kMaxAnimFrame = 4;
-    static constexpr float kAnimSpeed = 7.5f;
-    static constexpr int   kTexFrameSize = 81;
+    static constexpr int    kMaxAnimFrame = 4;
+    static constexpr float  kAnimSpeed = 7.5f;
+    static constexpr int    kTexFrameWidth = 81;
+    static constexpr int    kTexFrameHeight = 81;
 
     // 弾
     static constexpr float kShotInterval = 0.05f;               // 発射間隔

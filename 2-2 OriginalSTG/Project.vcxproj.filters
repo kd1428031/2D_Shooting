@@ -243,6 +243,9 @@
     <ClInclude Include="Src\Application\Score\ScoreManager.h">
       <Filter>Src\Application\Score</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Ui\WarningCutIn.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -370,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerManager.cpp">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Ui\WarningCutIn.cpp">
+      <Filter>Src\Application\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

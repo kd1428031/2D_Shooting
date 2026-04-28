@@ -62,7 +62,8 @@ protected:
     float       m_bulletAngleSpeed;
 
     // 画像サイズ
-    int m_texFrameSize = 64;
+    int m_texFrameWidth = 64;
+    int m_texFrameHeight = 64;
 
     // 画面外削除の余白距離
     static constexpr float kDeleteMargin = 500.0f;

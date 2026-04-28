@@ -17,7 +17,7 @@ void EnemyBase::Draw()
 {
     if (m_state == State::Dead) return;
     SHADER.m_spriteShader.SetMatrix(m_mat);
-    SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{ (int)m_animFrame.x * m_texFrameSize,(int)m_animFrame.y * m_texFrameSize, m_texFrameSize, m_texFrameSize }, m_alpha);
+    SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{ (int)m_animFrame.x * m_texFrameWidth,(int)m_animFrame.y * m_texFrameHeight, m_texFrameWidth, m_texFrameHeight }, m_alpha);
     
     DrawImpl();
 }

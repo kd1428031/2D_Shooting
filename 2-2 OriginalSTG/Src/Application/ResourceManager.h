@@ -9,6 +9,7 @@ namespace TexName
 	constexpr char kBgGame[]	= "bg_game";
 	constexpr char kBgResult[]	= "bg_result";
 	constexpr char kNumber[]	= "number";
+	constexpr char kWarning[]	= "warning";
 }
 
 class ResourceManager

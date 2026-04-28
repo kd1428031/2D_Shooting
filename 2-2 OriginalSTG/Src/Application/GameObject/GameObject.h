@@ -39,8 +39,5 @@ protected:
     KdTexture* m_tex;
 
     // 行列
-    Math::Matrix m_transMat;
-    Math::Matrix m_rotMat;
-    Math::Matrix m_scaleMat;
     Math::Matrix m_mat;
 };

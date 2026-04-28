@@ -1,7 +1,6 @@
 #include "ScoreDisplay.h"
 #include "Application/Score/ScoreManager.h"
 #include "Application/ResourceManager.h"
-#include "Application/Score/ScoreManager.h"
 
 ScoreDisplay::ScoreDisplay ()
 {
@@ -12,10 +11,8 @@ void ScoreDisplay::Init()
 {
 	m_tex = RESOURCEMANAGER.GetTex(TexName::kNumber);
 
-	m_texFrameSize = kTexFrameSize;
 	m_pos = kInitPos;
 	m_scale = kInitScale;
-	m_animFrame = {};
 	m_color = kInitColor;
 }
 
@@ -32,11 +29,11 @@ void ScoreDisplay::Draw()
 	for (int i = 0; i < digits; i++)
 	{
 		int digitIndex = (SCOREMANAGER.GetScore() / (int)pow(10, digits - 1 - i)) % 10;
-		float srcX = m_texFrameSize * digitIndex;
+		float srcX = kTexFrameWidth * digitIndex;
 
-		SHADER.m_spriteShader.SetMatrix(CreateMatrix({(float)(i * (m_texFrameSize + kTexFrameOffSet)), 0 }));
+		SHADER.m_spriteShader.SetMatrix(CreateMatrix({(float)(i * (kTexFrameWidth + kTexFrameOffSet)), 0 }));
 		SHADER.m_spriteShader.DrawTex_Color(m_tex, Math::Rectangle{
-			(int)srcX, 0, m_texFrameSize, m_texFrameSize }, m_color);
+			(int)srcX, 0, kTexFrameWidth, kTexFrameHeight }, m_color);
 	}
 }
 

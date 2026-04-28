@@ -20,10 +20,10 @@ void Background::Update(float dt)
         m_pos.x = 0.0f;
     }
 
-    m_scaleMat = Math::Matrix::CreateScale(m_scale, m_scale, 1);
+    Math::Matrix scaleMat = Math::Matrix::CreateScale(m_scale, m_scale, 1);
 
-    m_mat = m_scaleMat * Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-    m_mat2 = m_scaleMat * Math::Matrix::CreateTranslation(m_pos.x - kWidth * m_scale, m_pos.y, 0);
+    m_mat = scaleMat * Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
+    m_mat2 = scaleMat * Math::Matrix::CreateTranslation(m_pos.x - kWidth * m_scale, m_pos.y, 0);
 }
 
 void Background::Draw()
