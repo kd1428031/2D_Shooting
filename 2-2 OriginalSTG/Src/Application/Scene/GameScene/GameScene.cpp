@@ -5,7 +5,7 @@
 #include "Application/GameObject/Character/Enemy/EnemyManager.h"
 #include "Application/GameObject/Bullet/BulletManager.h"
 #include "Application/Ui/UiManager.h"
-#include "Application/Input/InputManager.h"
+#include "Application/TimeManager.h"
 #include "Application/Score/ScoreManager.h"
 
 void GameScene::Init()
@@ -45,7 +45,12 @@ void GameScene::Update(float dt)
 
 	if (SCOREMANAGER.GetScore() >= 100)
 	{
-		UIMANAGER.CreateUi(UiType::WarningCutIn);
+		if (!testFlg1)
+		{
+			UIMANAGER.CreateUi(UiType::WarningCutIn);
+			TIMEMANAGER.HitStop(200);
+			testFlg1 = true;
+		}
 	}
 
 	if (!PLAYERMANAGER.GetPlayer()->IsAlive())

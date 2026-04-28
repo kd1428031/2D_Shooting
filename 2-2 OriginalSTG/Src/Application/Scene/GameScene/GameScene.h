@@ -19,6 +19,7 @@ private:
 	std::unique_ptr<Background> m_background;
 
 	bool testKey = false;
+	bool testFlg1 = false;
 
 	int m_score;
 };

@@ -14,10 +14,14 @@ void WarningCutIn::Init()
 	m_scale = kInitScale;
 	m_color = kInitColor;
 	m_angle = kInitAngle;
+
+	UpdateMatrix();
 }
 
 void WarningCutIn::Draw()
 {
+	if (!m_isAlive)return;
+
 	SHADER.m_spriteShader.SetMatrix(m_mat);
 
 	Math::Rectangle rect{ 0,0,kTexWidth,kTexHeight };
@@ -27,5 +31,14 @@ void WarningCutIn::Draw()
 
 void WarningCutIn::UpdateImpl(float dt)
 {
-	m_pos += m_velocity * dt;
+	if (m_pos.y > -50 && m_pos.y < 250)
+	{
+		m_velocity = { -1.5f, 3.0f };
+	}
+	else
+	{
+		m_velocity = kInitVelocity;
+	}
+
+	m_pos += m_velocity;
 }
