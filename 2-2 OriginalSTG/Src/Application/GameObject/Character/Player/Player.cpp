@@ -61,7 +61,8 @@ void Player::Draw()
     if (m_state == State::Dead) return;
 
     Math::Rectangle rect = { 
-        (int)m_animFrame.x * kTexFrameWidth, 0, kTexFrameWidth, kTexFrameHeight };
+        (int)m_animFrame.x * kTexFrameWidth, 0, kTexFrameWidth, kTexFrameHeight 
+    };
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex(m_tex, rect, m_alpha);

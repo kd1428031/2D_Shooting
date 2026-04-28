@@ -3,6 +3,7 @@
 enum class UiType
 {
 	Score,
+	WarningCutIn
 };
 
 class UiBase

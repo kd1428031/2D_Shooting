@@ -36,8 +36,7 @@ void Bullet::Draw()
 {
     if (!m_isAlive) return;
 
-    Math::Rectangle rect{
-         0, kTexOffsetY, kTexFrameWidth, kTexFrameHeight };
+    Math::Rectangle rect{ 0, kTexOffsetY, kTexFrameWidth, kTexFrameHeight };
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex_Color(m_tex, rect, m_color);

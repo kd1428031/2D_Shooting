@@ -19,7 +19,8 @@ void EnemyBase::Draw()
 
     Math::Rectangle rect{
          (int)m_animFrame.x * m_texFrameWidth,(int)m_animFrame.y * m_texFrameHeight,
-         m_texFrameWidth, m_texFrameHeight };
+         m_texFrameWidth, m_texFrameHeight 
+    };
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex(m_tex, rect, m_alpha);

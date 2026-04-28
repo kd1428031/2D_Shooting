@@ -6,6 +6,7 @@
 #include "Application/GameObject/Bullet/BulletManager.h"
 #include "Application/Ui/UiManager.h"
 #include "Application/Input/InputManager.h"
+#include "Application/Score/ScoreManager.h"
 
 void GameScene::Init()
 {
@@ -41,6 +42,11 @@ void GameScene::Update(float dt)
 	BULLETMANAGER.Update(dt);
 	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet());
 	UIMANAGER.Update(dt);
+
+	if (SCOREMANAGER.GetScore() >= 100)
+	{
+		UIMANAGER.CreateUi(UiType::WarningCutIn);
+	}
 
 	if (!PLAYERMANAGER.GetPlayer()->IsAlive())
 	{

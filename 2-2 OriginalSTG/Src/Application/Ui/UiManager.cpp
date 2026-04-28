@@ -1,5 +1,6 @@
 #include "UiManager.h"
 #include "ScoreDisplay.h"
+#include "WarningCutIn.h"
 
 void UiManager::Init()
 {
@@ -40,6 +41,11 @@ void UiManager::CreateUi(UiType type)
     case UiType::Score:
         m_ui.emplace_back(std::make_unique<ScoreDisplay>());
         break;
+
+    case UiType::WarningCutIn:
+        m_ui.emplace_back(std::make_unique<WarningCutIn>());
+        break;
+
     default:
         break;
     }
