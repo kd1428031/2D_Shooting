@@ -31,9 +31,12 @@ void ScoreDisplay::Draw()
 		int digitIndex = (SCOREMANAGER.GetScore() / (int)pow(10, digits - 1 - i)) % 10;
 		float srcX = kTexFrameWidth * digitIndex;
 
+		Math::Rectangle rect{
+			(int)srcX, 0, kTexFrameWidth, kTexFrameHeight
+		};
+
 		SHADER.m_spriteShader.SetMatrix(CreateMatrix({(float)(i * (kTexFrameWidth + kTexFrameOffSet)), 0 }));
-		SHADER.m_spriteShader.DrawTex_Color(m_tex, Math::Rectangle{
-			(int)srcX, 0, kTexFrameWidth, kTexFrameHeight }, m_color);
+		SHADER.m_spriteShader.DrawTex_Color(m_tex, rect, m_color);
 	}
 }
 

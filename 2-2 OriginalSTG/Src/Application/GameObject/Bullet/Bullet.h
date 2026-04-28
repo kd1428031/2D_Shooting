@@ -63,7 +63,8 @@ private:
     // íËêî
     static constexpr float  kRadius         = 32.0f;
     static constexpr float  kDeleteMargin   = 500.0f;
-    static constexpr int    kTexFrameSize   = 32;
-    static constexpr int    kTexOffsetY     = kTexFrameSize * 8;
+    static constexpr int    kTexFrameWidth  = 32;
+    static constexpr int    kTexFrameHeight = 32;
+    static constexpr int    kTexOffsetY     = kTexFrameWidth * 8;
     static constexpr float  kLifeTimer      = 10.0f;
 };

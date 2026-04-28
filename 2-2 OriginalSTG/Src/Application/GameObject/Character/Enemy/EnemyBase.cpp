@@ -16,8 +16,13 @@ EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
 void EnemyBase::Draw()
 {
     if (m_state == State::Dead) return;
+
+    Math::Rectangle rect{
+         (int)m_animFrame.x * m_texFrameWidth,(int)m_animFrame.y * m_texFrameHeight,
+         m_texFrameWidth, m_texFrameHeight };
+
     SHADER.m_spriteShader.SetMatrix(m_mat);
-    SHADER.m_spriteShader.DrawTex(m_tex, Math::Rectangle{ (int)m_animFrame.x * m_texFrameWidth,(int)m_animFrame.y * m_texFrameHeight, m_texFrameWidth, m_texFrameHeight }, m_alpha);
+    SHADER.m_spriteShader.DrawTex(m_tex, rect, m_alpha);
     
     DrawImpl();
 }
