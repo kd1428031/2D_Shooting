@@ -38,14 +38,14 @@ void Player::Init()
 
 void Player::Update(float dt)
 {
+    if (m_state == State::Dead) return;
+
     if (m_state == State::Dying)
     {
         Death(dt);
         return;
     }
     
-    if (m_state == State::Dead) return;
-
     Move(dt);
 
     // íeî≠éÀèàóù
@@ -172,19 +172,20 @@ void Player::Shot(float dt)
 void Player::NormalShot()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
-    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Normal, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);
+    Math::Vector2 dir = { 1, 0 };
+    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Normal, spawnPos, dir * kBulletSpeed, kBulletScale, kBulletColor);
 }
 
 void Player::PenetratShot()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
-    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Penetrat, spawnPos, Math::Vector2(kBulletSpeed, 0), kBulletScale, kBulletColor);
+    Math::Vector2 dir = { 1, 0 };
+    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Penetrat, spawnPos, dir * kBulletSpeed, kBulletScale, kBulletColor);
 }
 
 void Player::TakeDamage(float damage)
 {
-    if (m_state == State::Dying)return;
-    if (m_state == State::Dead)return;
+    if (m_state == State::Dying || m_state == State::Dead)return;
 
     if (m_state != State::Invincible)
     {

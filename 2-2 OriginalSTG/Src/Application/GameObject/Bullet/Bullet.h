@@ -74,8 +74,8 @@ private:
     static constexpr int    kTexNormalOffsetY    = kTexFrameWidth * 8;
     static constexpr int    kPenetrateTexOffsetY = 0;
     static constexpr float  kLifeTimer           = 10.0f;
-    static constexpr float  kNormalDamage        = 1.0f;
-    static constexpr float  kPenetrateDamage     = 0.2f;
+    static constexpr int    kNormalDamage        = 10;
+    static constexpr int    kPenetrateDamage     = 2;
     static constexpr float  kRotateSpeed         = 300.0f;
     static constexpr float  kSpinAngleSpeed      = 300.0f;
 };

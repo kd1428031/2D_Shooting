@@ -12,7 +12,7 @@ void Enemy::Init()
 {
 	m_tex = RESOURCEMANAGER.GetTex(TexName::kEnemy);
 	m_velocity = { -30,0 };
-	m_hp = 3;
+	m_hp = 30;
 	m_score = 100;
 	m_shotTimer = 0.0f;
 
