@@ -1,28 +1,24 @@
 ﻿#include "TitleScene.h"
 #include "../SceneManager.h"
+#include "Application/Input/InputManager.h"
 
 void TitleScene::Init()
 {
-
+	m_background = SCENEMANAGER.GetBackground();
+	m_background->Init();
 }
 
 void TitleScene::Update(float dt)
 {
-	m_alpha += m_addAlpha;
+	m_background->Update(dt);
 
-	if (m_alpha > 1)
+	if (INPUT.IsKeyHeld(VK_RETURN))
 	{
-		m_alpha = 1.0f;
-		m_addAlpha *= -1;
+		SCENEMANAGER.SetNextScene(SceneManager::SceneType::Game);
 	}
-	else if(m_alpha < 0.0f)
-	{
-		m_alpha = 0.0f;
-		m_addAlpha *= -1;
-	}
-
 }
 
 void TitleScene::Draw()
 {
+	m_background->Draw();
 }

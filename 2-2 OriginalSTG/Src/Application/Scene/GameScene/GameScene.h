@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../BaseScene/BaseScene.h"
-#include "Application/GameObject/Background/Background.h"
+
+class Background;
 
 class GameScene : public BaseScene
 {
@@ -15,7 +16,7 @@ public:
 
 private:
 
-	std::unique_ptr<Background> m_background;
+	Background* m_background;
 
 	bool testKey = false;
 	bool testFlg1 = false;

@@ -2,6 +2,13 @@
 #include "GameScene/GameScene.h"
 #include "TitleScene/TitleScene.h"
 
+void SceneManager::Init()
+{
+	m_background = std::make_unique<Background>();
+	m_background->Init();
+	ChangeScene(m_currentSceneType);
+}
+
 void SceneManager::Update(float dt)
 {
 	// シーン切替
@@ -16,11 +23,6 @@ void SceneManager::Update(float dt)
 void SceneManager::Draw()
 {
 	m_currentScene->Draw();
-}
-
-void SceneManager::Init()
-{
-	ChangeScene(m_currentSceneType);
 }
 
 void SceneManager::Release()

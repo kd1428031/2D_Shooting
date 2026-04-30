@@ -12,7 +12,7 @@ void Background::Init()
 
 void Background::Update(float dt)
 {
-    m_pos.x += SCENE.GetScrollSpeed() * dt;
+    m_pos.x += kScrollSpeed * dt;
 
     // 1枚分スクロールしたらリセット
     if (m_pos.x >= kWidth * m_scale)

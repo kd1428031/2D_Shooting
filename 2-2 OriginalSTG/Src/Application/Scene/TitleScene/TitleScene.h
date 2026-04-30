@@ -1,7 +1,7 @@
 ﻿#pragma once
-
-// 継承の場合のみインクルード許可します！！
 #include "../BaseScene/BaseScene.h"
+
+class Background;
 
 class TitleScene : public BaseScene
 {
@@ -16,9 +16,5 @@ public:
 
 private:
 
-	KdTexture m_tex;
-	KdTexture m_startTex;
-
-	float m_alpha = 1.0f;
-	float m_addAlpha = 0.01f;
+	Background* m_background;
 };

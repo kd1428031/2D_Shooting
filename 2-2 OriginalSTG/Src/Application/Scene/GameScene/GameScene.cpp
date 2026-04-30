@@ -12,8 +12,7 @@
 void GameScene::Init()
 {
 	PLAYERMANAGER.Init();
-	m_background = std::make_unique<Background>();
-	m_background->Init();
+	m_background = SCENEMANAGER.GetBackground();
 	UIMANAGER.CreateUi(UiType::Score);
 }
 

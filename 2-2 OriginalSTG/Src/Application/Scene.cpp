@@ -3,13 +3,11 @@
 #include "Scene/SceneManager.h"
 #include "Application/TimeManager.h"
 #include "Application/ResourceManager.h"
-#include "Application/Input/InputManager.h"
 
 void Scene::Draw2D()
 {
 	SCENEMANAGER.Draw();	
 }
-
 
 void Scene::Update()
 {
@@ -22,6 +20,7 @@ void Scene::Update()
 void Scene::Init()
 {
 	RESOURCEMANAGER.LoadAll();
+	SCENEMANAGER.Init();
 }
 
 void Scene::Release()

@@ -88,12 +88,14 @@ void Player::Move(float dt)
     bool left   = INPUT.IsKeyHeld(VK_LEFT)  || INPUT.IsKeyHeld('A');
     bool right  = INPUT.IsKeyHeld(VK_RIGHT) || INPUT.IsKeyHeld('D');
 
-    if (up    && !down)  m_velocity.y = m_speed;
-    if (down  && !up)    m_velocity.y = -m_speed;
-    if (left  && !right) m_velocity.x = -m_speed;
-    if (right && !left)  m_velocity.x = m_speed;
+    if (up    && !down)  m_velocity.y = 1;
+    if (down  && !up)    m_velocity.y = -1;
+    if (left  && !right) m_velocity.x = -1;
+    if (right && !left)  m_velocity.x = 1;
 
-    m_pos += m_velocity * dt;
+    if(m_velocity.Length() > 0.0f)m_velocity.Normalize();
+
+    m_pos += m_velocity * m_speed * dt;
 
     // ˆÚ“®§ŒÀ
     if (m_pos.x >= SCENE.screenWidth - kRadius)m_pos.x = SCENE.screenWidth - kRadius;
