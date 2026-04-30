@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "../BaseScene/BaseScene.h"
-#include "Application/GameObject/Character/Player/Player.h"
 #include "Application/GameObject/Background/Background.h"
 
 class GameScene : public BaseScene

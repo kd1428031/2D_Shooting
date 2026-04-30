@@ -7,6 +7,7 @@
 #include "Application/Ui/UiManager.h"
 #include "Application/TimeManager.h"
 #include "Application/Score/ScoreManager.h"
+#include "Application/Random/Random.h"
 
 void GameScene::Init()
 {
@@ -25,7 +26,9 @@ void GameScene::Update(float dt)
 	{
 		if (!testKey)
 		{
-			ENEMYMANAGER.CreateEnemy({ 320,0 });
+			ENEMYMANAGER.CreateEnemy({ 640, Random::Range(-360.0f, 360.0f) });
+			/*UIMANAGER.CreateUi(UiType::WarningCutIn);
+			TIMEMANAGER.HitStop(200);*/
 			testKey = true;
 		}
 	}
@@ -33,7 +36,7 @@ void GameScene::Update(float dt)
 
 	if (rand() % 100 < 1)
 	{
-		ENEMYMANAGER.CreateEnemy({ 640, (float)(rand() % 720 - 360) });
+		//ENEMYMANAGER.CreateEnemy({ 640, (float)(rand() % 720 - 360) });
 	}
 
 	m_background->Update(dt);

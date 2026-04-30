@@ -21,8 +21,6 @@ void Scene::Update()
 
 void Scene::Init()
 {
-	srand((unsigned int)time(nullptr));
-
 	RESOURCEMANAGER.LoadAll();
 }
 

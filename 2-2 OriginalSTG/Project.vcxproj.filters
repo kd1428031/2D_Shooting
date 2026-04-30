@@ -82,6 +82,9 @@
     <Filter Include="Src\Application\Score">
       <UniqueIdentifier>{7bd43499-f161-4bdc-b8dd-ff00058e094b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Random">
+      <UniqueIdentifier>{23978f73-f059-4818-a60b-37ae59361fe6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -246,6 +249,9 @@
     <ClInclude Include="Src\Application\Ui\WarningCutIn.h">
       <Filter>Src\Application\Ui</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Random\Random.h">
+      <Filter>Src\Application\Random</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -376,6 +382,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Ui\WarningCutIn.cpp">
       <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Random\Random.cpp">
+      <Filter>Src\Application\Random</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
