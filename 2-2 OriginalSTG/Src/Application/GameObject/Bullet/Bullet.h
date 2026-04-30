@@ -48,6 +48,10 @@ public:
 
 private:
 
+    void InitNormalBullet();
+    void InitPenetratBullet();
+    void InitRotateBullet();
+
     BulletOwner m_owner;
     BulletType  m_type;
 
@@ -60,11 +64,18 @@ private:
     int     m_damage;
     float   m_spinAngle;
 
+    int   m_texOffsetY;
+
     // íËêî
-    static constexpr float  kRadius         = 32.0f;
-    static constexpr float  kDeleteMargin   = 500.0f;
-    static constexpr int    kTexFrameWidth  = 32;
-    static constexpr int    kTexFrameHeight = 32;
-    static constexpr int    kTexOffsetY     = kTexFrameWidth * 8;
-    static constexpr float  kLifeTimer      = 10.0f;
+    static constexpr float  kRadius              = 32.0f;
+    static constexpr float  kDeleteMargin        = 500.0f;
+    static constexpr int    kTexFrameWidth       = 32;
+    static constexpr int    kTexFrameHeight      = 32;
+    static constexpr int    kTexNormalOffsetY    = kTexFrameWidth * 8;
+    static constexpr int    kPenetrateTexOffsetY = 0;
+    static constexpr float  kLifeTimer           = 10.0f;
+    static constexpr float  kNormalDamage        = 1.0f;
+    static constexpr float  kPenetrateDamage     = 0.2f;
+    static constexpr float  kRotateSpeed         = 300.0f;
+    static constexpr float  kSpinAngleSpeed      = 300.0f;
 };

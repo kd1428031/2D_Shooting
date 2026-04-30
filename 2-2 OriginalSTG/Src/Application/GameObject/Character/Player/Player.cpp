@@ -76,10 +76,12 @@ void Player::Move(float dt)
     if(INPUT.IsKeyHeld(VK_SHIFT))
     {
         m_speed = kLowSpeed;
+        m_shotType = ShotType::PenetratShot;
     }
     else
     {
         m_speed = kHighSpeed;
+        m_shotType = ShotType::NormalShot;
     }
 
     // ˆÚ“®ˆ—(‹t•ûŒü‚ð“¯Žž‰Ÿ‚µ‚µ‚½‚ç’âŽ~‚·‚é‚æ‚¤‚É)
@@ -98,9 +100,9 @@ void Player::Move(float dt)
     m_pos += m_velocity * m_speed * dt;
 
     // ˆÚ“®§ŒÀ
-    if (m_pos.x >= SCENE.screenWidth - kRadius)m_pos.x = SCENE.screenWidth - kRadius;
-    if (m_pos.x <= -SCENE.screenWidth + kRadius)m_pos.x = -SCENE.screenWidth + kRadius;
-    if (m_pos.y >= SCENE.screenHeight - kRadius)m_pos.y = SCENE.screenHeight - kRadius;
+    if (m_pos.x >=  SCENE.screenWidth  - kRadius)m_pos.x =  SCENE.screenWidth  - kRadius;
+    if (m_pos.x <= -SCENE.screenWidth  + kRadius)m_pos.x = -SCENE.screenWidth  + kRadius;
+    if (m_pos.y >=  SCENE.screenHeight - kRadius)m_pos.y =  SCENE.screenHeight - kRadius;
     if (m_pos.y <= -SCENE.screenHeight + kRadius)m_pos.y = -SCENE.screenHeight + kRadius;
 }
 
@@ -159,7 +161,7 @@ void Player::Shot(float dt)
             // ’e‚ÌŽí—Þ
             switch (m_shotType)
             {
-            case ShotType::NormalShot: NormalShot(); break;
+            case ShotType::NormalShot:   NormalShot();   break;
             case ShotType::PenetratShot: PenetratShot(); break;
             default:break;
             }
