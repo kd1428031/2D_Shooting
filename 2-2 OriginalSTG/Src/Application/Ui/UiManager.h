@@ -23,6 +23,8 @@ public:
 
 	void Destroy(UiType type);
 
+	bool IsAlive(UiType type);
+
 private:
 
 	UiManager() = default;

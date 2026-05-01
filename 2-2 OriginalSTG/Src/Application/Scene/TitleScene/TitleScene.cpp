@@ -17,8 +17,12 @@ void TitleScene::Update(float dt)
 
 	if (INPUT.IsKeyHeld(VK_RETURN))
 	{
-		SCENEMANAGER.SetNextScene(SceneManager::SceneType::Game);
 		UIMANAGER.Destroy(UiType::TitleName);
+	}
+
+	if (!UIMANAGER.IsAlive(UiType::TitleName))
+	{
+		SCENEMANAGER.SetNextScene(SceneManager::SceneType::Game);
 	}
 	UIMANAGER.Update(dt);
 }

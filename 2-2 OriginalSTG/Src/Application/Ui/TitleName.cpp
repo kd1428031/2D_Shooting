@@ -17,6 +17,15 @@ void TitleName::Init()
 
 void TitleName::UpdateImpl(float dt)
 {
+	if (m_isExiting)
+	{
+		m_color.A(m_color.A() - dt);
+		m_exitTimer -= dt;
+		if (m_exitTimer <= 0)
+		{
+			m_isAlive = false;
+		}
+	}
 }
 
 void TitleName::Draw()
@@ -40,5 +49,5 @@ void TitleName::Draw()
 
 void TitleName::OnExit()
 {
-
+	m_exitTimer = kExitTime;
 }

@@ -11,15 +11,12 @@ void UiManager::Update(float dt)
 {
     for (int i = m_ui.size() - 1; i >= 0; --i)
     {
-        if (m_ui[i] != nullptr)
-        {
-            m_ui[i]->Update(dt);
+        m_ui[i]->Update(dt);
 
-            // 死んでたら削除
-            if (!m_ui[i]->IsAlive())
-            {
-                m_ui.erase(m_ui.begin() + i);  // deleteが不要
-            }
+        // 死んでたら削除
+        if (!m_ui[i]->IsAlive())
+        {
+            m_ui.erase(m_ui.begin() + i);  // deleteが不要
         }
     }
 }
@@ -28,10 +25,7 @@ void UiManager::Draw()
 {
     for (auto& p : m_ui)
     {
-        if (p != nullptr)
-        {
-            p->Draw();
-        }
+        p->Draw();
     }
 }
 
@@ -74,4 +68,17 @@ void UiManager::Destroy(UiType type)
             ui->Kill();
         }
     }
+}
+
+bool UiManager::IsAlive(UiType type)
+{
+    for (auto& ui : m_ui)
+    {
+        if (ui->GetUiType() == type)
+        {
+            return ui->IsAlive();
+        }
+    }
+
+    return false;
 }

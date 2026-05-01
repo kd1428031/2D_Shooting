@@ -24,4 +24,7 @@ private:
 	static constexpr int	kTexFrameHeight = 128;
 	static constexpr float	kInitScale = 0.5f;
 	static constexpr int	kTexFrameOffSet = -(kTexFrameWidth / 1.5f);
+	static constexpr float	kExitTime = 1.0f;
+
+	float m_exitTimer;
 };
