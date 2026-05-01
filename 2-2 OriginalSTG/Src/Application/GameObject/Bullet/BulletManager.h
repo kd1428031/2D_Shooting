@@ -19,7 +19,6 @@ public:
 
     void CreateBullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color = { 1,1,1,1 });
 
-    Bullet* GetBullet(int i) const;
     const std::vector<std::unique_ptr<Bullet>>& GetBullet() const { return m_bullet; }
     int GetBulletNum() const { return (int)m_bullet.size(); }
 

@@ -2,8 +2,8 @@
 #include "Application/GameObject/Bullet/BulletManager.h"
 #include "Application/Scene.h"
 #include "Application/ResourceManager.h"
-#include "Application/Input/InputManager.h";
-#include "Application/TimeManager.h";
+#include "Application/Input/InputManager.h"
+#include "Application/TimeManager.h"
 
 void Player::Init()
 {
@@ -90,20 +90,23 @@ void Player::Move(float dt)
     bool left   = INPUT.IsKeyHeld(VK_LEFT)  || INPUT.IsKeyHeld('A');
     bool right  = INPUT.IsKeyHeld(VK_RIGHT) || INPUT.IsKeyHeld('D');
 
-    if (up    && !down)  m_velocity.y = 1;
-    if (down  && !up)    m_velocity.y = -1;
-    if (left  && !right) m_velocity.x = -1;
-    if (right && !left)  m_velocity.x = 1;
+    Math::Vector2 dir;
 
-    if(m_velocity.Length() > 0.0f)m_velocity.Normalize();
+    if (up    && !down)  dir.y = 1;
+    if (down  && !up)    dir.y = -1;
+    if (left  && !right) dir.x = -1;
+    if (right && !left)  dir.x = 1;
 
-    m_pos += m_velocity * m_speed * dt;
+    if(dir.Length() > 0.0f)dir.Normalize();
+
+    m_velocity = m_speed * dir;
+    m_pos += m_velocity * dt;
 
     // ˆÚ“®§ŒÀ
-    if (m_pos.x >=  SCENE.screenWidth  - kRadius)m_pos.x =  SCENE.screenWidth  - kRadius;
-    if (m_pos.x <= -SCENE.screenWidth  + kRadius)m_pos.x = -SCENE.screenWidth  + kRadius;
-    if (m_pos.y >=  SCENE.screenHeight - kRadius)m_pos.y =  SCENE.screenHeight - kRadius;
-    if (m_pos.y <= -SCENE.screenHeight + kRadius)m_pos.y = -SCENE.screenHeight + kRadius;
+    if (m_pos.x >=  SCENE.screenWidth/2  - kRadius)m_pos.x =  SCENE.screenWidth/2  - kRadius;
+    if (m_pos.x <= -SCENE.screenWidth/2  + kRadius)m_pos.x = -SCENE.screenWidth/2  + kRadius;
+    if (m_pos.y >=  SCENE.screenHeight/2 - kRadius)m_pos.y =  SCENE.screenHeight/2 - kRadius;
+    if (m_pos.y <= -SCENE.screenHeight/2 + kRadius)m_pos.y = -SCENE.screenHeight/2 + kRadius;
 }
 
 void Player::UpdateAnim(float dt)
@@ -146,7 +149,7 @@ void Player::UpdateInvincible(float dt)
 void Player::Shot(float dt)
 {
     // ’e”­ŽË
-    m_isShooting = INPUT.IsKeyHeld(VK_SPACE);
+    m_isShooting = INPUT.IsKeyHeld('Z');
 
     // ’e”­ŽËŠÔŠuˆ—
     m_shotTimer -= dt;

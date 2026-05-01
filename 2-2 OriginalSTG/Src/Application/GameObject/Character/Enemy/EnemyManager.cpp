@@ -4,21 +4,19 @@
 
 void EnemyManager::Init()
 {
+    m_enemy.clear();
 }
 
 void EnemyManager::Update(float dt)
 {
     for (int i = m_enemy.size() - 1; i >= 0; --i)
     {
-        if (m_enemy[i] != nullptr)
-        {
-            m_enemy[i]->Update(dt);
+        m_enemy[i]->Update(dt);
 
-            // Ž€‚ñ‚Å‚½‚çíœ
-            if (!m_enemy[i]->IsAlive())
-            {
-                m_enemy.erase(m_enemy.begin() + i);
-            }
+        // Ž€‚ñ‚Å‚½‚çíœ
+        if (!m_enemy[i]->IsAlive())
+        {
+            m_enemy.erase(m_enemy.begin() + i);
         }
     }
 }
@@ -27,10 +25,7 @@ void EnemyManager::Draw()
 {
     for (auto& p : m_enemy)
     {
-        if (p != nullptr)
-        {
-            p->Draw();
-        }
+        p->Draw();
     }
 }
 

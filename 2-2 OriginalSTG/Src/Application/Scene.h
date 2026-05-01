@@ -13,8 +13,8 @@ private:
 
 public:
 
-	const int screenWidth = 640;
-	const int screenHeight = 360;
+	const int screenWidth = 1280;
+	const int screenHeight = 720;
 
 	// ‰Šúİ’è
 	void Init();

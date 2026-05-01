@@ -15,6 +15,7 @@ public:
     float m_timeScale = 1.0f;
     int   m_stopFrames = 0;
 
+    void Init();
     void Update();
 
     void HitStop(int frames);

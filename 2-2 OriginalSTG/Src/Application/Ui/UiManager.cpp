@@ -5,6 +5,7 @@
 
 void UiManager::Init()
 {
+    m_ui.clear();
 }
 
 void UiManager::Update(float dt)

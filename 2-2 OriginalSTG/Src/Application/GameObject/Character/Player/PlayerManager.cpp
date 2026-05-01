@@ -9,10 +9,12 @@ void PlayerManager::Init()
 
 void PlayerManager::Update(float dt)
 {
+	if (!m_player) return;
 	m_player->Update(dt);
 }
 
 void PlayerManager::Draw()
 {
+	if (!m_player) return;
 	m_player->Draw();
 }

@@ -8,12 +8,21 @@
 #include "Application/TimeManager.h"
 #include "Application/Score/ScoreManager.h"
 #include "Application/Random/Random.h"
+#include "Application/Fade/FadeManager.h"
 
 void GameScene::Init()
 {
-	PLAYERMANAGER.Init();
 	m_background = SCENEMANAGER.GetBackground();
+
+	TIMEMANAGER.Init();
+	PLAYERMANAGER.Init();
+	UIMANAGER.Init();
 	UIMANAGER.CreateUi(UiType::Score);
+
+	ENEMYMANAGER.Init();
+	BULLETMANAGER.Init();
+	FADEMANAGER.Init();
+	SCOREMANAGER.Init();
 }
 
 void GameScene::Update(float dt)
@@ -44,6 +53,7 @@ void GameScene::Update(float dt)
 	BULLETMANAGER.Update(dt);
 	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet());
 	UIMANAGER.Update(dt);
+	FADEMANAGER.Update(dt);
 
 	if (SCOREMANAGER.GetScore() >= 100)
 	{
@@ -57,7 +67,21 @@ void GameScene::Update(float dt)
 
 	if (!PLAYERMANAGER.GetPlayer()->IsAlive())
 	{
-		SCENEMANAGER.SetNextScene(SceneManager::SceneType::Title);
+		if (!m_sceneChangeFlg)
+		{
+			m_sceneChangeFlg = true;
+			FADEMANAGER.FadeOut(1);
+		}
+	}
+
+	if (m_sceneChangeFlg)
+	{
+		if (FADEMANAGER.IsFadeEnd())
+		{
+			UIMANAGER.Destroy(UiType::Score);
+			SCENEMANAGER.SetNextScene(SceneManager::SceneType::Title);
+			FADEMANAGER.FadeIn(1);
+		}
 	}
 }
 
@@ -68,4 +92,5 @@ void GameScene::Draw()
 	ENEMYMANAGER.Draw();
 	BULLETMANAGER.Draw();
 	UIMANAGER.Draw();
+	FADEMANAGER.Draw();
 }

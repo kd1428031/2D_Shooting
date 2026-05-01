@@ -22,4 +22,6 @@ private:
 	bool testFlg1 = false;
 
 	int m_score;
+
+	bool m_sceneChangeFlg = false;
 };

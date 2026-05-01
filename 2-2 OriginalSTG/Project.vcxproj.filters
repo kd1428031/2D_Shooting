@@ -85,6 +85,9 @@
     <Filter Include="Src\Application\Random">
       <UniqueIdentifier>{23978f73-f059-4818-a60b-37ae59361fe6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Fade">
+      <UniqueIdentifier>{7f7ea44c-2d16-4a59-8af5-e6a46f9b451e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -255,6 +258,9 @@
     <ClInclude Include="Src\Application\Ui\TitleName.h">
       <Filter>Src\Application\Ui</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Fade\FadeManager.h">
+      <Filter>Src\Application\Fade</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -391,6 +397,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Ui\TitleName.cpp">
       <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Fade\FadeManager.cpp">
+      <Filter>Src\Application\Fade</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

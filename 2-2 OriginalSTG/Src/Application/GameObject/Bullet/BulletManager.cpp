@@ -3,20 +3,18 @@
 
 void BulletManager::Init()
 {
+    m_bullet.clear();
 }
 
 void BulletManager::Update(float dt)
 {
     for (int i = m_bullet.size() - 1; i >= 0; --i)
     {
-        if (m_bullet[i] != nullptr)
-        {
-            m_bullet[i]->Update(dt);
+        m_bullet[i]->Update(dt);
 
-            if (!m_bullet[i]->IsAlive())
-            {
-                m_bullet.erase(m_bullet.begin() + i);
-            }
+        if (!m_bullet[i]->IsAlive())
+        {
+            m_bullet.erase(m_bullet.begin() + i);
         }
     }
 }
@@ -25,10 +23,7 @@ void BulletManager::Draw()
 {
     for (auto& p : m_bullet)
     {
-        if (p != nullptr)
-        {
-            p->Draw();
-        }
+        p->Draw();
     }
 }
 
@@ -37,10 +32,4 @@ void BulletManager::CreateBullet(BulletOwner owner, BulletType type, Math::Vecto
     auto bullet = std::make_unique<Bullet>(owner, type, pos, velocity, scale, color);
     bullet->Init();
     m_bullet.emplace_back(std::move(bullet));
-}
-
-Bullet* BulletManager::GetBullet(int i) const
-{
-    if (i < 0 || i >= (int)m_bullet.size()) return nullptr;
-    return m_bullet[i].get();
 }

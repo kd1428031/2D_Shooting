@@ -9,6 +9,7 @@ void ResourceManager::LoadAll()
     m_tex[TexName::ktitleName].Load("Texture/Ui/titlename.png");
     m_tex[TexName::kNumber].Load("Texture/Ui/number.png");
     m_tex[TexName::kWarning].Load("Texture/Ui/warning.png");
+    m_tex[TexName::kFade].Load("Texture/fade/fade.png");
 }
 
 void ResourceManager::ReleaseAll()
