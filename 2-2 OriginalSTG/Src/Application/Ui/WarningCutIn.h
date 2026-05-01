@@ -13,6 +13,8 @@ public:
 
 	void UpdateImpl(float dt)override;
 
+	UiType GetUiType() const { return UiType::WarningCutIn; }
+
 private:
 
 	Math::Vector2 m_velocity;

@@ -1,6 +1,7 @@
 #include "UiManager.h"
 #include "ScoreDisplay.h"
 #include "WarningCutIn.h"
+#include "TitleName.h"
 
 void UiManager::Init()
 {
@@ -36,8 +37,21 @@ void UiManager::Draw()
 
 void UiManager::CreateUi(UiType type)
 {
+    // 重複チェック（現状全UIが1つのみ存在してほしい為チェックしているが要改善）
+    for (auto& ui : m_ui)
+    {
+        if (ui->GetUiType() == type)
+        {
+            return;
+        }
+    }
+
     switch (type)
     {
+    case UiType::TitleName:
+        m_ui.emplace_back(std::make_unique<TitleName>());
+        break;
+
     case UiType::Score:
         m_ui.emplace_back(std::make_unique<ScoreDisplay>());
         break;
@@ -48,5 +62,16 @@ void UiManager::CreateUi(UiType type)
 
     default:
         break;
+    }
+}
+
+void UiManager::Destroy(UiType type)
+{
+    for (auto& ui : m_ui)
+    {
+        if (ui->GetUiType() == type)
+        {
+            ui->Kill();
+        }
     }
 }

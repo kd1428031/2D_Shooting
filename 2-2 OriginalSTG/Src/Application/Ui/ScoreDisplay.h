@@ -12,7 +12,8 @@ public:
 
 	void UpdateImpl(float dt)override;
 	void Draw() override;
-	Math::Matrix CreateMatrix(Math::Vector2 offset);
+
+	UiType GetUiType() const { return UiType::Score; }
 
 private:
 

@@ -8,6 +8,7 @@ namespace TexName
 	constexpr char kBgTitle[]	= "bg_title";
 	constexpr char kBgGame[]	= "bg_game";
 	constexpr char kBgResult[]	= "bg_result";
+	constexpr char ktitleName[]	= "titleName";
 	constexpr char kNumber[]	= "number";
 	constexpr char kWarning[]	= "warning";
 }

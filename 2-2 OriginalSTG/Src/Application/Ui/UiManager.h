@@ -21,6 +21,8 @@ public:
 
 	void CreateUi(UiType type);
 
+	void Destroy(UiType type);
+
 private:
 
 	UiManager() = default;

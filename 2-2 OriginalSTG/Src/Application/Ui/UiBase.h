@@ -2,6 +2,7 @@
 
 enum class UiType
 {
+	TitleName,
 	Score,
 	WarningCutIn
 };
@@ -14,13 +15,18 @@ public:
 	virtual ~UiBase() = default;
 
 	virtual void Init() = 0;
-	virtual void Update(float dt);
+	void Update(float dt);
 	virtual void Draw() = 0;
 	void UpdateMatrix();
-
 	virtual void UpdateImpl(float dt) {};
 
+	Math::Matrix CreateMatrix(Math::Vector2 offset);
+
 	bool IsAlive() const { return m_isAlive; }
+	void Kill();
+	virtual void OnExit();
+
+	virtual UiType GetUiType() const = 0;
 
 protected:
 
@@ -29,7 +35,8 @@ protected:
 
 	// 状態
 	bool m_isAlive;
-	
+	bool m_isExiting;
+
 	// サイズ
 	float m_scale = 1.0f;
 	float m_angle;
