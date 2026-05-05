@@ -17,4 +17,6 @@ public:
 private:
 
 	Background* m_background;
+
+	bool m_isExiting;
 };

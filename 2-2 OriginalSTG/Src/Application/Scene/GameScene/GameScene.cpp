@@ -9,6 +9,7 @@
 #include "Application/Score/ScoreManager.h"
 #include "Application/Random/Random.h"
 #include "Application/Fade/FadeManager.h"
+#include "Application/Input/InputManager.h"
 
 void GameScene::Init()
 {
@@ -54,6 +55,7 @@ void GameScene::Update(float dt)
 	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet());
 	UIMANAGER.Update(dt);
 	FADEMANAGER.Update(dt);
+	INPUT.Update();
 
 	if (SCOREMANAGER.GetScore() >= 100)
 	{

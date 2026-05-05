@@ -2,6 +2,7 @@
 #include "ScoreDisplay.h"
 #include "WarningCutIn.h"
 #include "TitleName.h"
+#include "GameStart.h"
 
 void UiManager::Init()
 {
@@ -47,6 +48,10 @@ void UiManager::CreateUi(UiType type)
         m_ui.emplace_back(std::make_unique<TitleName>());
         break;
 
+    case UiType::GameStart:
+        m_ui.emplace_back(std::make_unique<GameStart>());
+        break;
+
     case UiType::Score:
         m_ui.emplace_back(std::make_unique<ScoreDisplay>());
         break;
@@ -71,7 +76,21 @@ void UiManager::Destroy(UiType type)
     }
 }
 
-bool UiManager::IsAlive(UiType type)
+bool UiManager::IsGameStartButton() const
+{
+    for (auto& ui : m_ui)
+    {
+        if (ui->GetUiType() == UiType::GameStart)
+        {
+            auto* gameStart = static_cast<GameStart*>(ui.get());
+            return gameStart->IsClicked();
+        }
+    }
+
+    return false;
+}
+
+bool UiManager::IsAlive(UiType type) const
 {
     for (auto& ui : m_ui)
     {

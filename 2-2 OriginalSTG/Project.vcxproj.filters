@@ -261,6 +261,9 @@
     <ClInclude Include="Src\Application\Fade\FadeManager.h">
       <Filter>Src\Application\Fade</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Ui\GameStart.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -400,6 +403,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Fade\FadeManager.cpp">
       <Filter>Src\Application\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Ui\GameStart.cpp">
+      <Filter>Src\Application\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

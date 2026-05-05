@@ -6,28 +6,34 @@
 
 void TitleScene::Init()
 {
+	m_isExiting = false;
+
 	m_background = SCENEMANAGER.GetBackground();
 	m_background->Init();
 
 	UIMANAGER.Init();      
 	UIMANAGER.CreateUi(UiType::TitleName);
+	UIMANAGER.CreateUi(UiType::GameStart);
 }
 
 void TitleScene::Update(float dt)
 {
+	INPUT.Update();
 	m_background->Update(dt);
+	UIMANAGER.Update(dt);
+	FADEMANAGER.Update(dt);
 
-	if (INPUT.IsKeyHeld(VK_RETURN))
+	if (!m_isExiting && UIMANAGER.IsGameStartButton())
 	{
 		UIMANAGER.Destroy(UiType::TitleName);
+		UIMANAGER.Destroy(UiType::GameStart);
+		m_isExiting = true;
 	}
 
-	if (!UIMANAGER.IsAlive(UiType::TitleName))
+	if (m_isExiting && !UIMANAGER.IsAlive(UiType::TitleName))
 	{
 		SCENEMANAGER.SetNextScene(SceneManager::SceneType::Game);
 	}
-	UIMANAGER.Update(dt);
-	FADEMANAGER.Update(dt);
 }
 
 void TitleScene::Draw()

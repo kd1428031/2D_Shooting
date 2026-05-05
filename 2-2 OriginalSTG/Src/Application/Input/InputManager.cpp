@@ -2,9 +2,26 @@
 #include "Application/Scene.h"
 #include "Application/main.h"
 
+void InputManager::Update()
+{
+	bool current = GetAsyncKeyState(VK_LBUTTON) & 0x8000;
+	m_triggerLeftClick = current && !m_prevLeftClick; // トリガーをここで確定
+	m_prevLeftClick = current; // prevを更新
+}
+
 bool InputManager::IsKeyHeld(int key) const
 {
 	return GetAsyncKeyState(key) & 0x8000;
+}
+
+bool InputManager::IsLeftClick() const
+{
+	return GetAsyncKeyState(VK_LBUTTON) & 0x8000;
+}
+
+bool InputManager::IsTriggerLeftClick() const
+{
+	return m_triggerLeftClick;
 }
 
 POINT InputManager::GetMousePos()

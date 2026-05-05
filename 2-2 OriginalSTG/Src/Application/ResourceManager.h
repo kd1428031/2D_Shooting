@@ -11,6 +11,7 @@ namespace TexName
 	constexpr char ktitleName[]	= "titleName";
 	constexpr char kNumber[]	= "number";
 	constexpr char kWarning[]	= "warning";
+	constexpr char kStart[]		= "start";
 	constexpr char kFade[]		= "fade";
 }
 

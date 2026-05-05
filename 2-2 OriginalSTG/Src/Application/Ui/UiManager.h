@@ -23,7 +23,9 @@ public:
 
 	void Destroy(UiType type);
 
-	bool IsAlive(UiType type);
+	bool IsAlive(UiType type)const;
+
+	bool IsGameStartButton()const;
 
 private:
 
