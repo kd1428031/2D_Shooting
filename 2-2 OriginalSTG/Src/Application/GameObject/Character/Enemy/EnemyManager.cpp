@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "EnemyBase.h"
-#include "Enemy.h"
+#include "Daemon/Daemon.h"
+#include "Bat/Bat.h"
 
 void EnemyManager::Init()
 {
@@ -29,9 +30,29 @@ void EnemyManager::Draw()
     }
 }
 
-void EnemyManager::CreateEnemy(Math::Vector2 pos, float scale)
+void EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, float scale)
 {
-    auto enemy = std::make_unique<Enemy>(pos, scale);
-    enemy->Init();
-    m_enemy.emplace_back(std::move(enemy));
+    switch (type)
+    {
+    case EnemyType::Daemon:
+    {
+        auto enemy = std::make_unique<Daemon>(pos, scale);
+        enemy->Init();
+        m_enemy.emplace_back(std::move(enemy));
+
+        break;
+    }
+
+    case EnemyType::Bat:
+    {
+        auto enemy = std::make_unique<Bat>(pos, scale);
+        enemy->Init();
+        m_enemy.emplace_back(std::move(enemy));
+
+        break;
+    }
+
+    default:
+        break;
+    }
 }

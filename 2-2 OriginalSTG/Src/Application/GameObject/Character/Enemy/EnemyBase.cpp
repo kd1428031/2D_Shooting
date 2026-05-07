@@ -6,24 +6,23 @@
 #include "Application/GameObject/Character/Player/PlayerManager.h"
 
 EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
-    :Character(pos, scale), m_state(State::Alive), m_score(0), m_shotTimer(0.0f),
-    m_shotInterval(1.0f), m_bulletOffset(30.0f), m_bulletSpeed(300.0f), 
-    m_bulletScale(2.0f), m_bulletColor(1, 0, 0, 1),
-    m_bulletAngle(0.0f), m_bulletAngleSpeed(300.0f)
+    :Character(pos, scale), m_state(State::Alive), m_score(0), 
+    m_shotInterval(1.0f), m_shotTimer(m_shotInterval), m_bulletOffset(30.0f), 
+    m_bulletSpeed(300.0f), m_bulletScale(2.0f), m_bulletColor(1, 0, 0, 1),
+    m_bulletAngle(0.0f), m_bulletAngleSpeed(300.0f), m_shotNWay(0),
+    m_shotType(ShotType::Straight), m_shotFlg(false)
 {    
 }
 
 void EnemyBase::Draw()
 {
-    if (m_state == State::Dead) return;
-
     Math::Rectangle rect{
          (int)m_animFrame.x * m_texFrameWidth,(int)m_animFrame.y * m_texFrameHeight,
          m_texFrameWidth, m_texFrameHeight 
     };
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
-    SHADER.m_spriteShader.DrawTex(m_tex, rect, m_alpha);
+    SHADER.m_spriteShader.DrawTex_Color(m_tex, rect, m_color);
     
     DrawImpl();
 }
@@ -36,6 +35,15 @@ void EnemyBase::Update(float dt)
         return;
     }
 
+    if (m_shotFlg)
+    {
+        m_shotTimer -= dt;
+        if (m_shotTimer <= 0)
+        {
+            Shot(dt);
+            m_shotTimer = m_shotInterval;
+        }
+    }
     UpdateImpl(dt);
     Move(dt);
     UpdateMatrix();
@@ -57,18 +65,45 @@ void EnemyBase::Move(float dt)
     }
 }
 
+void EnemyBase::Shot(float dt)
+{
+    switch (m_shotType)
+    {
+    case ShotType::Straight:
+        ShotStraight();
+        break;
+
+    case ShotType::NWay :
+        ShotNWay();
+        break;
+
+    case ShotType::Aimed :
+        ShotAimed();
+        break;
+
+    case ShotType::Rotate:
+        ShotRotate(dt);
+        break;
+
+    default:
+        break;
+    }
+}
+
 void EnemyBase::ShotStraight()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(-m_bulletOffset, 0);
     BULLETMANAGER.CreateBullet(BulletOwner::Enemy, BulletType::Normal, spawnPos, Math::Vector2(-m_bulletSpeed, 0), m_bulletScale, m_bulletColor);
 }
 
-void EnemyBase::ShotNWay(int num)
+void EnemyBase::ShotNWay()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(-m_bulletOffset, 0);
 
-    float angleStep = 360.0f / num;
-    for (int i = 0; i < num; i++)
+    if (m_shotNWay <= 0) return;
+
+    float angleStep = 360.0f / m_shotNWay;
+    for (int i = 0; i < m_shotNWay; i++)
     {
         float angle = angleStep * i;
         Math::Vector2 velocity =
@@ -123,11 +158,16 @@ float EnemyBase::GetAngleDeg(Math::Vector2 src, Math::Vector2 dest)
 
 void EnemyBase::TakeDamage(float damage)
 {
-    Character::TakeDamage(damage);
-    TIMEMANAGER.HitStop(kHitStopFrames);
-    if (m_hp <= 0)
+    if (m_state == State::Alive)
     {
-        m_state = State::Dying;
-        SCOREMANAGER.AddScore(m_score);
+        Character::TakeDamage(damage);
+        TIMEMANAGER.HitStop(kHitStopFrames);
+        OnHit();
+        if (m_hp <= 0)
+        {
+            PreDeath();
+            m_state = State::Dying;
+            SCOREMANAGER.AddScore(m_score);
+        }
     }
 }

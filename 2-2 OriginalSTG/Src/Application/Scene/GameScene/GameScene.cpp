@@ -35,7 +35,7 @@ void GameScene::Update(float dt)
 	{
 		if (!testKey)
 		{
-			ENEMYMANAGER.CreateEnemy({ 640, Random::Range(-360.0f, 360.0f) });
+			ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640, Random::Range(-360.0f, 360.0f) });
 			/*UIMANAGER.CreateUi(UiType::WarningCutIn);
 			TIMEMANAGER.HitStop(200);*/
 			testKey = true;

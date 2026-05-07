@@ -88,6 +88,12 @@
     <Filter Include="Src\Application\Fade">
       <UniqueIdentifier>{7f7ea44c-2d16-4a59-8af5-e6a46f9b451e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\Daemon">
+      <UniqueIdentifier>{1d4a76ff-d604-4b48-94da-714d8341e99e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Character\Enemy\Bat">
+      <UniqueIdentifier>{8e0d6546-3a10-4f5f-a298-9b88f4641287}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -264,6 +270,12 @@
     <ClInclude Include="Src\Application\Ui\GameStart.h">
       <Filter>Src\Application\Ui</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\Daemon\Daemon.h">
+      <Filter>Src\Application\GameObject\Character\Enemy\Daemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\Bat\Bat.h">
+      <Filter>Src\Application\GameObject\Character\Enemy\Bat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -406,6 +418,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Ui\GameStart.cpp">
       <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\Daemon\Daemon.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy\Daemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\Bat\Bat.cpp">
+      <Filter>Src\Application\GameObject\Character\Enemy\Bat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

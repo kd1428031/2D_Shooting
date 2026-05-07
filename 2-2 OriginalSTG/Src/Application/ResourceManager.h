@@ -4,6 +4,10 @@ namespace TexName
 {
 	constexpr char kPlayer[]	= "player";
 	constexpr char kEnemy[]		= "enemy";
+	constexpr char kDaemon_idle[]	= "daemon";
+	constexpr char kDaemon_hit[]	= "daemon_hit";
+	constexpr char kDaemon_death[]	= "daemon_death";
+	constexpr char kBat[]			= "bat";
 	constexpr char kBullet[]	= "bullet";
 	constexpr char kBgTitle[]	= "bg_title";
 	constexpr char kBgGame[]	= "bg_game";

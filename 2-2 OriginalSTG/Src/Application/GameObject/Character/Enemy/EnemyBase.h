@@ -13,6 +13,14 @@ public:
         Dead    // €–S
     };
 
+    enum class ShotType
+    {
+        Straight,
+        NWay,
+        Aimed,
+        Rotate
+    };
+
     EnemyBase(Math::Vector2 pos, float scale);
     virtual ~EnemyBase() = default;
 
@@ -27,33 +35,47 @@ public:
     // “G‚²‚Æ‚Ì’Ç‰Á•`‰æˆ—
     virtual void DrawImpl() {}
 
+    void Shot(float dt);
+
     void ShotStraight();        // ’¼ü’e 
-    void ShotNWay(int num);     // Way’e 
+    void ShotNWay();     // Way’e 
     void ShotAimed();           // ©‹@‘_‚¢’e 
     void ShotRotate(float dt);  // ‰ñ“]’e
 
     float GetAngleDeg(Math::Vector2 src, Math::Vector2 dest);
 
     // €–S‚Ì‰‰oˆ—iƒGƒtƒFƒNƒgEƒAƒjƒ[ƒVƒ‡ƒ“‚È‚Çj
+    virtual void PreDeath(){}
     virtual void Death(float dt) = 0;
 
+    virtual void OnHit(){}
+
     void TakeDamage(float damage)override;
+
+    void SetShotFlg(bool shotFlg) { m_shotFlg = shotFlg; }
+    void SetShotType(ShotType shotType) { m_shotType = shotType; }
 
     float GetRadius() const { return m_radius; }
 
     void Destroy(){ m_state = State::Dead; }
     bool IsAlive() const override{ return m_state != State::Dead; };
+    bool IsActive() const { return m_state == State::Alive; }
 
 protected:
 
     State m_state;
-    
+    ShotType m_shotType;
+
+    bool m_shotFlg;
+
+    int m_shotNWay;
+
     // Œ‚”jŠl“¾ƒXƒRƒA
     int   m_score;
 
     // ’e
-    float       m_shotTimer;
     float       m_shotInterval;
+    float       m_shotTimer;
     float       m_bulletOffset;
     float       m_bulletSpeed;
     float       m_bulletScale;

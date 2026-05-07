@@ -1,6 +1,12 @@
 #pragma once
 #include "EnemyBase.h"
 
+enum class EnemyType
+{
+	Daemon,
+	Bat
+};
+
 class EnemyManager
 {
 public:
@@ -17,7 +23,7 @@ public:
 	void Update(float dt);
 	void Draw();
 
-	void CreateEnemy(Math::Vector2 pos, float scale = 1.0f);
+	void CreateEnemy(EnemyType type, Math::Vector2 pos, float scale = 1.0f);
 
 	const std::vector < std::unique_ptr<EnemyBase>> &GetEnemy() const { return m_enemy; }
 

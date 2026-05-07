@@ -4,6 +4,10 @@ void ResourceManager::LoadAll()
 {
     m_tex[TexName::kPlayer].Load("Texture/Player/Player2.png");
     m_tex[TexName::kEnemy].Load("Texture/Enemy/enemy.png");
+    m_tex[TexName::kDaemon_idle].Load("Texture/Enemy/daemon/IDLE.png");
+    m_tex[TexName::kDaemon_hit].Load("Texture/Enemy/daemon/HURT.png");
+    m_tex[TexName::kDaemon_death].Load("Texture/Enemy/daemon/DEATH.png");
+    m_tex[TexName::kBat].Load("Texture/Enemy/bat/Bat_Sprite_Sheet.png");
     m_tex[TexName::kBullet].Load("Texture/attackEffect1.png");
     m_tex[TexName::kBgGame].Load("Texture/Background/Background1.png");
     m_tex[TexName::ktitleName].Load("Texture/Ui/titlename.png");

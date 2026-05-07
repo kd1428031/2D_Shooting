@@ -24,7 +24,7 @@ void CollisionManager::CheckPlayerVsEnemy(Player* player, const std::vector<std:
 {
     for (auto& enemy : enemies)
     {
-        if (!enemy->IsAlive()) continue;
+        if (!enemy->IsActive()) continue;
 
         if (IsHit(player->GetPos(), player->GetRadius(),
             enemy->GetPos(), enemy->GetRadius()))
@@ -39,7 +39,7 @@ void CollisionManager::CheckEnemyVsPlayerBullet(const std::vector<std::unique_pt
 {
     for (auto& enemy : enemies)
     {
-        if (!enemy->IsAlive()) continue;
+        if (!enemy->IsActive()) continue;
 
         for (auto& bullet : bullets)
         {
