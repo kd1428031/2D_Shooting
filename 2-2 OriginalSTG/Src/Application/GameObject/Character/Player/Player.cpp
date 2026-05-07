@@ -48,9 +48,14 @@ void Player::Update(float dt)
     
     Move(dt);
 
+    if(m_mp < 100)
+    m_mp++;
+
     // 弾発射処理
-    Shot(dt);
-  
+    if (m_mp > 0)
+    {
+        Shot(dt);
+    }
     UpdateInvincible(dt);
     UpdateAnim(dt);
     UpdateMatrix();
@@ -66,6 +71,8 @@ void Player::Draw()
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex(m_tex, rect, m_alpha);
+
+    SHADER.m_spriteShader.DrawBox(0, 0, m_mp, 10, &m_color, true);
 }
 
 void Player::Move(float dt)
@@ -160,6 +167,9 @@ void Player::Shot(float dt)
         {
             // 発射間隔タイマーリセット
             m_shotTimer = kShotInterval;
+
+            // MP消費
+            m_mp -= 3;
 
             // 弾の種類
             switch (m_shotType)

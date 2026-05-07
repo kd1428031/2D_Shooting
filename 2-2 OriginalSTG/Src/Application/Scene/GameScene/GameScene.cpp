@@ -35,17 +35,31 @@ void GameScene::Update(float dt)
 	{
 		if (!testKey)
 		{
-			ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640, Random::Range(-360.0f, 360.0f) });
-			/*UIMANAGER.CreateUi(UiType::WarningCutIn);
-			TIMEMANAGER.HitStop(200);*/
+			int rand = Random::Range(0, 1);
+			bool shotFlg = Random::Chance(0.5f);
+			EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 3);
+
+			if(rand == 0)
+			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f, Random::Range(-360.0f, 360.0f)}, shotFlg, shotType);
+
+			if (rand == 1)
+				ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640.0f, Random::Range(-360.0f, 360.0f) },shotFlg, shotType);
+
 			testKey = true;
 		}
 	}
 	else testKey = false;
 
-	if (rand() % 100 < 1)
+	if (Random::Chance(0.01f))
 	{
-		//ENEMYMANAGER.CreateEnemy({ 640, (float)(rand() % 720 - 360) });
+		EnemyType type = (EnemyType)Random::Range(0, 1);
+		int rand = Random::Range(0, 1);
+		bool shotFlg = Random::Chance(0.5f);
+		EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 3);
+
+		ENEMYMANAGER.CreateEnemy(type, 
+			{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
+			shotFlg, shotType);
 	}
 
 	m_background->Update(dt);
@@ -57,7 +71,7 @@ void GameScene::Update(float dt)
 	FADEMANAGER.Update(dt);
 	INPUT.Update();
 
-	if (SCOREMANAGER.GetScore() >= 100)
+	/*if (SCOREMANAGER.GetScore() >= 100)
 	{
 		if (!testFlg1)
 		{
@@ -65,7 +79,7 @@ void GameScene::Update(float dt)
 			TIMEMANAGER.HitStop(200);
 			testFlg1 = true;
 		}
-	}
+	}*/
 
 	if (!PLAYERMANAGER.GetPlayer()->IsAlive())
 	{

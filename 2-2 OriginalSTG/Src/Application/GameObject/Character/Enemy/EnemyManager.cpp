@@ -30,7 +30,7 @@ void EnemyManager::Draw()
     }
 }
 
-void EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, float scale)
+void EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, bool shotFlg, EnemyBase::ShotType shotType, float scale)
 {
     switch (type)
     {
@@ -38,6 +38,8 @@ void EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, float scale)
     {
         auto enemy = std::make_unique<Daemon>(pos, scale);
         enemy->Init();
+        enemy->SetShotFlg(shotFlg);
+        enemy->SetShotType(shotType);
         m_enemy.emplace_back(std::move(enemy));
 
         break;
@@ -47,6 +49,8 @@ void EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, float scale)
     {
         auto enemy = std::make_unique<Bat>(pos, scale);
         enemy->Init();
+        enemy->SetShotFlg(shotFlg);
+        enemy->SetShotType(shotType);
         m_enemy.emplace_back(std::move(enemy));
 
         break;

@@ -1,6 +1,6 @@
 #include "Daemon.h"
-#include "Application/Scene.h"
 #include "Application/ResourceManager.h"
+#include "Application/Random/Random.h"
 
 Daemon::Daemon(Math::Vector2 pos, float scale)
 	: EnemyBase(pos, scale)
@@ -23,20 +23,13 @@ void Daemon::Init()
 	m_bulletScale = kBulletScale;
 	m_bulletColor = kBulletColor;
 	m_bulletAngleSpeed = kBulletAngleSpeed;
+
+	m_shotFlg = Random::Chance(0.5f);
+	m_shotType = (ShotType)Random::Range(0, 3);
 }
 
 void Daemon::UpdateImpl(float dt)
 {
-	m_shotTimer -= dt;
-	if (m_shotTimer <= 0)
-	{
-		ShotStraight();
-		//ShotNWay(8);
-		//ShotAimed();
-		//ShotRotate(dt);
-		m_shotTimer = kShotInterval;
-	}
-
 	m_animFrame.x += kAnimSpeed * dt;
 	if (m_animFrame.x > kIdleAnimMax)
 	{

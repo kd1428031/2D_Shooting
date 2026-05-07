@@ -1,5 +1,4 @@
 #include "Bat.h"
-#include "Application/Scene.h"
 #include "Application/ResourceManager.h"
 #include "Application/Random/Random.h"
 

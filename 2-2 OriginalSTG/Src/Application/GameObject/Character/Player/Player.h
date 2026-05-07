@@ -44,25 +44,13 @@ public:
 
 private:
     
-    State m_state;
-
-    float m_speed;
-
-    float m_animSpeed = kAnimSpeed;
-    static constexpr float kBlinkInterval = 3.0f;  // まばたき間隔
-    float m_blinkTimer = kBlinkInterval;
-
-    // 弾
-    ShotType m_shotType;
-    bool     m_isShooting;
-    float    m_shotTimer;
-
     // 定数
     // 初期値
     static constexpr float kInitPosX = -500.0f;
     static constexpr float kInitPosY = 0.0f;
     static constexpr float kInitSpeed = 400.0f;
     static constexpr int   kInitHp = 3;
+    static constexpr int   kInitMp = 100;
 
     // 速度
     static constexpr float kLowSpeed = 200;
@@ -89,4 +77,19 @@ private:
     static constexpr float kBulletSpeed = 1300.0f;              // 速さ
     static constexpr float kBulletScale = 2.0f;                 // サイズ
     const Math::Color kBulletColor = {0.0f,1.0f,0.0f,1.0f};     // 色
+
+    // 状態・ステータス
+    float m_mp;
+    State m_state;
+    float m_speed;
+
+    // アニメ
+    float m_animSpeed = kAnimSpeed;
+    static constexpr float kBlinkInterval = 3.0f;  // まばたき間隔
+    float m_blinkTimer = kBlinkInterval;
+
+    // 弾
+    ShotType m_shotType;
+    bool     m_isShooting;
+    float    m_shotTimer;
 };

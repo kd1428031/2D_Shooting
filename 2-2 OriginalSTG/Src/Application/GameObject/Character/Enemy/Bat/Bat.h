@@ -29,11 +29,11 @@ private:
     static constexpr float  kAnimSpeed = 20.0f;
     static constexpr int    kIdleAnimMax = 5;
     static constexpr int    kDeathAnimMax = 5;
-    static constexpr int    kScore = 100;
+    static constexpr int    kScore = 50;
 
     // 弾
     static constexpr float  kShotInterval = 0.5f;                     // 発射間隔
-    static constexpr float  kBulletOffsetX = 30.0f;                    // 発射位置
+    static constexpr float  kBulletOffsetX = 20.0f;                    // 発射位置
     static constexpr float  kBulletSpeed = 300.0f;                   // 速さ
     static constexpr float  kBulletScale = 2.0f;                     // サイズ
     static constexpr float  kBulletAngleSpeed = 600.0f;                     // サイズ

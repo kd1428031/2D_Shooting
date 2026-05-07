@@ -35,13 +35,17 @@ void EnemyBase::Update(float dt)
         return;
     }
 
-    if (m_shotFlg)
+    if (m_pos.x <  SCENE.screenWidth / 2 && m_pos.x > -SCENE.screenWidth / 2 &&
+        m_pos.y <  SCENE.screenHeight / 2 && m_pos.y > -SCENE.screenHeight / 2)
     {
-        m_shotTimer -= dt;
-        if (m_shotTimer <= 0)
+        if (m_shotFlg)
         {
-            Shot(dt);
-            m_shotTimer = m_shotInterval;
+            m_shotTimer -= dt;
+            if (m_shotTimer <= 0)
+            {
+                Shot(dt);
+                m_shotTimer = m_shotInterval;
+            }
         }
     }
     UpdateImpl(dt);

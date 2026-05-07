@@ -17,7 +17,7 @@ public:
 
 private:
 
-    static constexpr int    kInitHp = 30;
+    static constexpr int    kInitHp = 60;
     const Math::Vector2     kInitVelocity = { -30.0f, 0.0f };
 
     static constexpr float  kRadius = 32.0f;
