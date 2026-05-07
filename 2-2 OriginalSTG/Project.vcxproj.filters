@@ -276,6 +276,12 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\Bat\Bat.h">
       <Filter>Src\Application\GameObject\Character\Enemy\Bat</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Ui\PressStart.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Ui\PressMessage.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -424,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\Bat\Bat.cpp">
       <Filter>Src\Application\GameObject\Character\Enemy\Bat</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Ui\PressStart.cpp">
+      <Filter>Src\Application\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

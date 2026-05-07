@@ -14,6 +14,7 @@ void TitleScene::Init()
 	UIMANAGER.Init();      
 	UIMANAGER.CreateUi(UiType::TitleName);
 	UIMANAGER.CreateUi(UiType::GameStart);
+	UIMANAGER.CreateUi(UiType::PressStart);
 }
 
 void TitleScene::Update(float dt)
@@ -23,7 +24,8 @@ void TitleScene::Update(float dt)
 	UIMANAGER.Update(dt);
 	FADEMANAGER.Update(dt);
 
-	if (!m_isExiting && UIMANAGER.IsGameStartButton())
+	if (!m_isExiting && (UIMANAGER.IsGameStartButton() || 
+		INPUT.IsKeyHeld(VK_RETURN)))
 	{
 		UIMANAGER.Destroy(UiType::TitleName);
 		UIMANAGER.Destroy(UiType::GameStart);

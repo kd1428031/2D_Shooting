@@ -16,6 +16,8 @@ void Player::Init()
     m_speed = kInitSpeed;
 
     m_hp = kInitHp;
+
+    m_mp = kInitMp;
     
     m_state = State::Alive;
 
@@ -48,11 +50,10 @@ void Player::Update(float dt)
     
     Move(dt);
 
-    if(m_mp < 100)
-    m_mp++;
+    if (m_mp < kInitMp) m_mp += m_mpRegen;
 
     // íeî≠éÀèàóù
-    if (m_mp > 0)
+    if (m_mp > 10)
     {
         Shot(dt);
     }
@@ -72,7 +73,13 @@ void Player::Draw()
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex(m_tex, rect, m_alpha);
 
-    SHADER.m_spriteShader.DrawBox(0, 0, m_mp, 10, &m_color, true);
+    Math::Color backColor   = { 0.0f, 0.0f, 0.0f, 1.0f };
+    Math::Color gaugeColor  = { 0.8f, 0.2f, 0.8f, 1.0f };
+    float width = 100.0f;
+    float mpBar = (m_mp / kInitMp) * width;
+    SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
+    SHADER.m_spriteShader.DrawBox(-600 + width, -300, 105, 15, &backColor, true);
+    SHADER.m_spriteShader.DrawBox(-600 + mpBar, -300, mpBar, 10, &gaugeColor, true);
 }
 
 void Player::Move(float dt)
@@ -83,11 +90,13 @@ void Player::Move(float dt)
     if(INPUT.IsKeyHeld(VK_SHIFT))
     {
         m_speed = kLowSpeed;
+        m_mpRegen = 100.0f * dt;
         m_shotType = ShotType::PenetratShot;
     }
     else
     {
         m_speed = kHighSpeed;
+        m_mpRegen = 20.0f * dt;
         m_shotType = ShotType::NormalShot;
     }
 
@@ -169,7 +178,8 @@ void Player::Shot(float dt)
             m_shotTimer = kShotInterval;
 
             // MPè¡îÔ
-            m_mp -= 3;
+            m_mp -= 10;
+            if (m_mp <= 0)m_mp = 0;
 
             // íeÇÃéÌóﬁ
             switch (m_shotType)

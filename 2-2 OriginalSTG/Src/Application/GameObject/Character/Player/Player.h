@@ -39,6 +39,7 @@ public:
 
     float GetRadius() const { return kRadius; }
     float GetSpeed() const { return m_speed; }
+    float GetMp() const { return m_mp; }
     bool IsAlive() const override{ return m_state != State::Dead; }
     bool IsInvincible() const { return m_state == State::Invincible; }
 
@@ -80,6 +81,7 @@ private:
 
     // 状態・ステータス
     float m_mp;
+    float m_mpRegen;
     State m_state;
     float m_speed;
 

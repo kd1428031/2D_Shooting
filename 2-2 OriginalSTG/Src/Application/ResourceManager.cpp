@@ -11,6 +11,7 @@ void ResourceManager::LoadAll()
     m_tex[TexName::kBullet].Load("Texture/attackEffect1.png");
     m_tex[TexName::kBgGame].Load("Texture/Background/Background1.png");
     m_tex[TexName::ktitleName].Load("Texture/Ui/titlename.png");
+    m_tex[TexName::kPressMessage].Load("Texture/Ui/pressMessage.png");
     m_tex[TexName::kNumber].Load("Texture/Ui/number.png");
     m_tex[TexName::kWarning].Load("Texture/Ui/warning.png");
     m_tex[TexName::kStart].Load("Texture/Ui/gamestart.png");

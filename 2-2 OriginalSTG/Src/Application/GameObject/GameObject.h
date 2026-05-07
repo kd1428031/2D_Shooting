@@ -27,6 +27,7 @@ protected:
     float m_scale = 1.0f;
     float m_angle;
     float m_radius;
+    float m_flipX = 1.0f;
 
     // 色・透明度
     float m_alpha;

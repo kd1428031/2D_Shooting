@@ -17,6 +17,7 @@ void GameStart::Init()
 	m_scale = kInitScale;
 	m_color = kInitColor;
 	m_isClicked = false;
+	m_blink = false;
 }
 
 void GameStart::UpdateImpl(float dt)
@@ -29,6 +30,7 @@ void GameStart::UpdateImpl(float dt)
 		{
 			m_isAlive = false;
 		}
+		return;
 	}
 
 	POINT mouse = INPUT.GetMousePos();
@@ -40,6 +42,8 @@ void GameStart::UpdateImpl(float dt)
 	{
 		m_scale += (kMaxScale - m_scale) * kScaleChangeSpeed * dt;
 
+		m_color.A(kMaxBlinkAlpha);
+		
 		if (INPUT.IsTriggerLeftClick())
 		{
 			m_isClicked = true;
@@ -48,6 +52,17 @@ void GameStart::UpdateImpl(float dt)
 	else
 	{
 		m_scale += (kInitScale - m_scale) * kScaleChangeSpeed * dt;
+
+		if (!m_blink)
+		{
+			m_color.A(m_color.A() - kBlinkSpeed * dt);
+			if (m_color.A() <= kMinBlinkAlpha)m_blink = true;
+		}
+		else
+		{
+			m_color.A(m_color.A() + kBlinkSpeed * dt);
+			if (m_color.A() >= kMaxBlinkAlpha)m_blink = false;
+		}
 	}
 }
 
@@ -65,4 +80,5 @@ void GameStart::Draw()
 void GameStart::OnExit()
 {
 	m_exitTimer = kExitTime;
+	m_color.A(kMaxBlinkAlpha);
 }

@@ -28,8 +28,13 @@ private:
 	static constexpr float	kMaxScale = kInitScale * 1.1f;
 	static constexpr float	kScaleChangeSpeed = 10.0f;
 	static constexpr float	kExitTime = 1.0f;
+	static constexpr float	kBlinkSpeed = 0.5f;
+	static constexpr float	kMaxBlinkAlpha = 1.0f;
+	static constexpr float	kMinBlinkAlpha = 0.5f;
 
 	float m_exitTimer;
 
 	bool m_isClicked;
+
+	bool m_blink;
 };

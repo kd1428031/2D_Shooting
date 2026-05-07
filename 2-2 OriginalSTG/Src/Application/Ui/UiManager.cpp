@@ -3,6 +3,7 @@
 #include "WarningCutIn.h"
 #include "TitleName.h"
 #include "GameStart.h"
+#include "PressStart.h"
 
 void UiManager::Init()
 {
@@ -50,6 +51,10 @@ void UiManager::CreateUi(UiType type)
 
     case UiType::GameStart:
         m_ui.emplace_back(std::make_unique<GameStart>());
+        break;
+
+    case UiType::PressStart:
+        m_ui.emplace_back(std::make_unique<PressStart>());
         break;
 
     case UiType::Score:

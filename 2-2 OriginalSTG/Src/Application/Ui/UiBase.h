@@ -4,6 +4,7 @@ enum class UiType
 {
 	TitleName,
 	GameStart,
+	PressStart,
 	Score,
 	WarningCutIn
 };

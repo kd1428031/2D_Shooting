@@ -17,7 +17,7 @@ void Bat::Init()
 	m_hp = kInitHp;
 	m_score = kScore;
 	m_scale = kInitScale;
-	m_scale *= -1;
+	m_flipX *= -1;
 	m_animFrame.y = 1;
 	m_shotTimer = 0.0f;
 
