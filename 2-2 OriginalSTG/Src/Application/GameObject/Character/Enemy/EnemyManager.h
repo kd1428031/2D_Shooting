@@ -4,7 +4,9 @@
 enum class EnemyType
 {
 	Daemon,
-	Bat
+	Bat,
+	GrimReaper,
+	Gr_Summon
 };
 
 class EnemyManager
@@ -23,10 +25,18 @@ public:
 	void Update(float dt);
 	void Draw();
 
-	void CreateEnemy(EnemyType type, Math::Vector2 pos, bool shotFlg = false,
+	EnemyBase* CreateEnemy(EnemyType type, Math::Vector2 pos, bool shotFlg = false,
 		EnemyBase::ShotType shotType = EnemyBase::ShotType::Straight, float scale = 1.0f);
 
+	void AllDamage(float damage);
+
+	void AllDestroy();
+
 	const std::vector < std::unique_ptr<EnemyBase>> &GetEnemy() const { return m_enemy; }
+
+	std::vector<EnemyBase*> EnemyManager::GetEnemies(EnemyBase::EnemyTag tag);
+
+	bool IsBossAlive();
 
 private:
 

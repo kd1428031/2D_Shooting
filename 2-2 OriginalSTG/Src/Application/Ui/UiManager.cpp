@@ -1,9 +1,11 @@
 #include "UiManager.h"
 #include "ScoreDisplay.h"
+#include "ScoreText.h"
 #include "WarningCutIn.h"
 #include "TitleName.h"
 #include "GameStart.h"
 #include "PressStart.h"
+#include "BomdWaitCounter.h"
 
 void UiManager::Init()
 {
@@ -61,6 +63,14 @@ void UiManager::CreateUi(UiType type)
         m_ui.emplace_back(std::make_unique<ScoreDisplay>());
         break;
 
+    case UiType::ScoreText:
+        m_ui.emplace_back(std::make_unique<ScoreText>());
+        break;
+
+    case UiType::BomdWaitCounter:
+        m_ui.emplace_back(std::make_unique<BomdWaitCounter>());
+        break;
+
     case UiType::WarningCutIn:
         m_ui.emplace_back(std::make_unique<WarningCutIn>());
         break;
@@ -93,6 +103,41 @@ bool UiManager::IsGameStartButton() const
     }
 
     return false;
+}
+
+void UiManager::SetPos(UiType type, Math::Vector2 pos)
+{
+    for (auto& ui : m_ui)
+    {
+        if (ui->GetUiType() == type)
+        {
+            ui->SetPos(pos);
+        }
+    }
+}
+
+void UiManager::SetScale(UiType type, float scale)
+{
+    for (auto& ui : m_ui)
+    {
+        if (ui->GetUiType() == type)
+        {
+            ui->SetScale(scale);
+        }
+    }
+}
+
+UiBase* UiManager::GetUi(UiType type)
+{
+    for (auto& ui : m_ui)
+    {
+        if (ui->GetUiType() == type)
+        {
+            return ui.get();
+        }
+    }
+
+    return nullptr;
 }
 
 bool UiManager::IsAlive(UiType type) const

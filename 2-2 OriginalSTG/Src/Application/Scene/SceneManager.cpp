@@ -1,6 +1,8 @@
 ﻿#include "SceneManager.h"
 #include "GameScene/GameScene.h"
 #include "TitleScene/TitleScene.h"
+#include "ResultScene/ResultScene.h"
+#include "Application/Input/InputManager.h"
 
 void SceneManager::Init()
 {
@@ -40,7 +42,13 @@ void SceneManager::ChangeScene(SceneType _sceneType)
 	case SceneType::Game:
 		m_currentScene = std::make_shared<GameScene>();
 		break;
+
+	case SceneType::Result:
+		m_currentScene = std::make_shared<ResultScene>();
+		break;
 	}
+
+	INPUT.Reset();
 
 	m_currentSceneType = _sceneType;
 }

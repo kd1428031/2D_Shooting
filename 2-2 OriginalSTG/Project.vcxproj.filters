@@ -94,6 +94,18 @@
     <Filter Include="Src\Application\GameObject\Character\Enemy\Bat">
       <UniqueIdentifier>{8e0d6546-3a10-4f5f-a298-9b88f4641287}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Character\GrimReaper">
+      <UniqueIdentifier>{c4b880c5-3721-4b14-9752-0ce45cdf7a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Effect">
+      <UniqueIdentifier>{826bfdb9-7e30-4a45-b5dc-27384368ac17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Effect\Lightning">
+      <UniqueIdentifier>{05875fbd-d5e1-4d2a-8cba-9f32397f9113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\ResultScene">
+      <UniqueIdentifier>{b8b625d0-fd8b-46b9-917c-79518ac3b365}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -210,9 +222,6 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\EnemyManager.h">
       <Filter>Src\Application\GameObject\Character\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Character\Enemy\Enemy.h">
-      <Filter>Src\Application\GameObject\Character\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\GameObject\Character\Player\Player.h">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
     </ClInclude>
@@ -281,6 +290,33 @@
     </ClInclude>
     <ClInclude Include="Src\Application\Ui\PressMessage.h">
       <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\GrimReaper\GrimReaper.h">
+      <Filter>Src\Application\GameObject\Character\GrimReaper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Effect\EffectBase.h">
+      <Filter>Src\Application\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Effect\Lightning\Lightning.h">
+      <Filter>Src\Application\Effect\Lightning</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Effect\EffectManager.h">
+      <Filter>Src\Application\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Ui\BomdWaitCounter.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Effect\Lightning\LightningText.h">
+      <Filter>Src\Application\Effect\Lightning</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\ResultScene\ResultScene.h">
+      <Filter>Src\Application\Scene\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Ui\ScoreText.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Enemy\GrimReaper\Gr_Summon.h">
+      <Filter>Src\Application\GameObject\Character\GrimReaper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -368,9 +404,6 @@
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\EnemyManager.cpp">
       <Filter>Src\Application\GameObject\Character\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Character\Enemy\Enemy.cpp">
-      <Filter>Src\Application\GameObject\Character\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\Player.cpp">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
     </ClCompile>
@@ -433,6 +466,33 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Ui\PressStart.cpp">
       <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\GrimReaper\GrimReaper.cpp">
+      <Filter>Src\Application\GameObject\Character\GrimReaper</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Effect\EffectBase.cpp">
+      <Filter>Src\Application\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Effect\Lightning\Lightning.cpp">
+      <Filter>Src\Application\Effect\Lightning</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Effect\EffectManager.cpp">
+      <Filter>Src\Application\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Ui\BomdWaitCounter.cpp">
+      <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Effect\Lightning\LightningText.cpp">
+      <Filter>Src\Application\Effect\Lightning</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\ResultScene\ResultScene.cpp">
+      <Filter>Src\Application\Scene\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Ui\ScoreText.cpp">
+      <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Enemy\GrimReaper\Gr_Summon.cpp">
+      <Filter>Src\Application\GameObject\Character\GrimReaper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

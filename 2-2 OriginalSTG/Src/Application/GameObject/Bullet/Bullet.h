@@ -64,6 +64,7 @@ private:
     int     m_damage;
     float   m_spinAngle;
 
+    int   m_texOffsetX;
     int   m_texOffsetY;
 
     // íËêî
@@ -71,7 +72,8 @@ private:
     static constexpr float  kDeleteMargin        = 500.0f;
     static constexpr int    kTexFrameWidth       = 32;
     static constexpr int    kTexFrameHeight      = 32;
-    static constexpr int    kTexNormalOffsetY    = kTexFrameWidth * 8;
+    static constexpr int    kTexNormalOffsetY    = kTexFrameWidth * 20;
+    static constexpr int    kTexNormalOffsetX    = kTexFrameWidth * 2;
     static constexpr int    kPenetrateTexOffsetY = 0;
     static constexpr float  kLifeTimer           = 10.0f;
     static constexpr int    kNormalDamage        = 10;

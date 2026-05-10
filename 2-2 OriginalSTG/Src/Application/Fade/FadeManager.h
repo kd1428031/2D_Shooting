@@ -16,10 +16,13 @@ public:
     void Update(float dt);
     void Draw();
 
-    void FadeIn(float fadeSpeed);
-    void FadeOut(float fadeSpeed);
+    void FadeIn(float fadeSpeed, Math::Color color = {0,0,0,1,});
+    void FadeOut(float fadeSpeed, Math::Color color = {0,0,0,0});
 
     bool IsFadeEnd();
+
+    void Blink(float time, float speed, Math::Color color);
+    bool IsBlinkEnd();
 
 private:
 
@@ -36,6 +39,11 @@ private:
     bool m_fadeEndFlg;
 
     float m_fadeSpeed;
+
+    bool m_blinkFlg = false;
+    bool m_blink = false;
+    bool m_blinkEnd = false;
+    float m_timer = 0.0f;
 };
 
 #define FADEMANAGER FadeManager::GetInstance()

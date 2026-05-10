@@ -12,6 +12,7 @@ public:
     virtual void Update(float dt) = 0;
     virtual void Draw() = 0;
     void UpdateMatrix();
+    Math::Matrix CreateMatrix(Math::Vector2 pos, Math::Vector2 size, float angle);
 
     virtual bool IsAlive() const { return true; };
 

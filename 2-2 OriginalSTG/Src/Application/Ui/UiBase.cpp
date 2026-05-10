@@ -46,3 +46,18 @@ Math::Matrix UiBase::CreateMatrix(Math::Vector2 offset)
 
 	return mat;
 }
+
+Math::Matrix UiBase::CreateMatrix(Math::Vector2 pos, Math::Vector2 scale, float angle)
+{
+	Math::Matrix transMat;
+	Math::Matrix rotMat;
+	Math::Matrix scaleMat;
+	Math::Matrix mat;
+
+	scaleMat = Math::Matrix::CreateScale(scale.x, scale.y, 1);
+	rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(angle));
+	transMat = Math::Matrix::CreateTranslation(pos.x, pos.y, 0);
+	mat = scaleMat * rotMat * transMat;
+
+	return mat;
+}

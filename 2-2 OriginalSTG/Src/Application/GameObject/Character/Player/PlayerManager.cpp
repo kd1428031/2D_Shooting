@@ -18,3 +18,9 @@ void PlayerManager::Draw()
 	if (!m_player) return;
 	m_player->Draw();
 }
+
+void PlayerManager::DrawUi()
+{
+	if (!m_player) return;
+	m_player->DrawUi();
+}

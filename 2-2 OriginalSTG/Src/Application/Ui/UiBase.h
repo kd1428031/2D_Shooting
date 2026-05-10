@@ -6,6 +6,8 @@ enum class UiType
 	GameStart,
 	PressStart,
 	Score,
+	ScoreText,
+	BomdWaitCounter,
 	WarningCutIn
 };
 
@@ -23,10 +25,14 @@ public:
 	virtual void UpdateImpl(float dt) {};
 
 	Math::Matrix CreateMatrix(Math::Vector2 offset);
+	Math::Matrix CreateMatrix(Math::Vector2 pos, Math::Vector2 scale, float angle);
 
 	bool IsAlive() const { return m_isAlive; }
 	void Kill();
 	virtual void OnExit();
+
+	void SetPos(Math::Vector2 pos) { m_pos = pos; }
+	void SetScale(float scale) { m_scale = scale; }
 
 	virtual UiType GetUiType() const = 0;
 

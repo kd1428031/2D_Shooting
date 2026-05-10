@@ -14,3 +14,12 @@ void GameObject::UpdateMatrix()
     Math::Matrix transMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
     m_mat = scaleMat * rotMat * transMat;
 }
+
+Math::Matrix GameObject::CreateMatrix(Math::Vector2 pos, Math::Vector2 size, float angle)
+{
+    Math::Matrix scaleMat = Math::Matrix::CreateScale(size.x, size.y, 1);
+    Math::Matrix rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(angle));
+    Math::Matrix transMat = Math::Matrix::CreateTranslation(pos.x, pos.y, 0);
+    Math::Matrix mat = scaleMat * rotMat * transMat;
+    return mat;
+}

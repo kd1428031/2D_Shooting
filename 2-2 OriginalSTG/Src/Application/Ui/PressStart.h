@@ -14,7 +14,7 @@ public:
 	void Draw() override;
 	void OnExit()override;
 
-	UiType GetUiType() const { return UiType::TitleName; }
+	UiType GetUiType() const { return UiType::PressStart; }
 
 private:
 

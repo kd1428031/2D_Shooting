@@ -25,10 +25,11 @@ void TitleScene::Update(float dt)
 	FADEMANAGER.Update(dt);
 
 	if (!m_isExiting && (UIMANAGER.IsGameStartButton() || 
-		INPUT.IsKeyHeld(VK_RETURN)))
+		INPUT.IsKeyTriggered(VK_RETURN)))
 	{
 		UIMANAGER.Destroy(UiType::TitleName);
 		UIMANAGER.Destroy(UiType::GameStart);
+		UIMANAGER.Destroy(UiType::PressStart);
 		m_isExiting = true;
 	}
 

@@ -24,4 +24,10 @@ private:
 	int m_score;
 
 	bool m_sceneChangeFlg = false;
+	bool m_bossMakeFlg = false;
+	bool m_bossCreateFlg = false;
+	bool m_bossActiveFlg = false;
+	bool m_bossDestroyFlg = false;
+
+	bool m_enemyCreate = false;
 };

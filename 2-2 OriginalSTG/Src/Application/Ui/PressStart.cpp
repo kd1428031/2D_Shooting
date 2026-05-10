@@ -30,12 +30,12 @@ void PressStart::UpdateImpl(float dt)
 
 	if (!m_blink)
 	{
-		m_color.A(m_color.A() - kBlinkSpeed * dt);
+		m_color.A(m_color.A() - kBlinkSpeed * 0.02f);
 		if (m_color.A() <= kMinBlinkAlpha)m_blink = true;
 	}
 	else
 	{
-		m_color.A(m_color.A() + kBlinkSpeed * dt);
+		m_color.A(m_color.A() + kBlinkSpeed * 0.02f);
 		if (m_color.A() >= kMaxBlinkAlpha)m_blink = false;
 	}
 }

@@ -10,7 +10,7 @@ EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
     m_shotInterval(1.0f), m_shotTimer(m_shotInterval), m_bulletOffset(30.0f), 
     m_bulletSpeed(300.0f), m_bulletScale(2.0f), m_bulletColor(1, 0, 0, 1),
     m_bulletAngle(0.0f), m_bulletAngleSpeed(300.0f), m_shotNWay(0),
-    m_shotType(ShotType::Straight), m_shotFlg(false)
+    m_shotType(ShotType::Straight), m_shotFlg(false), m_preUpdateFlg(true)
 {    
 }
 
@@ -29,28 +29,32 @@ void EnemyBase::Draw()
 
 void EnemyBase::Update(float dt)
 {
-    if (m_state == State::Dying)
+    if (m_preUpdateFlg)PreUpdate(dt);
+    if (!m_preUpdateFlg)
     {
-        Death(dt);
-        return;
-    }
-
-    if (m_pos.x <  SCENE.screenWidth / 2 && m_pos.x > -SCENE.screenWidth / 2 &&
-        m_pos.y <  SCENE.screenHeight / 2 && m_pos.y > -SCENE.screenHeight / 2)
-    {
-        if (m_shotFlg)
+        if (m_state == State::Dying)
         {
-            m_shotTimer -= dt;
-            if (m_shotTimer <= 0)
+            Death(dt);
+            return;
+        }
+
+        if (m_pos.x <  SCENE.screenWidth / 2 && m_pos.x > -SCENE.screenWidth / 2 &&
+            m_pos.y <  SCENE.screenHeight / 2 && m_pos.y > -SCENE.screenHeight / 2)
+        {
+            if (m_shotFlg)
             {
-                Shot(dt);
-                m_shotTimer = m_shotInterval;
+                m_shotTimer -= dt;
+                if (m_shotTimer <= 0)
+                {
+                    Shot(dt);
+                    m_shotTimer = m_shotInterval;
+                }
             }
         }
+        UpdateImpl(dt);
+        Move(dt);
+        UpdateMatrix();
     }
-    UpdateImpl(dt);
-    Move(dt);
-    UpdateMatrix();
 }
 
 void EnemyBase::Move(float dt)
@@ -67,6 +71,11 @@ void EnemyBase::Move(float dt)
     {
         m_state = State::Dead;
     }
+}
+
+void EnemyBase::PreUpdate(float dt)
+{
+    m_preUpdateFlg = false;
 }
 
 void EnemyBase::Shot(float dt)
@@ -96,41 +105,121 @@ void EnemyBase::Shot(float dt)
 
 void EnemyBase::ShotStraight()
 {
-    Math::Vector2 spawnPos = m_pos + Math::Vector2(-m_bulletOffset, 0);
-    BULLETMANAGER.CreateBullet(BulletOwner::Enemy, BulletType::Normal, spawnPos, Math::Vector2(-m_bulletSpeed, 0), m_bulletScale, m_bulletColor);
+    float angle = 180.0f; // 左方向
+
+    float rad = DirectX::XMConvertToRadians(angle);
+
+    Math::Vector2 dir =
+    {
+        cos(rad),
+        sin(rad)
+    };
+
+    Math::Vector2 spawnPos = m_pos + dir * m_bulletOffset;
+    Math::Vector2 velocity = dir * m_bulletSpeed;
+
+    BULLETMANAGER.CreateBullet(
+        BulletOwner::Enemy,
+        BulletType::Normal,
+        spawnPos,
+        velocity,
+        m_bulletScale,
+        m_bulletColor
+    );
 }
 
 void EnemyBase::ShotNWay()
 {
-    Math::Vector2 spawnPos = m_pos + Math::Vector2(-m_bulletOffset, 0);
-
     if (m_shotNWay <= 0) return;
 
-    float angleStep = 360.0f / m_shotNWay;
+    // 弾の間隔
+    float angleStep = 0;
+    if (m_shotNWay > 1)
+    {
+        angleStep = m_spreadAngle / (m_shotNWay - 1);
+    }
+
+    // 開始角（中心から左右に広げる）
+    float startAngle = m_baseAngle - (m_spreadAngle / 2);
+
     for (int i = 0; i < m_shotNWay; i++)
     {
-        float angle = angleStep * i;
-        Math::Vector2 velocity =
+        float angle = startAngle + angleStep * i;
+        float rad = DirectX::XMConvertToRadians(angle);
+
+        Math::Vector2 dir =
         {
-            cos(DirectX::XMConvertToRadians(angle)) * m_bulletSpeed,
-            sin(DirectX::XMConvertToRadians(angle)) * m_bulletSpeed
+            cos(rad),
+            sin(rad)
         };
 
-        BULLETMANAGER.CreateBullet(BulletOwner::Enemy, BulletType::Normal, spawnPos, velocity, m_bulletScale, m_bulletColor);
+        Math::Vector2 spawnPos = m_pos + dir * m_bulletOffset;
+        Math::Vector2 velocity = dir * m_bulletSpeed;
+
+        BULLETMANAGER.CreateBullet(
+            BulletOwner::Enemy,
+            BulletType::Normal,
+            spawnPos,
+            velocity,
+            m_bulletScale,
+            m_bulletColor
+        );
+    }
+}
+
+void EnemyBase::ShotAllRange()
+{
+    if (m_shotAllNWay <= 0) return;
+
+    float angleStep = 360.0f / m_shotAllNWay;
+
+    for (int i = 0; i < m_shotAllNWay; i++)
+    {
+        float angle = angleStep * i;
+        float rad = DirectX::XMConvertToRadians(angle);
+
+        Math::Vector2 dir =
+        {
+            cos(rad),
+            sin(rad)
+        };
+
+        Math::Vector2 spawnPos = m_pos + dir * m_bulletOffset;
+        Math::Vector2 velocity = dir * m_bulletSpeed;
+
+        BULLETMANAGER.CreateBullet(
+            BulletOwner::Enemy,
+            BulletType::Normal,
+            spawnPos,
+            velocity,
+            m_bulletScale,
+            m_bulletColor
+        );
     }
 }
 
 void EnemyBase::ShotAimed()
 {
-    Math::Vector2 spawnPos = m_pos + Math::Vector2(-m_bulletOffset, 0);
-
     float deg = GetAngleDeg(m_pos, PLAYERMANAGER.GetPlayer()->GetPos());
-    Math::Vector2 velocity =
+    float rad = DirectX::XMConvertToRadians(deg);
+
+    Math::Vector2 dir =
     {
-        cos(DirectX::XMConvertToRadians(deg)) * m_bulletSpeed,
-        sin(DirectX::XMConvertToRadians(deg)) * m_bulletSpeed
+        cos(rad),
+        sin(rad)
     };
-    BULLETMANAGER.CreateBullet(BulletOwner::Enemy, BulletType::Normal, spawnPos, velocity, m_bulletScale, m_bulletColor);
+
+    Math::Vector2 spawnPos = m_pos + dir * m_bulletOffset;
+    Math::Vector2 velocity = dir * m_bulletSpeed;
+
+    BULLETMANAGER.CreateBullet(
+        BulletOwner::Enemy,
+        BulletType::Normal,
+        spawnPos,
+        velocity,
+        m_bulletScale,
+        m_bulletColor
+    );
 }
 
 void EnemyBase::ShotRotate(float dt)
@@ -141,15 +230,25 @@ void EnemyBase::ShotRotate(float dt)
         m_bulletAngle -= 360;
     }
 
-    Math::Vector2 dir = {
-        cos(DirectX::XMConvertToRadians(m_bulletAngle)),
-        sin(DirectX::XMConvertToRadians(m_bulletAngle)) };
+    float rad = DirectX::XMConvertToRadians(m_bulletAngle);
+
+    Math::Vector2 dir =
+    {
+        cos(rad),
+        sin(rad)
+    };
 
     Math::Vector2 spawnPos = m_pos + dir * m_bulletOffset;
-    Math::Vector2 bulletSpeed = dir * m_bulletSpeed;
+    Math::Vector2 velocity = dir * m_bulletSpeed;
 
-    BULLETMANAGER.CreateBullet(BulletOwner::Enemy, BulletType::Normal, spawnPos, bulletSpeed, m_bulletScale, m_bulletColor);
-
+    BULLETMANAGER.CreateBullet(
+        BulletOwner::Enemy,
+        BulletType::Normal,
+        spawnPos,
+        velocity,
+        m_bulletScale,
+        m_bulletColor
+    );
 }
 
 float EnemyBase::GetAngleDeg(Math::Vector2 src, Math::Vector2 dest)

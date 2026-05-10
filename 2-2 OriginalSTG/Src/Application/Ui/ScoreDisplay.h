@@ -15,6 +15,8 @@ public:
 
 	UiType GetUiType() const { return UiType::Score; }
 
+	void SetOffSet(float offset) { m_texFrameOffSet = offset; }
+
 private:
 
 	const Math::Color		kInitColor		= { 0.8f,0.2f,0.8f,1.0f };
@@ -23,4 +25,5 @@ private:
 	static constexpr int	kTexFrameHeight = 128;
 	static constexpr float	kInitScale		= 0.5f;
 	static constexpr int	kTexFrameOffSet = -(kTexFrameWidth / 1.5f);
+	int	m_texFrameOffSet = kTexFrameOffSet;
 };

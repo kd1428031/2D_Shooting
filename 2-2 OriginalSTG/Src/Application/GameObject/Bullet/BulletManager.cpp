@@ -33,3 +33,14 @@ void BulletManager::CreateBullet(BulletOwner owner, BulletType type, Math::Vecto
     bullet->Init();
     m_bullet.emplace_back(std::move(bullet));
 }
+
+void BulletManager::AllDestroy(BulletOwner owner)
+{
+    for (auto& p : m_bullet)
+    {
+        if (p->GetBulletOwner() == owner)
+        {
+            p->Destroy();
+        }
+    }
+}

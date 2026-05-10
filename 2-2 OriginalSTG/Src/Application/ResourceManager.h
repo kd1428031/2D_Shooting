@@ -2,22 +2,32 @@
 
 namespace TexName
 {
-	constexpr char kPlayer[]	= "player";
-	constexpr char kEnemy[]		= "enemy";
-	constexpr char kDaemon_idle[]	= "daemon";
-	constexpr char kDaemon_hit[]	= "daemon_hit";
-	constexpr char kDaemon_death[]	= "daemon_death";
-	constexpr char kBat[]			= "bat";
-	constexpr char kBullet[]	= "bullet";
-	constexpr char kBgTitle[]	= "bg_title";
-	constexpr char kBgGame[]	= "bg_game";
-	constexpr char kBgResult[]	= "bg_result";
-	constexpr char ktitleName[]	= "titleName";
-	constexpr char kPressMessage[]	= "pressMessage";
-	constexpr char kNumber[]	= "number";
-	constexpr char kWarning[]	= "warning";
-	constexpr char kStart[]		= "start";
-	constexpr char kFade[]		= "fade";
+	constexpr char kPlayer[]			= "player";
+	constexpr char kHeart[]				= "heart";
+	constexpr char kDaemon_idle[]		= "daemon";
+	constexpr char kDaemon_hit[]		= "daemon_hit";
+	constexpr char kDaemon_death[]		= "daemon_death";
+	constexpr char kBat[]				= "bat";
+	constexpr char kGrimReaper_idle[]	= "grimReaper_idle";
+	constexpr char kGrimReaper_death[]	= "grimReaper_death";
+	constexpr char kGrimReaper_summon[]	= "grimReaper_summon";
+	constexpr char kGr_Summon_idle[]	= "gr_summon_idle";
+	constexpr char kGr_SummonAppear[]	= "gr_summon_appear";
+	constexpr char kGr_Summon_death[]	= "gr_summon_death";
+	constexpr char kBullet[]			= "bullet";
+	constexpr char kBgTitle[]			= "bg_title";
+	constexpr char kBgGame[]			= "bg_game";
+	constexpr char kBgResult[]			= "bg_result";
+	constexpr char ktitleName[]			= "titleName";
+	constexpr char kPressMessage[]		= "pressMessage";
+	constexpr char kNumber[]			= "number";
+	constexpr char kScore[]				= "score";
+	constexpr char kWarning[]			= "warning";
+	constexpr char kStart[]				= "start";
+	constexpr char kFade[]				= "fade";
+	constexpr char kLightning[]			= "lightning";
+	constexpr char kLightningText[]		= "lightningText";
+	constexpr char kLightningIcon[]		= "lightningIcon";
 }
 
 class ResourceManager

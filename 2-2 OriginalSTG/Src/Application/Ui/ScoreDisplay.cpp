@@ -35,7 +35,7 @@ void ScoreDisplay::Draw()
 			(int)srcX, 0, kTexFrameWidth, kTexFrameHeight
 		};
 
-		SHADER.m_spriteShader.SetMatrix(CreateMatrix({(float)(i * (kTexFrameWidth + kTexFrameOffSet)), 0 }));
+		SHADER.m_spriteShader.SetMatrix(CreateMatrix({(float)(i * (kTexFrameWidth + m_texFrameOffSet)), 0 }));
 		SHADER.m_spriteShader.DrawTex_Color(m_tex, rect, m_color);
 	}
 }

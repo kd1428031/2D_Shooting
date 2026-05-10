@@ -17,8 +17,16 @@ public:
     {
         Straight,
         NWay,
+        AllRange,
         Aimed,
         Rotate
+    };
+
+    enum class EnemyTag
+    {
+        Normal,
+        Boss,
+        Summoned
     };
 
     EnemyBase(Math::Vector2 pos, float scale);
@@ -34,11 +42,13 @@ public:
 
     // “G‚²‚Æ‚Ì’Ç‰Á•`‰æˆ—
     virtual void DrawImpl() {}
+    virtual void PreUpdate(float dt);
 
-    void Shot(float dt);
+    virtual void Shot(float dt);
 
     void ShotStraight();        // ’¼ü’e 
     void ShotNWay();     // Way’e 
+    void ShotAllRange();     // Way’e 
     void ShotAimed();           // ©‹@‘_‚¢’e 
     void ShotRotate(float dt);  // ‰ñ“]’e
 
@@ -54,7 +64,9 @@ public:
 
     void SetShotFlg(bool shotFlg) { m_shotFlg = shotFlg; }
     void SetShotType(ShotType shotType) { m_shotType = shotType; }
+    void SetState(State state) { m_state = state; }
 
+    EnemyTag GetEnemyTag() const { return m_enemyTag; }
     float GetRadius() const { return m_radius; }
 
     void Destroy(){ m_state = State::Dead; }
@@ -65,10 +77,14 @@ protected:
 
     State m_state;
     ShotType m_shotType;
-
+    EnemyTag m_enemyTag = EnemyTag::Normal;
+    
     bool m_shotFlg;
 
     int m_shotNWay;
+    int m_shotAllNWay;
+
+    bool m_preUpdateFlg;
 
     // Œ‚”jŠl“¾ƒXƒRƒA
     int   m_score;
@@ -82,6 +98,8 @@ protected:
     Math::Color m_bulletColor;
     float       m_bulletAngle;
     float       m_bulletAngleSpeed;
+    float       m_baseAngle = 180.0f; // ƒfƒtƒHƒ‹ƒg¶Œü‚«
+    float       m_spreadAngle = 60.0f; // î‚ÌL‚ª‚èŠp
 
     // ‰æ‘œƒTƒCƒY
     int m_texFrameWidth = 64;

@@ -8,14 +8,21 @@ void TimeManager::Init()
 
 void TimeManager::Update()
 {
-    if (m_stopFrames > 0)
+    if (!m_isStopped)
     {
-        m_stopFrames--;
-        m_timeScale = 0.0f;
+        if (m_stopFrames > 0)
+        {
+            m_stopFrames--;
+            m_timeScale = 0.0f;
+        }
+        else
+        {
+            m_timeScale = 1.0f;  // ストップ終了後に自動リセット
+        }
     }
     else
     {
-        m_timeScale = 1.0f;  // ストップ終了後に自動リセット
+        m_timeScale = 0.0f;
     }
 }
 

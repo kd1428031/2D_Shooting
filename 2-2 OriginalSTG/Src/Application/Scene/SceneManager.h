@@ -18,7 +18,8 @@ public:
 	enum class SceneType
 	{
 		Title,
-		Game
+		Game,
+		Result
 	};
 	
 	void Init();

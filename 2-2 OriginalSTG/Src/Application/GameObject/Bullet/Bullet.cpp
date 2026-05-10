@@ -44,7 +44,7 @@ void Bullet::Draw()
 {
     if (!m_isAlive) return;
 
-    Math::Rectangle rect{ 0, m_texOffsetY, kTexFrameWidth, kTexFrameHeight };
+    Math::Rectangle rect{ m_texOffsetX, m_texOffsetY, kTexFrameWidth, kTexFrameHeight };
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex_Color(m_tex, rect, m_color);
@@ -100,12 +100,22 @@ void Bullet::AddHitEnemy(EnemyBase* enemy)
 
 void Bullet::InitNormalBullet()
 {
-    m_texOffsetY = kTexNormalOffsetY;
+    if (m_owner == BulletOwner::Player)
+    {
+        m_texOffsetX = kTexNormalOffsetX;
+        m_texOffsetY = kTexNormalOffsetY;
+    }
+    else if (m_owner == BulletOwner::Enemy)
+    {
+        m_texOffsetX = 0;
+        m_texOffsetY = 32 * 1;
+    }
     m_damage = kNormalDamage;
 }
 
 void Bullet::InitPenetratBullet()
 {
+    m_texOffsetX = 0;
     m_texOffsetY = kPenetrateTexOffsetY;
     m_damage = kPenetrateDamage;
 }

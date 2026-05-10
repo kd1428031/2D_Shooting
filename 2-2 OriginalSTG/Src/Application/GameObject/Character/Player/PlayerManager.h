@@ -16,6 +16,7 @@ public:
 	void Init();
 	void Update(float dt);
 	void Draw();
+	void DrawUi();
 
 	//void CreatePlayer(Math::Vector2 pos, float scale = 1.0f);
 

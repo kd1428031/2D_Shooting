@@ -2,6 +2,8 @@
 #include "EnemyBase.h"
 #include "Daemon/Daemon.h"
 #include "Bat/Bat.h"
+#include "GrimReaper/GrimReaper.h"
+#include "GrimReaper/Gr_Summon.h"
 
 void EnemyManager::Init()
 {
@@ -30,33 +32,82 @@ void EnemyManager::Draw()
     }
 }
 
-void EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, bool shotFlg, EnemyBase::ShotType shotType, float scale)
+EnemyBase *EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, bool shotFlg, EnemyBase::ShotType shotType, float scale)
 {
+    std::unique_ptr<EnemyBase> enemy;
+
     switch (type)
     {
     case EnemyType::Daemon:
-    {
-        auto enemy = std::make_unique<Daemon>(pos, scale);
-        enemy->Init();
-        enemy->SetShotFlg(shotFlg);
-        enemy->SetShotType(shotType);
-        m_enemy.emplace_back(std::move(enemy));
-
+        enemy = std::make_unique<Daemon>(pos, scale);
         break;
-    }
-
     case EnemyType::Bat:
+        enemy = std::make_unique<Bat>(pos, scale);
+        break;
+    case EnemyType::GrimReaper:
+        enemy = std::make_unique<GrimReaper>(pos, scale);
+        break;
+    case EnemyType::Gr_Summon:
+        enemy = std::make_unique<Gr_Summon>(pos, scale);
+        break;
+    }
+
+    if (enemy)
     {
-        auto enemy = std::make_unique<Bat>(pos, scale);
         enemy->Init();
         enemy->SetShotFlg(shotFlg);
         enemy->SetShotType(shotType);
         m_enemy.emplace_back(std::move(enemy));
+        return m_enemy.back().get();
+    }
+}
 
-        break;
+void EnemyManager::AllDamage(float damage)
+{
+    for (auto& p : m_enemy)
+    {
+        if (p->IsAlive())
+        {
+            p->TakeDamage(damage);
+        }
+    }
+}
+
+void EnemyManager::AllDestroy()
+{
+    for (auto& p : m_enemy)
+    {
+        if (p->IsAlive())
+        {
+            p->PreDeath();
+            p->SetState(EnemyBase::State::Dying);
+        }
+    }
+}
+
+std::vector<EnemyBase*> EnemyManager::GetEnemies(EnemyBase::EnemyTag tag)
+{
+    std::vector<EnemyBase*> result;
+
+    for (auto& p : m_enemy)
+    {
+        if (p->GetEnemyTag() == tag && p->IsAlive())
+        {
+            result.push_back(p.get());
+        }
     }
 
-    default:
-        break;
+    return result;
+}
+
+bool EnemyManager::IsBossAlive()
+{
+    for (auto& p : m_enemy)
+    {
+        if (p->GetEnemyTag() == EnemyBase::EnemyTag::Boss)
+        {
+           return p->IsAlive();
+        }
     }
+    return false;
 }

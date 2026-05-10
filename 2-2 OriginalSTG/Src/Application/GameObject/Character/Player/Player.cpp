@@ -4,10 +4,15 @@
 #include "Application/ResourceManager.h"
 #include "Application/Input/InputManager.h"
 #include "Application/TimeManager.h"
+#include "Application/Effect/EffectManager.h"
+#include "Application/Random/Random.h"
 
 void Player::Init()
 {
     m_tex = RESOURCEMANAGER.GetTex(TexName::kPlayer);
+    m_heartTex = RESOURCEMANAGER.GetTex(TexName::kHeart);
+
+    m_scale = kScale;
 
     m_pos = { kInitPosX, kInitPosY };
     
@@ -25,6 +30,8 @@ void Player::Init()
 
     m_animFrame = {};
     
+    m_actionFlg = true;
+
     m_invincibleTimer = 0.0f;
 
     // èââÒë¶î≠éÀÇÃÇΩÇﬂïâílÇ≈èâä˙âª
@@ -33,9 +40,15 @@ void Player::Init()
     // èâä˙èÛë‘ÇÕí èÌíe
     m_shotType = ShotType::NormalShot;
 
+    m_bombType = BombType::Lightning;
+
+    m_bomdTimer = 0.0f;
+
     m_isShooting = false;
 
     m_angle = 0.0f;
+
+    m_uiAlpha = 1.0f;
 }
 
 void Player::Update(float dt)
@@ -48,18 +61,28 @@ void Player::Update(float dt)
         return;
     }
     
-    Move(dt);
-
     if (m_mp < kInitMp) m_mp += m_mpRegen;
 
-    // íeî≠éÀèàóù
-    if (m_mp > 10)
+    if (m_actionFlg)
     {
-        Shot(dt);
+        Move(dt);
+
+        // íeî≠éÀèàóù
+        if (m_mp > 1)
+        {
+            Shot(dt);
+        }
+
+        Bomb(dt);
     }
+
+    if (m_mp <= 0)m_mp = 0;
+
     UpdateInvincible(dt);
     UpdateAnim(dt);
     UpdateMatrix();
+    Math::Vector2 pos = { -500.0f,-250.0f };
+    m_heartMat = CreateMatrix(pos, { 4, 4 }, 0);
 }
 
 void Player::Draw()
@@ -72,9 +95,33 @@ void Player::Draw()
 
     SHADER.m_spriteShader.SetMatrix(m_mat);
     SHADER.m_spriteShader.DrawTex(m_tex, rect, m_alpha);
+}
 
-    Math::Color backColor   = { 0.0f, 0.0f, 0.0f, 1.0f };
-    Math::Color gaugeColor  = { 0.8f, 0.2f, 0.8f, 1.0f };
+void Player::DrawUi()
+{
+    Math::Rectangle heartRect;
+    switch (m_hp)
+    {
+    case 3:
+        heartRect = { 33, 11 * 0, 33, 11 };
+        break;
+    case 2:
+        heartRect = { 33, 11 * 2, 33, 11 };
+        break;
+    case 1:
+        heartRect = { 33, 11 * 4, 33, 11 };
+        break;
+    case 0:
+        heartRect = { 33, 11 * 6, 33, 11 };
+        break;
+    }
+
+    SHADER.m_spriteShader.SetMatrix(m_heartMat);
+    SHADER.m_spriteShader.DrawTex(m_heartTex, heartRect, m_uiAlpha);
+
+
+    Math::Color backColor = { 0.0f, 0.0f, 0.0f, m_uiAlpha };
+    Math::Color gaugeColor = { 0.8f, 0.2f, 0.8f, m_uiAlpha };
     float width = 100.0f;
     float mpBar = (m_mp / kInitMp) * width;
     SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
@@ -90,13 +137,13 @@ void Player::Move(float dt)
     if(INPUT.IsKeyHeld(VK_SHIFT))
     {
         m_speed = kLowSpeed;
-        m_mpRegen = 100.0f * dt;
+        m_mpRegen = 25.0f * dt;
         m_shotType = ShotType::PenetratShot;
     }
     else
     {
         m_speed = kHighSpeed;
-        m_mpRegen = 20.0f * dt;
+        m_mpRegen = 5.0f * dt;
         m_shotType = ShotType::NormalShot;
     }
 
@@ -165,7 +212,7 @@ void Player::UpdateInvincible(float dt)
 void Player::Shot(float dt)
 {
     // íeî≠éÀ
-    m_isShooting = INPUT.IsKeyHeld('Z');
+    m_isShooting = INPUT.IsKeyHeld('Z') || INPUT.IsLeftClick();
 
     // íeî≠éÀä‘äuèàóù
     m_shotTimer -= dt;
@@ -178,8 +225,7 @@ void Player::Shot(float dt)
             m_shotTimer = kShotInterval;
 
             // MPè¡îÔ
-            m_mp -= 10;
-            if (m_mp <= 0)m_mp = 0;
+            m_mp -= 1;
 
             // íeÇÃéÌóﬁ
             switch (m_shotType)
@@ -206,6 +252,44 @@ void Player::PenetratShot()
     BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Penetrat, spawnPos, dir * kBulletSpeed, kBulletScale, kBulletColor);
 }
 
+void Player::Bomb(float dt)
+{
+    m_isBomd = INPUT.IsKeyHeld('X') || INPUT.IsRightClick();
+
+    m_bomdTimer -= 10 * dt;
+    if (m_bomdTimer <= 0)m_bomdTimer = 0;
+
+    if (m_isBomd)
+    {
+        if (m_bomdTimer <= 0)
+        {
+            if (m_bombType == BombType::Lightning)
+            {
+                if (m_mp >= 80)
+                {
+                    m_mp -= 0;
+                    m_bomdTimer = kBomdInterval;
+
+                    m_invincibleTimer = kInvincibleTime;
+                    m_state = State::Invincible;
+
+                    Lightning();
+                }
+            }
+        }
+    }
+}
+
+void Player::Lightning()
+{
+    for (int i = 0; i < Random::Range(20, 40); i++)
+    {
+        EFFCTMANAGER.CreateEffect(EffectType::Lightning,
+            { 0 + Random::Range(-700.0f, 700.0f), Random::Range(40.0f, 100.0f) }, 8);
+    }
+    EFFCTMANAGER.CreateEffect(EffectType::LightningText, { 0, 0 }, 1);
+}
+
 void Player::TakeDamage(float damage)
 {
     if (m_state == State::Dying || m_state == State::Dead)return;
@@ -225,5 +309,6 @@ void Player::TakeDamage(float damage)
 void Player::Death(float dt)
 {
     m_alpha -= dt;
+    //m_uiAlpha -= dt;
     if(m_alpha<=0)m_state = State::Dead;
 }

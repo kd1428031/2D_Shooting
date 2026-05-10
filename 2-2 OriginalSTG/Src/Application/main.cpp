@@ -33,7 +33,10 @@ bool Application::Init(int w, int h)
 	//===================================================================
 	// ウィンドウ作成
 	//===================================================================
-	if (m_window.Create(w, h, "Arcanum Forest", "Window") == false) {
+
+	std::string titleBer = "Arcanum Forest FPS:";
+
+	if (m_window.Create(w, h, titleBer, "Window") == false) {
 		MessageBoxA(nullptr, "ウィンドウ作成に失敗", "エラー", MB_OK);
 		return false;
 	}
@@ -250,6 +253,9 @@ void Application::Execute()
 			m_fps = (count * 1000) / (st - baseTime);
 			baseTime = st;
 			count = 0;
+
+			std::string titleBer = "Arcanum Forest FPS:" + std::to_string(m_fps);
+			SetWindowTextA(m_window.GetWndHandle(), titleBer.c_str());
 		}
 
 	}
