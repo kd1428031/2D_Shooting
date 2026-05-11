@@ -1,5 +1,6 @@
 #include "LightningText.h"
 #include "Application/ResourceManager.h"
+#include "Application/GameObject/Character/Enemy/EnemyManager.h"
 
 LightningText::LightningText(Math::Vector2 pos, float scale)
 	:EffectBase(pos, scale)
@@ -43,6 +44,7 @@ void LightningText::UpdateImpl(float dt)
 		m_color.A(m_color.A() - 0.075f);
 		if (m_color.A() <= 0)
 		{
+			ENEMYMANAGER.AllDamage(100);
 			m_isAlive = false;
 		}
 	}

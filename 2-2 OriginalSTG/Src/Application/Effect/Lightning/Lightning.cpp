@@ -1,6 +1,5 @@
 #include "Lightning.h"
 #include "Application/ResourceManager.h"
-#include "Application/GameObject/Character/Enemy/EnemyManager.h"
 #include "Application/GameObject/Bullet/BulletManager.h"
 #include "Application/TimeManager.h"
 
@@ -42,6 +41,8 @@ void Lightning::Draw()
 
 void Lightning::UpdateImpl(float dt)
 {
+	if (!m_isAlive)return;
+
 	m_timer++;
 
 	if (m_timer > 20)
@@ -55,7 +56,6 @@ void Lightning::UpdateImpl(float dt)
 		if (m_animFrame.y > kAnimMaxY)
 		{
 			m_isAlive = false;
-			ENEMYMANAGER.AllDamage(100);
 			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
 			TIMEMANAGER.Start();
 		}

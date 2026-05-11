@@ -1,6 +1,7 @@
 #include "Daemon.h"
 #include "Application/ResourceManager.h"
 #include "Application/Random/Random.h"
+#include "Application/GameObject/Character/Player/PlayerManager.h"
 
 Daemon::Daemon(Math::Vector2 pos, float scale)
 	: EnemyBase(pos, scale)
@@ -13,7 +14,22 @@ Daemon::Daemon(Math::Vector2 pos, float scale)
 void Daemon::Init()
 {
 	m_tex = RESOURCEMANAGER.GetTex(TexName::kDaemon_idle);
-	m_velocity = kInitVelocity;
+
+	if (Random::Chance(0.3))
+	{
+		float deg = GetAngleDeg(m_pos, PLAYERMANAGER.GetPlayer()->GetPos());
+		float rad = DirectX::XMConvertToRadians(deg);
+
+		Math::Vector2 dir = { cos(rad),sin(rad) };
+
+		Math::Vector2 velocity = dir * -kInitVelocity * Random::Range(0.8f, 2.0f);
+		m_velocity = velocity;
+	}
+	else
+	{
+		m_velocity = kInitVelocity * Random::Range(0.8f, 2.0f);
+	}
+
 	m_hp = kInitHp;
 	m_score = kScore;
 	m_shotTimer = 0.0f;

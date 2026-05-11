@@ -60,7 +60,7 @@ private:
     static constexpr float kMovingSpeed = 200.0f;
 
     // 初期化用定数
-    static constexpr int    kInitHp = 60;
+    static constexpr int    kInitHp = 2000;
     const Math::Vector2     kInitVelocity = { 0.0f, 0.0f };
 
     // 召喚数上限

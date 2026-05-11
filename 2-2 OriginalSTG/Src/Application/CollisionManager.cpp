@@ -40,6 +40,7 @@ void CollisionManager::CheckEnemyVsPlayerBullet(const std::vector<std::unique_pt
     for (auto& enemy : enemies)
     {
         if (!enemy->IsActive()) continue;
+        if (enemy->IsInvincible()) continue;
 
         for (auto& bullet : bullets)
         {

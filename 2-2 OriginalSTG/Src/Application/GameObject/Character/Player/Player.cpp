@@ -299,6 +299,8 @@ void Player::TakeDamage(float damage)
         m_invincibleTimer = kInvincibleTime;
         m_state = State::Invincible;
 
+        if (m_hp <= 1)return;
+
         Character::TakeDamage(damage);
         if (m_hp <= 0) m_state = State::Dying;
 

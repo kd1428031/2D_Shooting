@@ -9,6 +9,7 @@ public:
     enum class State
     {
         Alive,  // ê∂ë∂
+        Invincible,
         Dying,  // éÄñSââèo
         Dead    // éÄñS
     };
@@ -62,9 +63,16 @@ public:
 
     void TakeDamage(float damage)override;
 
+    void SetHp(int hp) { m_hp = hp; }
+    void SetVelocity(Math::Vector2 velocity) { m_velocity = velocity; }
+    void SetScale(float scale) { m_scale = scale; }
     void SetShotFlg(bool shotFlg) { m_shotFlg = shotFlg; }
     void SetShotType(ShotType shotType) { m_shotType = shotType; }
     void SetState(State state) { m_state = state; }
+    void SetStopPos(Math::Vector2 stopPos) { m_stopPos = stopPos; }
+    void SetBulletSpeed(float bulletSpeed) { m_bulletSpeed = bulletSpeed; }
+    void SetShotInterval(float shotInterval) { m_shotInterval = shotInterval; }
+    void SetBulletAngleSpeed(float bulletAngleSpeed) { m_bulletAngleSpeed = bulletAngleSpeed; }
 
     EnemyTag GetEnemyTag() const { return m_enemyTag; }
     float GetRadius() const { return m_radius; }
@@ -72,6 +80,7 @@ public:
     void Destroy(){ m_state = State::Dead; }
     bool IsAlive() const override{ return m_state != State::Dead; };
     bool IsActive() const { return m_state == State::Alive; }
+    bool IsInvincible() const { return m_state == State::Invincible; }
 
 protected:
 
@@ -79,6 +88,8 @@ protected:
     ShotType m_shotType;
     EnemyTag m_enemyTag = EnemyTag::Normal;
     
+    Math::Vector2 m_stopPos = { -4000, 0 };
+
     bool m_shotFlg;
 
     int m_shotNWay;

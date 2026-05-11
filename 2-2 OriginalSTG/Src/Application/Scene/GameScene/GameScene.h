@@ -2,10 +2,20 @@
 #include "../BaseScene/BaseScene.h"
 
 class Background;
+class EnemyBase;
 
 class GameScene : public BaseScene
 {
 public:
+
+	enum class Wave
+	{
+		oen,
+		oenBoss,
+		two,
+		three,
+		threeBoss
+	};
 
 	GameScene() { Init(); }
 	~GameScene() override {}
@@ -30,4 +40,12 @@ private:
 	bool m_bossDestroyFlg = false;
 
 	bool m_enemyCreate = false;
-};
+
+	float m_timer = 0.0f;
+
+	float m_time = 0.0f;
+
+	Wave m_wave = Wave::oen;
+
+	EnemyBase* m_oneBoss = nullptr;
+}; 

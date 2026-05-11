@@ -59,11 +59,10 @@ void EnemyBase::Update(float dt)
 
 void EnemyBase::Move(float dt)
 {
-    // 回転移動
-    /*m_velocity.x = cos(DirectX::XMConvertToRadians(m_spinAngle)) * 300;
-  m_velocity.y = sin(DirectX::XMConvertToRadians(m_spinAngle)) * 300;*/
-
-    m_pos += m_velocity * dt;
+    if (m_stopPos.x < m_pos.x)
+    {
+        m_pos += m_velocity * dt;
+    }
 
     // 画面外チェック
     if (m_pos.x > SCENE.screenWidth/2 + kDeleteMargin || m_pos.y > SCENE.screenHeight/2 + kDeleteMargin ||

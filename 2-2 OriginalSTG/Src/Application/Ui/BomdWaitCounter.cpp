@@ -22,7 +22,9 @@ void BomdWaitCounter::UpdateImpl(float dt)
 	Math::Vector2 pos = { -350, -300 };
 	m_iconMat = CreateMatrix(pos, { 0.25f,0.25f, }, 0.0f);
 
-	if (PLAYERMANAGER.GetPlayer()->GetBomdWait() > 0)
+	Player* player = PLAYERMANAGER.GetPlayer();
+
+	if (player->GetBomdWait() > 0 || player->GetMp() < 80)
 	{
 		m_iconColor.A(0.5f);
 	}

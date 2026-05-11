@@ -74,12 +74,15 @@ void Gr_Summon::OnHit()
 
 void Gr_Summon::PreUpdate(float dt)
 {
+	m_state = State::Invincible;
+
 	m_animFrame.x += kAnimSpeed * 2 * dt;
 
-	if (!m_preAnimFlg && m_animFrame.y == kDeathAnimMaxY && m_animFrame.x > kDeathAnimMaxX - 1)
+	if (!m_preAnimFlg && m_animFrame.y >= kDeathAnimMaxY && m_animFrame.x > kDeathAnimMaxX - 1)
 	{
 		m_tex = RESOURCEMANAGER.GetTex(TexName::kGr_Summon_idle);
 		m_preUpdateFlg = false;
+		m_state = State::Alive;
 	}
 
 	if (m_preAnimFlg)
@@ -106,7 +109,7 @@ void Gr_Summon::Death(float dt)
 {
 	m_animFrame.x += kAnimSpeed * 3 * dt;
 
-	if (m_deathFlg && m_animFrame.y == kDeathAnimMaxY && m_animFrame.x > kDeathAnimMaxX - 1)
+	if (m_deathFlg && m_animFrame.y >= kDeathAnimMaxY && m_animFrame.x > kDeathAnimMaxX - 1)
 	{
 		m_state = State::Dead;
 	}
