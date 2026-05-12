@@ -1,6 +1,6 @@
 #include "SoulLinkText.h"
 #include "Application/ResourceManager.h"
-#include "Application/GameObject/Character/Enemy/EnemyManager.h"
+#include "Application/Audio/AudioManager.h"
 #include "Application/TimeManager.h"
 
 SoulLinkText::SoulLinkText(Math::Vector2 pos, float scale)
@@ -18,7 +18,7 @@ void SoulLinkText::Init()
 	m_timer = 0.0f;
 
 	TIMEMANAGER.Stop();
-
+	AUDIOM.PlaySe(SoundName::kChain);
 	UpdateMatrix();
 }
 

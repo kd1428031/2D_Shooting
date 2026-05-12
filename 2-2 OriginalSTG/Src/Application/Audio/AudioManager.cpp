@@ -34,6 +34,7 @@ void AudioManager::Init()
 	LoadSound(SoundName::kMenuPush,"Sound/decide3.wav");
 	LoadSound(SoundName::kMenuHover,"Sound/cursor3.wav");
 	LoadSound(SoundName::kHeartbeat,"Sound/maou_se_sound_heartbeat01.wav");
+	LoadSound(SoundName::kChain,"Sound/チェーン・鎖03.wav");
 }	
 
 void AudioManager::Update()

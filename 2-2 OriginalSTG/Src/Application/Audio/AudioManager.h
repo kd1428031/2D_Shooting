@@ -20,6 +20,7 @@ namespace SoundName
 	constexpr char kMenuPush[] = "menuPush";
 	constexpr char kMenuHover[] = "menuHover";
 	constexpr char kHeartbeat[] = "heartbeat";
+	constexpr char kChain[] = "chain";
 }
 
 class AudioManager
