@@ -19,8 +19,6 @@ void Lightning::Init()
 	m_animFrame = {};
 	m_timer = 0.0f;
 
-	TIMEMANAGER.Stop();
-
 	UpdateMatrix();
 }
 
@@ -57,7 +55,6 @@ void Lightning::UpdateImpl(float dt)
 		{
 			m_isAlive = false;
 			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
-			TIMEMANAGER.Start();
 		}
 	}
 }

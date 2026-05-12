@@ -66,3 +66,15 @@ POINT InputManager::GetMousePos()
 
 	return mousePos;
 }
+
+POINT InputManager::GetMousePosRaw()
+{
+	POINT mousePos;
+
+	GetCursorPos(&mousePos);
+
+	//指定のウィンドウ基準のマウス座標に変換（実行画面の左上が(0,0)）
+	ScreenToClient(APP.m_window.GetWndHandle(), &mousePos);
+
+	return mousePos;
+}

@@ -40,6 +40,8 @@ private:
     bool m_deathFlg;
     bool m_createFlg;
 
+    Math::Vector2 m_targetPos;
+
     // 全方位弾用カウンタ
     float m_allShotTimer;
     static constexpr float kAllShotTimerInterval = 7.5f;
@@ -73,7 +75,7 @@ private:
     static constexpr float  kAnimSpeed = 20.0f;
     static constexpr int    kIdleAnimMax = 4;
     static constexpr int    kDeathAnimMax = 7;
-    static constexpr int    kScore = 100;
+    static constexpr int    kScore = 10000;
 
     // 弾
     static constexpr float  kShotInterval = 0.5f;                    // 発射間隔

@@ -29,6 +29,8 @@ private:
 	Background* m_background;
 
 	bool testKey = false;
+	bool testKey2 = false;
+	bool testKey3 = false;
 	bool testFlg1 = false;
 
 	int m_score;

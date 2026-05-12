@@ -106,6 +106,15 @@
     <Filter Include="Src\Application\Scene\ResultScene">
       <UniqueIdentifier>{b8b625d0-fd8b-46b9-917c-79518ac3b365}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Audio">
+      <UniqueIdentifier>{2c6df885-305e-4a74-a8cd-e591cc78ebef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Effect\SoulLink">
+      <UniqueIdentifier>{a2374cb1-0380-4759-bf5b-1f07f42c8a6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Effect\MagicCircle">
+      <UniqueIdentifier>{ef6f2dd3-45f4-4a5c-9796-ea209f190004}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -318,6 +327,21 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\GrimReaper\Gr_Summon.h">
       <Filter>Src\Application\GameObject\Character\GrimReaper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Audio\AudioManager.h">
+      <Filter>Src\Application\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Character\Player\Raven.h">
+      <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Ui\RavenWaitCounter.h">
+      <Filter>Src\Application\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Effect\SoulLink\SoulLinkText.h">
+      <Filter>Src\Application\Effect\SoulLink</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Effect\MagicCircle\MagicCircle.h">
+      <Filter>Src\Application\Effect\MagicCircle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -493,6 +517,21 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\GrimReaper\Gr_Summon.cpp">
       <Filter>Src\Application\GameObject\Character\GrimReaper</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Audio\AudioManager.cpp">
+      <Filter>Src\Application\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Character\Player\Raven.cpp">
+      <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Ui\RavenWaitCounter.cpp">
+      <Filter>Src\Application\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Effect\SoulLink\SoulLinkText.cpp">
+      <Filter>Src\Application\Effect\SoulLink</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Effect\MagicCircle\MagicCircle.cpp">
+      <Filter>Src\Application\Effect\MagicCircle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

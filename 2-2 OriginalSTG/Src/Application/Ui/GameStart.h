@@ -37,4 +37,6 @@ private:
 	bool m_isClicked;
 
 	bool m_blink;
+
+	bool m_hoverSoundFlg;
 };

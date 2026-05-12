@@ -3,10 +3,22 @@
 #include "Scene/SceneManager.h"
 #include "Application/TimeManager.h"
 #include "Application/ResourceManager.h"
+#include "Application/Audio/AudioManager.h"
+#include "Application/Fade/FadeManager.h"
+#include "Application/Input/InputManager.h"
 
 void Scene::Draw2D()
 {
 	SCENEMANAGER.Draw();	
+	//DrawCursor();
+}
+
+void Scene::DrawCursor()
+{
+	Math::Rectangle rect = { 0,0,128,128 };
+	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };
+	SHADER.m_spriteShader.SetMatrix(m_mat);
+	SHADER.m_spriteShader.DrawTex_Color(m_mouseTex, rect, color);
 }
 
 void Scene::Update()
@@ -15,33 +27,30 @@ void Scene::Update()
 	float dt = APP.m_deltaTime * TIMEMANAGER.m_timeScale;
 
 	SCENEMANAGER.Update(dt);	
+
+	/*POINT pt = INPUT.GetMousePos();
+
+	m_mouse.x = pt.x;
+	m_mouse.y = pt.y;
+
+	Math::Matrix transMat = Math::Matrix::CreateTranslation(m_mouse.x, m_mouse.y, 1);
+	Math::Matrix scaleMat = Math::Matrix::CreateScale(0.4f, 0.4f, 0);
+	m_mat = scaleMat * transMat;*/
 }
 
 void Scene::Init()
 {
+	ShowCursor(FALSE);
+	AUDIOM.Init();
 	RESOURCEMANAGER.LoadAll();
 	SCENEMANAGER.Init();
+	FADEMANAGER.Init();
+	m_mouseTex = RESOURCEMANAGER.GetTex(TexName::kMouseCursor);
 }
 
 void Scene::Release()
 {
-}
-
-void Scene::ScrollSpeedChange(float dt)
-{
-	//スクロール速度を自機入力で加減速(採用検討)
-	//if (INPUT.IsKeyHeld(VK_RIGHT) || INPUT.IsKeyHeld('D'))
-	//{
-	//	m_scrollSpeed += m_player->GetSpeed() / 2 * dt;
-	//}
-	//if (INPUT.IsKeyHeld(VK_LEFT) || INPUT.IsKeyHeld('A'))
-	//{
-	//	m_scrollSpeed -= m_player->GetSpeed() / 2 * dt;
-	//}
-
-	//// 速度制限
-	//if (m_scrollSpeed > kMaxScrollSpeed) m_scrollSpeed = kMaxScrollSpeed;
-	//if (m_scrollSpeed < kMinScrollSpeed) m_scrollSpeed = kMinScrollSpeed;
+	AUDIOM.Release();
 }
 
 void Scene::ImGuiUpdate()

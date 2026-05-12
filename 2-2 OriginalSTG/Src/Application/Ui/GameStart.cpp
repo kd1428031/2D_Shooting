@@ -3,6 +3,7 @@
 #include "Application/Scene/SceneManager.h"
 #include "Application/Input/InputManager.h"
 #include "Application/Ui/UiManager.h"
+#include "Application/Audio/AudioManager.h"
 
 GameStart::GameStart()
 {
@@ -18,6 +19,7 @@ void GameStart::Init()
 	m_color = kInitColor;
 	m_isClicked = false;
 	m_blink = false;
+	m_hoverSoundFlg = false;
 }
 
 void GameStart::UpdateImpl(float dt)
@@ -44,6 +46,12 @@ void GameStart::UpdateImpl(float dt)
 
 		m_color.A(kMaxBlinkAlpha);
 		
+		if (!m_hoverSoundFlg)
+		{
+			m_hoverSoundFlg = true;
+			AUDIOM.PlaySe(SoundName::kMenuHover);
+		}
+
 		if (INPUT.IsTriggerLeftClick())
 		{
 			m_isClicked = true;
@@ -51,9 +59,14 @@ void GameStart::UpdateImpl(float dt)
 	}
 	else
 	{
+		if (m_hoverSoundFlg)
+		{
+			m_hoverSoundFlg = false;
+		}
+
 		m_scale += (kInitScale - m_scale) * kScaleChangeSpeed * dt;
 
-		if (!m_blink)
+		/*if (!m_blink)
 		{
 			m_color.A(m_color.A() - kBlinkSpeed * dt);
 			if (m_color.A() <= kMinBlinkAlpha)m_blink = true;
@@ -62,7 +75,7 @@ void GameStart::UpdateImpl(float dt)
 		{
 			m_color.A(m_color.A() + kBlinkSpeed * dt);
 			if (m_color.A() >= kMaxBlinkAlpha)m_blink = false;
-		}
+		}*/
 	}
 }
 

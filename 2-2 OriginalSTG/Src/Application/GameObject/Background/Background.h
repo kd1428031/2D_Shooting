@@ -19,6 +19,6 @@ private:
 	static constexpr int   kWidth = 1280;
 	static constexpr int   kHeight = 720;
 
-	static constexpr float kScrollSpeed = 50;
+	static constexpr float kScrollSpeed = 100.0f;
 
 };

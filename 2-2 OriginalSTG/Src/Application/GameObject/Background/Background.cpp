@@ -12,12 +12,16 @@ void Background::Init()
 
 void Background::Update(float dt)
 {
-    m_pos.x += kScrollSpeed * dt;
+    if (kScrollSpeed * dt > 0)
+    {
+        m_pos.x += 1.0f;
+    }
+    //m_pos.x += kScrollSpeed * dt;
 
     // 1枚分スクロールしたらリセット
     if (m_pos.x >= kWidth * m_scale)
     {
-        m_pos.x = 0.0f;
+        m_pos.x = 0;
     }
 
     Math::Matrix scaleMat = Math::Matrix::CreateScale(m_scale, m_scale, 1);

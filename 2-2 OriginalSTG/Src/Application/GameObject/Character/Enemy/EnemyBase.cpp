@@ -4,6 +4,7 @@
 #include "Application/TimeManager.h"
 #include "Application/GameObject/Bullet/BulletManager.h"
 #include "Application/GameObject/Character/Player/PlayerManager.h"
+#include "Application/Audio/AudioManager.h"
 
 EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
     :Character(pos, scale), m_state(State::Alive), m_score(0), 
@@ -125,6 +126,7 @@ void EnemyBase::ShotStraight()
         m_bulletScale,
         m_bulletColor
     );
+    AUDIOM.PlaySeNumLimit(SoundName::kNShot);
 }
 
 void EnemyBase::ShotNWay()
@@ -164,6 +166,7 @@ void EnemyBase::ShotNWay()
             m_bulletColor
         );
     }
+    AUDIOM.PlaySeNumLimit(SoundName::kNShot);
 }
 
 void EnemyBase::ShotAllRange()
@@ -195,6 +198,7 @@ void EnemyBase::ShotAllRange()
             m_bulletColor
         );
     }
+    AUDIOM.PlaySeNumLimit(SoundName::kNShot);
 }
 
 void EnemyBase::ShotAimed()
@@ -219,11 +223,17 @@ void EnemyBase::ShotAimed()
         m_bulletScale,
         m_bulletColor
     );
+    AUDIOM.PlaySeNumLimit(SoundName::kNShot);
 }
 
 void EnemyBase::ShotRotate(float dt)
 {
     m_bulletAngle += m_bulletAngleSpeed * dt;
+    if ((int)m_bulletAngle % 45 == 0)
+    {
+        AUDIOM.PlaySeNumLimit(SoundName::kNShot);
+
+    }
     if (m_bulletAngle > 360)
     {
         m_bulletAngle -= 360;
@@ -250,14 +260,6 @@ void EnemyBase::ShotRotate(float dt)
     );
 }
 
-float EnemyBase::GetAngleDeg(Math::Vector2 src, Math::Vector2 dest)
-{
-    float rad = atan2(dest.y - src.y, dest.x - src.x);
-    float deg = DirectX::XMConvertToDegrees(rad);
-    if (deg < 0) deg += 360.0f;
-    return deg;
-}
-
 void EnemyBase::TakeDamage(float damage)
 {
     if (m_state == State::Alive)
@@ -270,6 +272,7 @@ void EnemyBase::TakeDamage(float damage)
             PreDeath();
             m_state = State::Dying;
             SCOREMANAGER.AddScore(m_score);
+            PLAYERMANAGER.AddDestroyCnt();
         }
     }
 }

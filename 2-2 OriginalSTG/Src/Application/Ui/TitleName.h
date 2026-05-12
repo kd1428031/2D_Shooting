@@ -19,8 +19,8 @@ public:
 private:
 
 	const Math::Color		kInitColor = { 0.8f,0.2f,0.8f,1.0f };
-	const Math::Vector2		kInitPos = { -301.0f, 200.0f };
-	static constexpr int	kTexFrameWidth = 128;
+	const Math::Vector2		kInitPos = { 0.0f, 200.0f };
+	static constexpr int	kTexFrameWidth = 2048;
 	static constexpr int	kTexFrameHeight = 128;
 	static constexpr float	kInitScale = 0.5f;
 	static constexpr int	kTexFrameOffSet = -(kTexFrameWidth / 1.5f);

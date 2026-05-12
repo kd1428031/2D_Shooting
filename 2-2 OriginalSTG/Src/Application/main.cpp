@@ -34,7 +34,7 @@ bool Application::Init(int w, int h)
 	// ウィンドウ作成
 	//===================================================================
 
-	std::string titleBer = "Arcanum Forest FPS:";
+	std::string titleBer = "Arcana Forest FPS:";
 
 	if (m_window.Create(w, h, titleBer, "Window") == false) {
 		MessageBoxA(nullptr, "ウィンドウ作成に失敗", "エラー", MB_OK);
@@ -254,7 +254,7 @@ void Application::Execute()
 			baseTime = st;
 			count = 0;
 
-			std::string titleBer = "Arcanum Forest FPS:" + std::to_string(m_fps);
+			std::string titleBer = "Arcana Forest FPS:" + std::to_string(m_fps);
 			SetWindowTextA(m_window.GetWndHandle(), titleBer.c_str());
 		}
 

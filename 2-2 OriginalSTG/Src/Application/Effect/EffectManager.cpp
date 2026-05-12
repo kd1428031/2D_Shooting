@@ -1,6 +1,8 @@
 #include "EffectManager.h"
 #include "Lightning/Lightning.h"
 #include "Lightning/LightningText.h"
+#include "SoulLink/SoulLinkText.h"
+#include "MagicCircle/MagicCircle.h"
 
 void EffectManager::Init()
 {
@@ -29,21 +31,42 @@ void EffectManager::Draw()
     }
 }
 
-void EffectManager::CreateEffect(EffectType type, Math::Vector2 pos, float scale)
+void EffectManager::DrawBack()
 {
+    for (auto& p : m_Effect)
+    {
+        p->DrawBack();
+    }
+}
+
+EffectBase* EffectManager::CreateEffect(EffectType type, Math::Vector2 pos, float scale)
+{
+    std::unique_ptr<EffectBase> effectBase;
+
     switch (type)
     {
     case EffectType::Lightning:
-        m_Effect.emplace_back(std::make_unique<Lightning>(pos, scale));
+        effectBase = std::make_unique<Lightning>(pos, scale);
         break;
 
     case EffectType::LightningText:
-        m_Effect.emplace_back(std::make_unique<LightningText>(pos, scale));
+        effectBase = std::make_unique<LightningText>(pos, scale);
+        break;
+
+    case EffectType::SoulLinkText:
+        effectBase = std::make_unique<SoulLinkText>(pos, scale);
+        break;
+
+    case EffectType::MagicCircle:
+        effectBase = std::make_unique<MagicCircle>(pos, scale);
         break;
 
     default:
         break;
     }
+
+    m_Effect.emplace_back(std::move(effectBase));
+    return m_Effect.back().get();
 }
 
 void EffectManager::Destroy(EffectType type)

@@ -26,6 +26,8 @@ public:
 	//マウス座標
 	POINT GetMousePos();
 
+	POINT GetMousePosRaw();
+
 private:
 
 	InputManager(){}

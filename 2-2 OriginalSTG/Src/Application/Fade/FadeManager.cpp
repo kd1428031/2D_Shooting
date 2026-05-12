@@ -1,6 +1,7 @@
 #include "FadeManager.h"
 #include "Application/Scene.h"
 #include "Application/ResourceManager.h"
+#include "Application/Audio/AudioManager.h"
 
 void FadeManager::Init()
 {
@@ -45,6 +46,7 @@ void FadeManager::Update(float dt)
 				if (m_color.A() >= 1)
 				{
 					m_blink = true;
+					AUDIOM.PlaySe(SoundName::kHeartbeat);
 				}
 			}
 			else if (m_blink)
@@ -87,6 +89,8 @@ void FadeManager::Draw()
 
 void FadeManager::FadeIn(float fadeSpeed, Math::Color color)
 {
+	m_blinkFlg = false;
+
 	m_color = color;
 	m_color.A(1.0f);
 	m_fadeInFlg = true;
@@ -96,6 +100,9 @@ void FadeManager::FadeIn(float fadeSpeed, Math::Color color)
 
 void FadeManager::FadeOut(float fadeSpeed, Math::Color color)
 {
+	m_blinkFlg = false;    
+	m_blinkEnd = false;    
+
 	m_color = color;
 	m_color.A(0.0f);
 	m_fadeOutFlg = true;
@@ -110,6 +117,9 @@ bool FadeManager::IsFadeEnd()
 
 void FadeManager::Blink(float time, float speed, Math::Color color)
 {
+	m_fadeInFlg = false;
+	m_fadeOutFlg = false;
+
 	m_blinkFlg = true;
 	m_blink = false;
 	m_blinkEnd = false;

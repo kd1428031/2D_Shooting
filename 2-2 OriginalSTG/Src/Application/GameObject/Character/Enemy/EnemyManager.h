@@ -25,6 +25,8 @@ public:
 	void Update(float dt);
 	void Draw();
 
+	int GetEnemyNum() { return (int)m_enemy.size(); }
+
 	EnemyBase* CreateEnemy(EnemyType type, Math::Vector2 pos, bool shotFlg = false,
 		EnemyBase::ShotType shotType = EnemyBase::ShotType::Straight, float scale = 1.0f);
 

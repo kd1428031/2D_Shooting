@@ -18,8 +18,9 @@ public:
 	void Init();
 	void Update(float dt);
 	void Draw();
+	void DrawBack();
 
-	void CreateEffect(EffectType type, Math::Vector2 pos, float scale);
+	EffectBase* CreateEffect(EffectType type, Math::Vector2 pos, float scale);
 
 	void Destroy(EffectType type);
 

@@ -26,7 +26,7 @@ public:
 
 private:
 
-    FadeManager() = default;
+    FadeManager() { Init(); };
 
     KdTexture* m_tex;
     Math::Matrix m_mat;

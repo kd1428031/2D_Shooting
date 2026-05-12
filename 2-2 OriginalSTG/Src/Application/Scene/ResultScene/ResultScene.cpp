@@ -12,9 +12,11 @@
 #include "Application/Fade/FadeManager.h"
 #include "Application/Input/InputManager.h"
 #include "Application/Effect/EffectManager.h"
+#include "Application/Audio/AudioManager.h"
 
 void ResultScene::Init()
 {
+	FADEMANAGER.Init();
 	m_background = SCENEMANAGER.GetBackground();
 
 	UIMANAGER.Init();
@@ -31,6 +33,7 @@ void ResultScene::Init()
 	UIMANAGER.CreateUi(UiType::PressStart);
 
 	PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
+	FADEMANAGER.FadeIn(1);
 }
 
 void ResultScene::Update(float dt)
@@ -45,6 +48,8 @@ void ResultScene::Update(float dt)
 	UIMANAGER.Update(dt);
 	FADEMANAGER.Update(dt);
 	INPUT.Update();
+	AUDIOM.Update();
+	AUDIOM.UpdateFade();
 
 	if (INPUT.IsKeyTriggered(VK_RETURN) || INPUT.IsLeftClick())
 	{
@@ -62,7 +67,6 @@ void ResultScene::Update(float dt)
 			TIMEMANAGER.Start();
 			UIMANAGER.Destroy(UiType::Score);
 			SCENEMANAGER.SetNextScene(SceneManager::SceneType::Title);
-			FADEMANAGER.FadeIn(1);
 		}
 	}
 }

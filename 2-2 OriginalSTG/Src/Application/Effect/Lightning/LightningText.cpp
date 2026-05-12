@@ -1,6 +1,7 @@
 #include "LightningText.h"
 #include "Application/ResourceManager.h"
 #include "Application/GameObject/Character/Enemy/EnemyManager.h"
+#include "Application/TimeManager.h"
 
 LightningText::LightningText(Math::Vector2 pos, float scale)
 	:EffectBase(pos, scale)
@@ -15,6 +16,8 @@ void LightningText::Init()
 	m_scale = kInitScale;
 	m_color = kInitColor;
 	m_timer = 0.0f;
+
+	TIMEMANAGER.Stop();
 
 	UpdateMatrix();
 }
@@ -39,13 +42,15 @@ void LightningText::UpdateImpl(float dt)
 		m_color.A(m_color.A() + 0.1f);
 		if (m_color.A() >= 1.0f)m_color.A(1.0f);
 	}
-	else if (m_timer > 30)
+	else if (m_timer > 50)
 	{
 		m_color.A(m_color.A() - 0.075f);
 		if (m_color.A() <= 0)
 		{
 			ENEMYMANAGER.AllDamage(100);
 			m_isAlive = false;
+			TIMEMANAGER.Start();
+
 		}
 	}
 }

@@ -23,3 +23,26 @@ Math::Matrix GameObject::CreateMatrix(Math::Vector2 pos, Math::Vector2 size, flo
     Math::Matrix mat = scaleMat * rotMat * transMat;
     return mat;
 }
+
+Math::Matrix GameObject::CreateMatrix(Math::Vector2 offset)
+{
+    Math::Matrix transMat;
+    Math::Matrix rotMat;
+    Math::Matrix scaleMat;
+    Math::Matrix mat;
+
+    scaleMat = Math::Matrix::CreateScale(m_scale, m_scale, 1);
+    rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_angle));
+    transMat = Math::Matrix::CreateTranslation(m_pos.x + offset.x, m_pos.y + offset.y, 0);
+    mat = scaleMat * rotMat * transMat;
+
+    return mat;
+}
+
+float GameObject::GetAngleDeg(Math::Vector2 src, Math::Vector2 dest)
+{
+    float rad = atan2(dest.y - src.y, dest.x - src.x);
+    float deg = DirectX::XMConvertToDegrees(rad);
+    if (deg < 0) deg += 360.0f;
+    return deg;
+}

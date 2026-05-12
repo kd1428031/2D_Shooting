@@ -11,9 +11,11 @@
 #include "Application/Fade/FadeManager.h"
 #include "Application/Input/InputManager.h"
 #include "Application/Effect/EffectManager.h"
+#include "Application/Audio/AudioManager.h"
 
 void GameScene::Init()
 {
+	FADEMANAGER.Init();
 	m_background = SCENEMANAGER.GetBackground();
 
 	TIMEMANAGER.Init();
@@ -21,19 +23,22 @@ void GameScene::Init()
 	UIMANAGER.Init();
 	UIMANAGER.CreateUi(UiType::Score);
 	UIMANAGER.CreateUi(UiType::BomdWaitCounter);
+	UIMANAGER.CreateUi(UiType::RavenBomdWaitCounter);
 
 	ENEMYMANAGER.Init();
 	BULLETMANAGER.Init();
 	EFFCTMANAGER.Init();
-	FADEMANAGER.Init();
 	SCOREMANAGER.Init();
 
-	m_timer = 10.0f;
+	m_timer = 0.0f;
 	m_time = 0.0f;
+
+	FADEMANAGER.FadeIn(1);
 }
 
 void GameScene::Update(float dt)
 {
+	// 大ボス
 	if (GetAsyncKeyState('U') & 0x8000)
 	{
 		if (!testKey)
@@ -44,9 +49,38 @@ void GameScene::Update(float dt)
 			m_bossMakeFlg = true;
 			m_enemyCreate = true;
 			testKey = true;
+
+			m_wave = Wave::three;
+			m_timer = 5.0f;
 		}
 	}
 	else testKey = false;
+
+	// 中ボス
+	if (GetAsyncKeyState('I') & 0x8000)
+	{
+		if (!testKey2)
+		{
+			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+			ENEMYMANAGER.AllDestroy();
+			//m_bossMakeFlg = true;
+			m_enemyCreate = true;
+			testKey2 = true;
+
+			m_wave = Wave::oen;
+			m_timer = 20.0f;
+		}
+	}
+	else testKey2 = false;
+
+	if (GetAsyncKeyState('O') & 0x8000)
+	{
+		if (!testKey3)
+		{
+			PLAYERMANAGER.GetPlayer()->SetGameoverFlg(true);
+		}
+	}
+	else testKey3 = false;
 
 	m_timer += dt;
 
@@ -55,15 +89,18 @@ void GameScene::Update(float dt)
 	{
 	case GameScene::Wave::oen:
 	{
-		if (Random::Chance(0.05f))
+		if (ENEMYMANAGER.GetEnemyNum() < 15)
 		{
-			EnemyType type = (EnemyType)Random::Range(0, 1);
-			bool shotFlg = Random::Chance(0.1f);
-			EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 3);
+			if (Random::Chance(0.05f))
+			{
+				EnemyType type = (EnemyType)Random::Range(0, 1);
+				bool shotFlg = Random::Chance(0.1f);
+				EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 3);
 
-			ENEMYMANAGER.CreateEnemy(type,
-				{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
-				shotFlg, shotType);
+				ENEMYMANAGER.CreateEnemy(type,
+					{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
+					shotFlg, shotType);
+			}
 		}
 
 		if (m_timer > 20.0f)
@@ -79,7 +116,8 @@ void GameScene::Update(float dt)
 				{ 640.0f + Random::Range(60.0f, 120.0), 0.0f },
 				shotFlg, shotType);
 			m_oneBoss->SetScale(2);
-			m_oneBoss->SetHp(1500);
+			m_oneBoss->SetRadius(64);
+			m_oneBoss->SetHp(750);
 			m_oneBoss->SetVelocity({ -300, 0 });
 			m_oneBoss->SetBulletSpeed(150.0f);
 			m_oneBoss->SetBulletAngleSpeed(700);
@@ -111,21 +149,35 @@ void GameScene::Update(float dt)
 	}
 	case GameScene::Wave::two:
 	{
-		if (Random::Chance(0.075f))
+		if (ENEMYMANAGER.GetEnemyNum() < 30)
 		{
-			EnemyType type = (EnemyType)Random::Range(0, 1);
-			bool shotFlg = Random::Chance(0.3f);
-			EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 4);
+			if (Random::Chance(0.05f))
+			{
+				EnemyType type = (EnemyType)Random::Range(0, 1);
+				bool shotFlg = Random::Chance(0.3f);
+				EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 4);
 
-			ENEMYMANAGER.CreateEnemy(type,
-				{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
-				shotFlg, shotType);
+				ENEMYMANAGER.CreateEnemy(type,
+					{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
+					shotFlg, shotType);
+			}
 		}
 
 		if (m_timer > 20.0f)
 		{
 			m_wave = Wave::three;
 			m_timer = 0.0f;
+
+			for (int i = 0; i < 50; i++)
+			{
+				EnemyType type = (EnemyType)Random::Range(0, 1);
+				bool shotFlg = Random::Chance(0.3f);
+				EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 4);
+
+				ENEMYMANAGER.CreateEnemy(type,
+					{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
+					shotFlg, shotType);
+			}
 		}
 
 		break;
@@ -133,18 +185,21 @@ void GameScene::Update(float dt)
 
 	case GameScene::Wave::three:
 	{
-		if (Random::Chance(0.5f))
+		if (ENEMYMANAGER.GetEnemyNum() < 300)
 		{
-			EnemyType type = (EnemyType)Random::Range(0, 1);
-			bool shotFlg = Random::Chance(0.5f);
-			EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 5);
+			/*if (Random::Chance(0.05f))
+			{
+				EnemyType type = (EnemyType)Random::Range(0, 1);
+				bool shotFlg = Random::Chance(0.5f);
+				EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 5);
 
-			ENEMYMANAGER.CreateEnemy(type,
-				{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
-				shotFlg, shotType);
+				ENEMYMANAGER.CreateEnemy(type,
+					{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
+					shotFlg, shotType);
+			}*/
 		}
 
-		if (m_timer > 5.0f)
+		if (ENEMYMANAGER.GetEnemyNum() <= 0)
 		{
 			PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
 			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
@@ -154,6 +209,8 @@ void GameScene::Update(float dt)
 
 			m_wave = Wave::threeBoss;
 			m_timer = 0.0f;
+
+			AUDIOM.FadeOutBgm(1.5f);
 		}
 
 		break;
@@ -179,10 +236,21 @@ void GameScene::Update(float dt)
 					true, EnemyBase::ShotType::Rotate, 4);
 				m_bossCreateFlg = false;
 				m_bossActiveFlg = true;
+				AUDIOM.FadeInBgm(SoundName::kLastboss, 2.0f);
+
 			}
 		}
 		break;
 	}
+	}
+
+	// ヒット時画面が赤く
+	if (PLAYERMANAGER.GetPlayer()->IsIsHit() && PLAYERMANAGER.GetPlayer()->IsAlive())
+	{
+		if (!m_sceneChangeFlg)
+		{
+			FADEMANAGER.Blink(0.2f, 1.0f, Math::Color(0.8f, 0.2f, 0.2f, 0.0f));
+		}
 	}
 
 	// 更新
@@ -195,6 +263,8 @@ void GameScene::Update(float dt)
 	UIMANAGER.Update(dt);
 	FADEMANAGER.Update(dt);
 	INPUT.Update();
+	AUDIOM.Update();
+	AUDIOM.UpdateFade();
 
 	// リザルトへ移行
 	if (m_bossActiveFlg)
@@ -227,8 +297,9 @@ void GameScene::Update(float dt)
 		{
 			UIMANAGER.Destroy(UiType::Score);
 			UIMANAGER.Destroy(UiType::BomdWaitCounter);
+			UIMANAGER.Destroy(UiType::RavenBomdWaitCounter);
 			SCENEMANAGER.SetNextScene(SceneManager::SceneType::Result);
-			FADEMANAGER.FadeIn(1);
+			AUDIOM.FadeOutAndPlayNext(SoundName::kResult, 0.5f, 1.0f, true);
 		}
 	}
 }
@@ -236,6 +307,7 @@ void GameScene::Update(float dt)
 void GameScene::Draw()
 {
 	m_background->Draw();
+	EFFCTMANAGER.DrawBack();
 	PLAYERMANAGER.Draw();
 	ENEMYMANAGER.Draw();
 	BULLETMANAGER.Draw();

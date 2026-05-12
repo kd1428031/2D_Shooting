@@ -10,6 +10,9 @@ private:
 	static constexpr float kMinScrollSpeed = 250.0f;
 	static constexpr float kMaxScrollSpeed = 700.0f;
 
+	KdTexture* m_mouseTex;
+	Math::Vector2 m_mouse;
+	Math::Matrix m_mat;
 
 public:
 
@@ -28,7 +31,7 @@ public:
 	// •`‰æˆ—
 	void Draw2D();
 
-	void ScrollSpeedChange(float dt);
+	void DrawCursor();
 
 	float GetScrollSpeed() const { return m_scrollSpeed; }
 

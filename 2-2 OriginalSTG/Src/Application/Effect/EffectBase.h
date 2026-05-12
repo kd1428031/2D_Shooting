@@ -3,7 +3,9 @@
 enum class EffectType
 {
 	Lightning,
-	LightningText
+	LightningText,
+	SoulLinkText,
+	MagicCircle
 };
 
 class EffectBase
@@ -16,7 +18,8 @@ public:
 	virtual void Init() = 0;
 	void Update(float dt);
 	virtual void Draw() = 0;
-	void UpdateMatrix();
+	virtual void DrawBack(){}
+	virtual void UpdateMatrix();
 	virtual void UpdateImpl(float dt) {};
 
 	Math::Matrix CreateMatrix(Math::Vector2 offset);
@@ -25,6 +28,7 @@ public:
 	bool IsAlive() const { return m_isAlive; }
 	void Kill();
 	virtual void OnExit();
+	void SetTargetPos(Math::Vector2 targetPos) { m_targetPos = targetPos; }
 
 	virtual EffectType GetEffectType() const = 0;
 
@@ -32,6 +36,8 @@ protected:
 
 	// 座標
 	Math::Vector2 m_pos;
+
+	Math::Vector2 m_targetPos = {};
 
 	// 状態
 	bool m_isAlive;

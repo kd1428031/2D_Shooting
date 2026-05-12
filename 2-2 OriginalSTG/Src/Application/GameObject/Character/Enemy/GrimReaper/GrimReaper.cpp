@@ -62,19 +62,43 @@ void GrimReaper::UpdateImpl(float dt)
 		m_baseAngle -= 360.0f;
 	}
 
+	float deg = GetAngleDeg(m_pos, PLAYERMANAGER.GetPlayer()->GetPos());
+	if (deg > 90 && deg < 270)
+	{
+		m_flipX = -1;
+	}
+	else
+	{
+		m_flipX = 1;
+	}
+
+	if (m_moveFlg)
+	{
+		if (m_pos.x < -50.0f)
+		{
+			m_velocity.x = 0.0f;
+			m_velocity.y = 0.0f;
+			m_moveFlg = false;
+			m_moveTimer = kMoveTimerInterval;
+		}
+	}
 
 	UpdateSummon(dt);
 	UpdateMove(dt);
 	UpdateShot(dt);
 	UpdataAnim(dt);
+	m_color = { 1,1,1,1 };
 }
 
 void GrimReaper::PreUpdate(float dt)
 {
+	m_state = State::Invincible;
+
 	m_color.A(m_color.A() + dt);
 	if (m_color.A() >= 1.0f)
 	{
 		m_preUpdateFlg = false;
+		m_state = State::Alive;
 	}
 }
 
@@ -142,7 +166,9 @@ void GrimReaper::UpdateSummon(float dt)
 
 void GrimReaper::UpdateShot(float dt)
 {
-	m_shotTimer -= dt;
+	if (m_moveFlg || m_movingTimer > 0)return;
+
+		m_shotTimer -= dt;
 	if (m_shotTimer <= 0)
 	{
 		Shot(dt);
@@ -167,6 +193,7 @@ void GrimReaper::UpdateMove(float dt)
 			m_moveFlg = true;
 			m_moveTimer = kMoveTimerInterval;
 			m_movingTimer = kMovingTimerInterval;
+			m_targetPos = PLAYERMANAGER.GetPlayer()->GetPos();
 		}
 	}
 
@@ -175,7 +202,7 @@ void GrimReaper::UpdateMove(float dt)
 		m_movingTimer -= dt;
 		if (m_movingTimer > 0)
 		{
-			float deg = GetAngleDeg(m_pos, PLAYERMANAGER.GetPlayer()->GetPos());
+			float deg = GetAngleDeg(m_pos, m_targetPos);
 			float rad = DirectX::XMConvertToRadians(deg);
 
 			Math::Vector2 dir = { cos(rad),sin(rad) };
@@ -228,6 +255,7 @@ void GrimReaper::OnHit()
 {
 	//m_tex = RESOURCEMANAGER.GetTex(TexName::kGrimReaper_hit);
 	//m_animFrame.x = 1;
+	m_color = { 1,0,0,1 };
 }
 
 void GrimReaper::PreDeath()

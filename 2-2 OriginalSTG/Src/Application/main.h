@@ -16,6 +16,7 @@ public:
 	// アプリケーション終了
 	void End() { m_endFlag = true; }
 
+	KdGameWindow GetWindowHandle() { return m_window; }
 
 	//=====================================================
 	// グローバルデータ

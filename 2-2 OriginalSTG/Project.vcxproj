@@ -159,11 +159,14 @@
     <ClInclude Include="..\Library\tinygltf\stb_image.h" />
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
+    <ClInclude Include="Src\Application\Audio\AudioManager.h" />
     <ClInclude Include="Src\Application\CollisionManager.h" />
     <ClInclude Include="Src\Application\Effect\EffectBase.h" />
     <ClInclude Include="Src\Application\Effect\EffectManager.h" />
     <ClInclude Include="Src\Application\Effect\Lightning\Lightning.h" />
     <ClInclude Include="Src\Application\Effect\Lightning\LightningText.h" />
+    <ClInclude Include="Src\Application\Effect\MagicCircle\MagicCircle.h" />
+    <ClInclude Include="Src\Application\Effect\SoulLink\SoulLinkText.h" />
     <ClInclude Include="Src\Application\Fade\FadeManager.h" />
     <ClInclude Include="Src\Application\GameObject\Background\Background.h" />
     <ClInclude Include="Src\Application\GameObject\Bullet\Bullet.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="Src\Application\GameObject\Character\Enemy\GrimReaper\Gr_Summon.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\Player.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerManager.h" />
+    <ClInclude Include="Src\Application\GameObject\Character\Player\Raven.h" />
     <ClInclude Include="Src\Application\GameObject\GameObject.h" />
     <ClInclude Include="Src\Application\Input\InputManager.h" />
     <ClInclude Include="Src\Application\Random\Random.h" />
@@ -194,6 +198,7 @@
     <ClInclude Include="Src\Application\Ui\GameStart.h" />
     <ClInclude Include="Src\Application\Ui\PressMessage.h" />
     <ClInclude Include="Src\Application\Ui\PressStart.h" />
+    <ClInclude Include="Src\Application\Ui\RavenWaitCounter.h" />
     <ClInclude Include="Src\Application\Ui\ScoreDisplay.h" />
     <ClInclude Include="Src\Application\Ui\ScoreText.h" />
     <ClInclude Include="Src\Application\Ui\TitleName.h" />
@@ -223,11 +228,14 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Src\Application\Audio\AudioManager.cpp" />
     <ClCompile Include="Src\Application\CollisionManager.cpp" />
     <ClCompile Include="Src\Application\Effect\EffectBase.cpp" />
     <ClCompile Include="Src\Application\Effect\EffectManager.cpp" />
     <ClCompile Include="Src\Application\Effect\Lightning\Lightning.cpp" />
     <ClCompile Include="Src\Application\Effect\Lightning\LightningText.cpp" />
+    <ClCompile Include="Src\Application\Effect\MagicCircle\MagicCircle.cpp" />
+    <ClCompile Include="Src\Application\Effect\SoulLink\SoulLinkText.cpp" />
     <ClCompile Include="Src\Application\Fade\FadeManager.cpp" />
     <ClCompile Include="Src\Application\GameObject\Background\Background.cpp" />
     <ClCompile Include="Src\Application\GameObject\Bullet\Bullet.cpp" />
@@ -241,6 +249,7 @@
     <ClCompile Include="Src\Application\GameObject\Character\Enemy\GrimReaper\Gr_Summon.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\Player.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerManager.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Character\Player\Raven.cpp" />
     <ClCompile Include="Src\Application\GameObject\GameObject.cpp" />
     <ClCompile Include="Src\Application\Input\InputManager.cpp" />
     <ClCompile Include="Src\Application\Random\Random.cpp" />
@@ -256,6 +265,7 @@
     <ClCompile Include="Src\Application\Ui\BomdWaitCounter.cpp" />
     <ClCompile Include="Src\Application\Ui\GameStart.cpp" />
     <ClCompile Include="Src\Application\Ui\PressStart.cpp" />
+    <ClCompile Include="Src\Application\Ui\RavenWaitCounter.cpp" />
     <ClCompile Include="Src\Application\Ui\ScoreDisplay.cpp" />
     <ClCompile Include="Src\Application\Ui\ScoreText.cpp" />
     <ClCompile Include="Src\Application\Ui\TitleName.cpp" />

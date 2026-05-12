@@ -6,6 +6,7 @@
 #include "GameStart.h"
 #include "PressStart.h"
 #include "BomdWaitCounter.h"
+#include "RavenWaitCounter.h"
 
 void UiManager::Init()
 {
@@ -69,6 +70,10 @@ void UiManager::CreateUi(UiType type)
 
     case UiType::BomdWaitCounter:
         m_ui.emplace_back(std::make_unique<BomdWaitCounter>());
+        break;
+
+    case UiType::RavenBomdWaitCounter:
+        m_ui.emplace_back(std::make_unique<RavenWaitCounter>());
         break;
 
     case UiType::WarningCutIn:

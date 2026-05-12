@@ -13,10 +13,12 @@ public:
     virtual void Draw() = 0;
     void UpdateMatrix();
     Math::Matrix CreateMatrix(Math::Vector2 pos, Math::Vector2 size, float angle);
+    Math::Matrix CreateMatrix(Math::Vector2 offset);
 
     virtual bool IsAlive() const { return true; };
 
     Math::Vector2 GetPos() const { return m_pos; }
+    float GetAngleDeg(Math::Vector2 src, Math::Vector2 dest);
 
 protected:
 

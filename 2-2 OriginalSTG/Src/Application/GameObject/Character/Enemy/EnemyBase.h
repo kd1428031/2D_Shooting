@@ -53,8 +53,6 @@ public:
     void ShotAimed();           // 自機狙い弾 
     void ShotRotate(float dt);  // 回転弾
 
-    float GetAngleDeg(Math::Vector2 src, Math::Vector2 dest);
-
     // 死亡時の演出処理（エフェクト・アニメーションなど）
     virtual void PreDeath(){}
     virtual void Death(float dt) = 0;
@@ -63,7 +61,9 @@ public:
 
     void TakeDamage(float damage)override;
 
+    void SetColor(Math::Color color) { m_color = color; }
     void SetHp(int hp) { m_hp = hp; }
+    void SetRadius(float radius) { m_radius = radius; }
     void SetVelocity(Math::Vector2 velocity) { m_velocity = velocity; }
     void SetScale(float scale) { m_scale = scale; }
     void SetShotFlg(bool shotFlg) { m_shotFlg = shotFlg; }

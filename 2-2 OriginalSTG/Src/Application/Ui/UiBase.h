@@ -8,6 +8,7 @@ enum class UiType
 	Score,
 	ScoreText,
 	BomdWaitCounter,
+	RavenBomdWaitCounter,
 	WarningCutIn
 };
 
