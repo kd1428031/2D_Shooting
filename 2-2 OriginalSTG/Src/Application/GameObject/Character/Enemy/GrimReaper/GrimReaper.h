@@ -83,5 +83,5 @@ private:
     static constexpr float  kBulletSpeed = 200.0f;                   // 速さ
     static constexpr float  kBulletScale = 2.0f;                     // サイズ
     static constexpr float  kBulletAngleSpeed = 600.0f;              // サイズ
-    const Math::Color       kBulletColor = { 0.0f,0.0f,0.0f,1.0f };  // 色
+    const Math::Color       kBulletColor = { 0.0f,0.0f,1.0f,1.0f };  // 色
 };

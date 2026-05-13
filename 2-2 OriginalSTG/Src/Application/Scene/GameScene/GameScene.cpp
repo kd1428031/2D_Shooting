@@ -97,6 +97,17 @@ void GameScene::Update(float dt)
 	//}
 	//else testKey2 = false;
 
+	/*if (GetAsyncKeyState('P') & 0x8000)
+	{
+		if (!testKey2)
+		{
+			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+			ENEMYMANAGER.AllDestroy();
+			testKey2 = true;
+
+			ChangePhase(Phase::FinalBossIntro);
+		}
+	}*/
 	//// 自機無敵解除
 	//if (GetAsyncKeyState('O') & 0x8000)
 	//{

@@ -222,10 +222,10 @@ void Player::Move(float dt)
     }
 
     // ˆÚ“®ˆ—(‹t•ûŒü‚ğ“¯‰Ÿ‚µ‚µ‚½‚ç’â~‚·‚é‚æ‚¤‚É)
-    bool up     = INPUT.IsKeyHeld(VK_UP)    || INPUT.IsKeyHeld('W');
-    bool down   = INPUT.IsKeyHeld(VK_DOWN)  || INPUT.IsKeyHeld('S');
-    bool left   = INPUT.IsKeyHeld(VK_LEFT)  || INPUT.IsKeyHeld('A');
-    bool right  = INPUT.IsKeyHeld(VK_RIGHT) || INPUT.IsKeyHeld('D');
+    bool up     = INPUT.IsKeyHeld(VK_UP)  ;
+    bool down   = INPUT.IsKeyHeld(VK_DOWN);
+    bool left   = INPUT.IsKeyHeld(VK_LEFT);
+    bool right  = INPUT.IsKeyHeld(VK_RIGHT);
 
     Math::Vector2 dir;
 
@@ -417,8 +417,6 @@ void Player::TakeDamage(float damage)
     {
         m_invincibleTimer = kInvincibleTime;
         m_state = State::Invincible;
-
-        if (m_hp <= 1 && !m_gameoverFlg)return;
 
         AUDIOM.PlaySe(SoundName::kHit);
         Character::TakeDamage(damage);
