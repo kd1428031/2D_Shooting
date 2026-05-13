@@ -28,4 +28,8 @@ private:
 	Math::Matrix m_iconMat;
 	KdTexture* m_iconTex;
 	Math::Color m_iconColor = { 1.0f,1.0f,1.0f,1.0f };
+
+	Math::Matrix m_keyMat;
+	KdTexture* m_keyTex;
+	Math::Color m_keyColor = { 0.8f,0.2f,0.8f,1.0f };
 };

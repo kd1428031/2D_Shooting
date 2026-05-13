@@ -11,6 +11,7 @@ void BomdWaitCounter::Init()
 {
 	m_tex = RESOURCEMANAGER.GetTex(TexName::kNumber);
 	m_iconTex = RESOURCEMANAGER.GetTex(TexName::kLightningIcon);
+	m_keyTex = RESOURCEMANAGER.GetTex(TexName::kX);
 
 	m_pos = kInitPos;
 	m_scale = kInitScale;
@@ -21,6 +22,9 @@ void BomdWaitCounter::UpdateImpl(float dt)
 {
 	Math::Vector2 pos = { -350, -300 };
 	m_iconMat = CreateMatrix(pos, { 0.25f,0.25f, }, 0.0f);
+
+	Math::Vector2 pos2 = { -350, -300 + 30 };
+	m_keyMat = CreateMatrix(pos2, { 0.5f,0.5f, }, 0.0f);
 
 	Player* player = PLAYERMANAGER.GetPlayer();
 
@@ -42,6 +46,10 @@ void BomdWaitCounter::Draw()
 
 	Math::Rectangle rect{ 0, 0, 128, 128 };
 	SHADER.m_spriteShader.DrawTex_Color(m_iconTex, rect, m_iconColor);
+
+	SHADER.m_spriteShader.SetMatrix(m_keyMat);
+	rect = { 0, 0, 64, 64 };
+	SHADER.m_spriteShader.DrawTex_Color(m_keyTex, rect, m_keyColor);
 
 	if (PLAYERMANAGER.GetPlayer()->GetBomdWait() > 0)
 	{

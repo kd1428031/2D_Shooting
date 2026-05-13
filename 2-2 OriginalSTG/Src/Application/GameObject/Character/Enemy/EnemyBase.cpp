@@ -92,6 +92,10 @@ void EnemyBase::Shot(float dt)
         ShotNWay();
         break;
 
+    case ShotType::AllRange:
+        ShotAllRange();
+        break;
+    
     case ShotType::Aimed :
         ShotAimed();
         break;

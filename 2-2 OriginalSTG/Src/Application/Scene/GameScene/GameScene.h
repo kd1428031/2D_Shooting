@@ -52,8 +52,13 @@ private:
 	int m_score;
 
 	float m_phaseTimer = 0.0f;
+	float m_spawnTimer = 0.0f;
 
 	Phase m_phase = Phase::Phase1;
 
 	EnemyBase* m_oneBoss = nullptr;
+
+	Math::Matrix m_tutorialShotMat;
+	KdTexture *m_tutorialShotTex;
+	Math::Color m_color = { 0.8f,0.2f,0.8f,1.0f };
 }; 

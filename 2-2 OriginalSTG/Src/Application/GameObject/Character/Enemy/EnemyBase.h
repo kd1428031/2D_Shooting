@@ -49,8 +49,8 @@ public:
     virtual void Shot(float dt);
 
     void ShotStraight();        // íºê¸íe 
-    void ShotNWay();     // Wayíe 
-    void ShotAllRange();     // Wayíe 
+    void ShotNWay();            // Wayíe 
+    void ShotAllRange();        // ëSï˚à íeíe 
     void ShotAimed();           // é©ã@ë_Ç¢íe 
     void ShotRotate(float dt);  // âÒì]íe
 
@@ -68,6 +68,7 @@ public:
     void SetVelocity(Math::Vector2 velocity) { m_velocity = velocity; }
     void SetScale(float scale) { m_scale = scale; }
     void SetShotType(ShotType shotType) { m_shotType = shotType; }
+    void SetShotAllNWay(int shotAllNWay) { m_shotAllNWay = shotAllNWay; }
     void SetState(State state) { m_state = state; }
     void SetStopPos(Math::Vector2 stopPos) { m_stopPos = stopPos; }
     void SetBulletSpeed(float bulletSpeed) { m_bulletSpeed = bulletSpeed; }

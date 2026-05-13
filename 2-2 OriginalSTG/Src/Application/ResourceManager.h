@@ -30,6 +30,7 @@ namespace TexName
 	constexpr char kPressMessage[]		= "pressMessage";
 	constexpr char kNumber[]			= "number";
 	constexpr char kScore[]				= "score";
+	constexpr char kTutorial_shot[]		= "tutorial_Shot";
 
 	// ÉAÉCÉRÉì
 	constexpr char kRavenIcon[]			= "ravenIcon";
@@ -43,6 +44,8 @@ namespace TexName
 	constexpr char kLightningIcon[]		= "lightningIcon";
 	constexpr char kMagicCircle_idle[]	= "magicCircleIdle";
 	constexpr char kMagicCircle_summon[]= "magicCircleSummon";
+	constexpr char kX[]= "x";
+	constexpr char kC[]= "c";
 }
 
 class ResourceManager

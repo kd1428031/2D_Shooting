@@ -31,12 +31,15 @@ void ResourceManager::LoadAll()
     m_tex[TexName::kBgGame].Load("Texture/Background/Background1.png");
 
     // Ui
-    m_tex[TexName::ktitleName].Load("Texture/Ui/title6.png");
+    m_tex[TexName::ktitleName].Load("Texture/Ui/title1.png");
     m_tex[TexName::kPressMessage].Load("Texture/Ui/pressMessage.png");
     m_tex[TexName::kNumber].Load("Texture/Ui/number.png");
     m_tex[TexName::kScore].Load("Texture/Ui/score.png");
     m_tex[TexName::kWarning].Load("Texture/Ui/warning.png");
     m_tex[TexName::kRavenIcon].Load("Texture/Ui/Raven.png");
+    m_tex[TexName::kTutorial_shot].Load("Texture/Ui/shot_tutorial.png");
+    m_tex[TexName::kX].Load("Texture/Ui/x.png");
+    m_tex[TexName::kC].Load("Texture/Ui/c.png");
 
     // フェード用
     m_tex[TexName::kFade].Load("Texture/fade/fade.png");
