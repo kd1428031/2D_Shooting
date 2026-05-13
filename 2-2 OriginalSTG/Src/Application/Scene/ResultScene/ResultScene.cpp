@@ -51,7 +51,7 @@ void ResultScene::Update(float dt)
 	AUDIOM.Update();
 	AUDIOM.UpdateFade();
 
-	if (INPUT.IsKeyTriggered(VK_RETURN) || INPUT.IsLeftClick())
+	if (INPUT.IsKeyTriggered(VK_RETURN))
 	{
 		if (!m_sceneChangeFlg)
 		{

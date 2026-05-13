@@ -3,7 +3,6 @@
 #include "ScoreText.h"
 #include "WarningCutIn.h"
 #include "TitleName.h"
-#include "GameStart.h"
 #include "PressStart.h"
 #include "BomdWaitCounter.h"
 #include "RavenWaitCounter.h"
@@ -52,10 +51,6 @@ void UiManager::CreateUi(UiType type)
         m_ui.emplace_back(std::make_unique<TitleName>());
         break;
 
-    case UiType::GameStart:
-        m_ui.emplace_back(std::make_unique<GameStart>());
-        break;
-
     case UiType::PressStart:
         m_ui.emplace_back(std::make_unique<PressStart>());
         break;
@@ -94,20 +89,6 @@ void UiManager::Destroy(UiType type)
             ui->Kill();
         }
     }
-}
-
-bool UiManager::IsGameStartButton() const
-{
-    for (auto& ui : m_ui)
-    {
-        if (ui->GetUiType() == UiType::GameStart)
-        {
-            auto* gameStart = static_cast<GameStart*>(ui.get());
-            return gameStart->IsClicked();
-        }
-    }
-
-    return false;
 }
 
 void UiManager::SetPos(UiType type, Math::Vector2 pos)

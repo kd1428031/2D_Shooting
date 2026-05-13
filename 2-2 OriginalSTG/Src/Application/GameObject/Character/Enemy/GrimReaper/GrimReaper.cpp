@@ -45,7 +45,6 @@ void GrimReaper::Init()
 	m_bulletColor = kBulletColor;
 	m_bulletAngleSpeed = kBulletAngleSpeed;
 
-	m_shotFlg = Random::Chance(0.5f);
 	m_shotType = (ShotType)Random::Range(0, 3);
 
 	m_shotNWay = 4;
@@ -136,7 +135,7 @@ void GrimReaper::Summon(float dt)
 
 		Math::Vector2 offset = spawnPos - m_pos;
 
-		auto* e = ENEMYMANAGER.CreateEnemy(EnemyType::Gr_Summon, spawnPos, true, EnemyBase::ShotType::Aimed);
+		auto* e = ENEMYMANAGER.CreateEnemy(EnemyType::Gr_Summon, spawnPos, EnemyBase::ShotType::Aimed);
 		auto* gr = static_cast<Gr_Summon*>(e);
 
 		gr->SetOffset(offset);

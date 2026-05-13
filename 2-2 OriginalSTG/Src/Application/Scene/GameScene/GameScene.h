@@ -8,13 +8,16 @@ class GameScene : public BaseScene
 {
 public:
 
-	enum class Wave
+	enum class Phase
 	{
-		oen,
-		oenBoss,
-		two,
-		three,
-		threeBoss
+		Phase1,
+		Phase1Boss,
+		Phase2,
+		Phase3,
+		FinalBossIntro,
+		FinalBoss,
+		GameClear,
+		GameOver,
 	};
 
 	GameScene() { Init(); }
@@ -23,6 +26,19 @@ public:
 	void Init()				override;
 	void Update(float dt)	override;
 	void Draw()				override;
+
+	void UpdatePhase1(float dt);
+	void UpdatePhase1Boss(float dt);
+	void UpdatePhase2(float dt);
+	void UpdatePhase3(float dt);
+	void UpdateFinalBossIntro(float dt);
+	void UpdateFinalBoss(float dt);
+	void UpdateGameClear(float dt);
+	void UpdateGameOver(float dt);
+
+	void ChangePhase(Phase phase);
+
+	void IsGameOver();
 
 private:
 
@@ -35,19 +51,9 @@ private:
 
 	int m_score;
 
-	bool m_sceneChangeFlg = false;
-	bool m_bossMakeFlg = false;
-	bool m_bossCreateFlg = false;
-	bool m_bossActiveFlg = false;
-	bool m_bossDestroyFlg = false;
+	float m_phaseTimer = 0.0f;
 
-	bool m_enemyCreate = false;
-
-	float m_timer = 0.0f;
-
-	float m_time = 0.0f;
-
-	Wave m_wave = Wave::oen;
+	Phase m_phase = Phase::Phase1;
 
 	EnemyBase* m_oneBoss = nullptr;
 }; 

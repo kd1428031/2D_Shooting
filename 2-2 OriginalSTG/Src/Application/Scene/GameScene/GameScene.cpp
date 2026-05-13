@@ -30,14 +30,14 @@ void GameScene::Init()
 	EFFCTMANAGER.Init();
 	SCOREMANAGER.Init();
 
-	m_timer = 0.0f;
-	m_time = 0.0f;
-
 	FADEMANAGER.FadeIn(1);
+
+	ChangePhase(Phase::Phase1);
 }
 
 void GameScene::Update(float dt)
 {
+	// デバッグキー　以下はリリース時消す=========================
 	// 大ボス
 	if (GetAsyncKeyState('U') & 0x8000)
 	{
@@ -46,12 +46,9 @@ void GameScene::Update(float dt)
 			PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
 			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
 			ENEMYMANAGER.AllDestroy();
-			m_bossMakeFlg = true;
-			m_enemyCreate = true;
 			testKey = true;
 
-			m_wave = Wave::three;
-			m_timer = 5.0f;
+			ChangePhase(Phase::Phase3);
 		}
 	}
 	else testKey = false;
@@ -63,16 +60,14 @@ void GameScene::Update(float dt)
 		{
 			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
 			ENEMYMANAGER.AllDestroy();
-			//m_bossMakeFlg = true;
-			m_enemyCreate = true;
 			testKey2 = true;
 
-			m_wave = Wave::oen;
-			m_timer = 20.0f;
+			ChangePhase(Phase::Phase1);
 		}
 	}
 	else testKey2 = false;
 
+	// 自機無敵解除
 	if (GetAsyncKeyState('O') & 0x8000)
 	{
 		if (!testKey3)
@@ -82,176 +77,62 @@ void GameScene::Update(float dt)
 	}
 	else testKey3 = false;
 
-	m_timer += dt;
+	// 以上はリリース時消す=====================================
 
-	// ランダム生成
-	switch (m_wave)
+
+	m_phaseTimer += dt;
+
+	switch (m_phase)
 	{
-	case GameScene::Wave::oen:
-	{
-		if (ENEMYMANAGER.GetEnemyNum() < 15)
-		{
-			if (Random::Chance(0.05f))
-			{
-				EnemyType type = (EnemyType)Random::Range(0, 1);
-				bool shotFlg = Random::Chance(0.1f);
-				EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 3);
+	case GameScene::Phase::Phase1:
 
-				ENEMYMANAGER.CreateEnemy(type,
-					{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
-					shotFlg, shotType);
-			}
-		}
-
-		if (m_timer > 20.0f)
-		{
-			ENEMYMANAGER.AllDestroy();
-			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
-
-			EnemyType type = (EnemyType)0;
-			bool shotFlg = false;
-			EnemyBase::ShotType shotType = EnemyBase::ShotType::Rotate;
-
-			m_oneBoss = ENEMYMANAGER.CreateEnemy(type,
-				{ 640.0f + Random::Range(60.0f, 120.0), 0.0f },
-				shotFlg, shotType);
-			m_oneBoss->SetScale(2);
-			m_oneBoss->SetRadius(64);
-			m_oneBoss->SetHp(750);
-			m_oneBoss->SetVelocity({ -300, 0 });
-			m_oneBoss->SetBulletSpeed(150.0f);
-			m_oneBoss->SetBulletAngleSpeed(700);
-			m_oneBoss->SetShotInterval(0.02f);
-			m_oneBoss->SetStopPos({ 320.0f, 0.0f });
-
-			m_wave = Wave::oenBoss;
-			m_timer = 0.0f;
-		}
-
+		UpdatePhase1(dt);
 		break;
-	}
-	case GameScene::Wave::oenBoss:
-	{
-		if (m_oneBoss != nullptr)
-		{
-			if (m_oneBoss->GetPos().x <= 320)
-			{
-				m_oneBoss->SetShotFlg(true);
-			}
 
-			if (!m_oneBoss->IsActive())
-			{
-				m_wave = Wave::two;
-				m_timer = 0.0f;
-			}
-		}
+	case GameScene::Phase::Phase1Boss:
+
+		UpdatePhase1Boss(dt);
 		break;
-	}
-	case GameScene::Wave::two:
-	{
-		if (ENEMYMANAGER.GetEnemyNum() < 30)
-		{
-			if (Random::Chance(0.05f))
-			{
-				EnemyType type = (EnemyType)Random::Range(0, 1);
-				bool shotFlg = Random::Chance(0.3f);
-				EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 4);
 
-				ENEMYMANAGER.CreateEnemy(type,
-					{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
-					shotFlg, shotType);
-			}
-		}
+	case GameScene::Phase::Phase2:
 
-		if (m_timer > 20.0f)
-		{
-			m_wave = Wave::three;
-			m_timer = 0.0f;
-
-			for (int i = 0; i < 50; i++)
-			{
-				EnemyType type = (EnemyType)Random::Range(0, 1);
-				bool shotFlg = Random::Chance(0.3f);
-				EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 4);
-
-				ENEMYMANAGER.CreateEnemy(type,
-					{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
-					shotFlg, shotType);
-			}
-		}
-
+		UpdatePhase2(dt);
 		break;
-	}
 
-	case GameScene::Wave::three:
-	{
-		if (ENEMYMANAGER.GetEnemyNum() < 300)
-		{
-			/*if (Random::Chance(0.05f))
-			{
-				EnemyType type = (EnemyType)Random::Range(0, 1);
-				bool shotFlg = Random::Chance(0.5f);
-				EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 5);
+	case GameScene::Phase::Phase3:
 
-				ENEMYMANAGER.CreateEnemy(type,
-					{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },
-					shotFlg, shotType);
-			}*/
-		}
-
-		if (ENEMYMANAGER.GetEnemyNum() <= 0)
-		{
-			PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
-			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
-			ENEMYMANAGER.AllDestroy();
-			m_bossMakeFlg = true;
-			m_enemyCreate = true;
-
-			m_wave = Wave::threeBoss;
-			m_timer = 0.0f;
-
-			AUDIOM.FadeOutBgm(1.5f);
-		}
-
+		UpdatePhase3(dt);
 		break;
-	}
-	case GameScene::Wave::threeBoss:
-	{
-		// ボス生成
-		if (m_bossMakeFlg)
-		{
-			FADEMANAGER.Blink(1.9f, 3.0f, Math::Color(0.0f, 0.0f, 0.0f, 0.0f));
-			m_bossMakeFlg = false;
-			m_bossCreateFlg = true;
-		}
 
-		if (!m_bossMakeFlg && m_bossCreateFlg)
-		{
-			if (FADEMANAGER.IsBlinkEnd())
-			{
-				PLAYERMANAGER.GetPlayer()->SetActionFlg(true);
+	case GameScene::Phase::FinalBossIntro:
 
-				ENEMYMANAGER.CreateEnemy(EnemyType::GrimReaper,
-					{ 320.0f, 0.0f },
-					true, EnemyBase::ShotType::Rotate, 4);
-				m_bossCreateFlg = false;
-				m_bossActiveFlg = true;
-				AUDIOM.FadeInBgm(SoundName::kLastboss, 2.0f);
-
-			}
-		}
+		UpdateFinalBossIntro(dt);
 		break;
-	}
+
+	case GameScene::Phase::FinalBoss:
+
+		UpdateFinalBoss(dt);
+		break;
+
+	case GameScene::Phase::GameClear:
+
+		UpdateGameClear(dt);
+		break;
+
+	case GameScene::Phase::GameOver:
+
+		UpdateGameOver(dt);
+		break;
 	}
 
 	// ヒット時画面が赤く
 	if (PLAYERMANAGER.GetPlayer()->IsIsHit() && PLAYERMANAGER.GetPlayer()->IsAlive())
 	{
-		if (!m_sceneChangeFlg)
-		{
-			FADEMANAGER.Blink(0.2f, 1.0f, Math::Color(0.8f, 0.2f, 0.2f, 0.0f));
-		}
+		FADEMANAGER.Blink(0.2f, 1.0f, Math::Color(0.8f, 0.2f, 0.2f, 0.0f));
 	}
+
+	// 自機死亡時リザルトへ
+	IsGameOver();
 
 	// 更新
 	m_background->Update(dt);
@@ -265,43 +146,6 @@ void GameScene::Update(float dt)
 	INPUT.Update();
 	AUDIOM.Update();
 	AUDIOM.UpdateFade();
-
-	// リザルトへ移行
-	if (m_bossActiveFlg)
-	{
-		if (!ENEMYMANAGER.IsBossAlive())
-		{
-			ENEMYMANAGER.AllDestroy();
-			if (!m_sceneChangeFlg)
-			{
-				m_sceneChangeFlg = true;
-				FADEMANAGER.FadeOut(1);
-			}
-		}
-	}
-
-	// 自機死亡時リザルトへ
-	if (!PLAYERMANAGER.GetPlayer()->IsAlive())
-	{
-		if (!m_sceneChangeFlg)
-		{
-			m_sceneChangeFlg = true;
-			FADEMANAGER.FadeOut(1);
-		}
-	}
-
-	// 共通リザルト移行処理
-	if (m_sceneChangeFlg)
-	{
-		if (FADEMANAGER.IsFadeEnd())
-		{
-			UIMANAGER.Destroy(UiType::Score);
-			UIMANAGER.Destroy(UiType::BomdWaitCounter);
-			UIMANAGER.Destroy(UiType::RavenBomdWaitCounter);
-			SCENEMANAGER.SetNextScene(SceneManager::SceneType::Result);
-			AUDIOM.FadeOutAndPlayNext(SoundName::kResult, 0.5f, 1.0f, true);
-		}
-	}
 }
 
 void GameScene::Draw()
@@ -316,10 +160,193 @@ void GameScene::Draw()
 	PLAYERMANAGER.DrawUi();
 	FADEMANAGER.Draw();
 
-	/*char text[200];
+	// 以下デバッグ用
+	char text[200];
 
-	sprintf_s(text, sizeof(text), "Time %.4f", m_timer);
+	sprintf_s(text, sizeof(text), "Time %.4f", m_phaseTimer);
 
-	SHADER.m_spriteShader.DrawString(400, 320, text, Math::Vector4(1, 1, 0, 1));*/
+	SHADER.m_spriteShader.DrawString(400, 320, text, Math::Vector4(1, 1, 0, 1));
+}
 
+void GameScene::UpdatePhase1(float dt)
+{
+	if (m_phaseTimer > 10.0f)
+	{
+		EnemyBase::ShotType shotType = EnemyBase::ShotType::Straight;
+		ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, 300.0f }, shotType);
+		ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, 0.0f }, shotType);
+		ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, -300.0f }, shotType);
+
+		shotType = EnemyBase::ShotType::Aimed;
+		ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640.0f + 50.0f, 150.0f }, shotType);
+		ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640.0f + 50.0f, -150.0f }, shotType);
+	}
+
+	if (ENEMYMANAGER.GetEnemyNum() <= 0 || m_phaseTimer > 10000.0f)
+	{
+		ChangePhase(Phase::Phase1Boss);
+	}
+}
+
+void GameScene::UpdatePhase1Boss(float dt)
+{
+	if (m_oneBoss != nullptr)
+	{
+		if (m_oneBoss->GetPos().x <= 320)
+		{
+			m_oneBoss->SetShotType(EnemyBase::ShotType::Rotate);
+		}
+
+		if (!m_oneBoss->IsActive())
+		{
+			ChangePhase(Phase::Phase2);
+		}
+	}
+}
+
+void GameScene::UpdatePhase2(float dt)
+{
+	if (ENEMYMANAGER.GetEnemyNum() < 30)
+	{
+		if (Random::Chance(0.05f))
+		{
+			EnemyType type = (EnemyType)Random::Range(0, 1);
+			EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 4);
+
+			ENEMYMANAGER.CreateEnemy(type,
+				{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },shotType);
+		}
+	}
+
+	if (m_phaseTimer > 20.0f)
+	{
+		ChangePhase(Phase::Phase3);
+
+		for (int i = 0; i < 50; i++)
+		{
+			EnemyType type = (EnemyType)Random::Range(0, 1);
+			EnemyBase::ShotType shotType = (EnemyBase::ShotType)Random::Range(0, 4);
+
+			ENEMYMANAGER.CreateEnemy(type,
+				{ 640.0f + Random::Range(60.0f, 120.0), Random::Range(-360.0f, 360.0f) },shotType);
+		}
+	}
+}
+
+void GameScene::UpdatePhase3(float dt)
+{
+	if (ENEMYMANAGER.GetEnemyNum() <= 0)
+	{
+		ChangePhase(Phase::FinalBossIntro);
+	}
+}
+
+void GameScene::UpdateFinalBossIntro(float dt)
+{
+	if (FADEMANAGER.IsBlinkEnd())
+	{
+		ChangePhase(Phase::FinalBoss);
+	}
+}
+
+void GameScene::UpdateFinalBoss(float dt)
+{
+	// ボス死亡時リザルトへ移行
+	if (!ENEMYMANAGER.IsBossAlive())
+	{
+		ENEMYMANAGER.AllDestroy();
+		FADEMANAGER.FadeOut(1);
+
+		ChangePhase(Phase::GameClear);
+	}
+}
+
+void GameScene::UpdateGameClear(float dt)
+{
+	// リザルト移行
+	if (FADEMANAGER.IsFadeEnd())
+	{
+		UIMANAGER.Destroy(UiType::Score);
+		UIMANAGER.Destroy(UiType::BomdWaitCounter);
+		UIMANAGER.Destroy(UiType::RavenBomdWaitCounter);
+		SCENEMANAGER.SetNextScene(SceneManager::SceneType::Result);
+		AUDIOM.FadeOutAndPlayNext(SoundName::kResult, 0.5f, 1.0f, true);
+	}
+}
+
+void GameScene::UpdateGameOver(float dt)
+{
+	// リザルト移行
+	if (FADEMANAGER.IsFadeEnd())
+	{
+		UIMANAGER.Destroy(UiType::Score);
+		UIMANAGER.Destroy(UiType::BomdWaitCounter);
+		UIMANAGER.Destroy(UiType::RavenBomdWaitCounter);
+		SCENEMANAGER.SetNextScene(SceneManager::SceneType::Result);
+		AUDIOM.FadeOutAndPlayNext(SoundName::kResult, 0.5f, 1.0f, true);
+	}
+}
+
+void GameScene::ChangePhase(Phase phase)
+{
+	m_phase = phase;
+	m_phaseTimer = 0.0f;
+
+	switch (phase)
+	{
+	case Phase::Phase1:
+	{
+		EnemyBase::ShotType shotType = EnemyBase::ShotType::None;
+		ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, 0.0f }, shotType);
+		ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, 150.0f }, shotType);
+		ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, -150.0f }, shotType);
+
+		 break;
+	}
+
+	case Phase::Phase1Boss:
+	{
+		ENEMYMANAGER.AllDestroy();
+		BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+
+		EnemyType type = (EnemyType)0;
+		EnemyBase::ShotType shotType = EnemyBase::ShotType::None;
+
+		m_oneBoss = ENEMYMANAGER.CreateEnemy(type,
+			{ 640.0f + Random::Range(60.0f, 120.0), 0.0f },shotType);
+		m_oneBoss->SetScale(2);
+		m_oneBoss->SetRadius(64);
+		m_oneBoss->SetHp(750);
+		m_oneBoss->SetVelocity({ -300, 0 });
+		m_oneBoss->SetBulletSpeed(150.0f);
+		m_oneBoss->SetBulletAngleSpeed(700);
+		m_oneBoss->SetShotInterval(0.02f);
+		m_oneBoss->SetStopPos({ 320.0f, 0.0f });
+		break;
+	}
+	case Phase::FinalBossIntro:
+		PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
+		BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+		ENEMYMANAGER.AllDestroy();
+		AUDIOM.FadeOutBgm(1.5f);
+		FADEMANAGER.Blink(1.9f, 3.0f, Math::Color(0.0f, 0.0f, 0.0f, 0.0f));
+		break;
+
+	case Phase::FinalBoss:
+		PLAYERMANAGER.GetPlayer()->SetActionFlg(true);
+		ENEMYMANAGER.CreateEnemy(EnemyType::GrimReaper,
+			{ 320.0f, 0.0f },EnemyBase::ShotType::Rotate, 4);
+		AUDIOM.FadeInBgm(SoundName::kLastboss, 2.0f);
+		break;
+	}
+}
+
+void GameScene::IsGameOver()
+{
+	if (m_phase != Phase::GameOver && m_phase != Phase::GameClear &&
+		!PLAYERMANAGER.GetPlayer()->IsAlive())
+	{
+		FADEMANAGER.FadeOut(1);
+		ChangePhase(Phase::GameOver);
+	}
 }

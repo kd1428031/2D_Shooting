@@ -26,8 +26,6 @@ public:
 
 	bool IsAlive(UiType type)const;
 
-	bool IsGameStartButton()const;
-
 	void SetPos(UiType type, Math::Vector2 pos);
 	void SetScale(UiType type, float scale);
 

@@ -16,6 +16,7 @@ public:
 
     enum class ShotType
     {
+        None,
         Straight,
         NWay,
         AllRange,
@@ -66,7 +67,6 @@ public:
     void SetRadius(float radius) { m_radius = radius; }
     void SetVelocity(Math::Vector2 velocity) { m_velocity = velocity; }
     void SetScale(float scale) { m_scale = scale; }
-    void SetShotFlg(bool shotFlg) { m_shotFlg = shotFlg; }
     void SetShotType(ShotType shotType) { m_shotType = shotType; }
     void SetState(State state) { m_state = state; }
     void SetStopPos(Math::Vector2 stopPos) { m_stopPos = stopPos; }
@@ -89,8 +89,6 @@ protected:
     EnemyTag m_enemyTag = EnemyTag::Normal;
     
     Math::Vector2 m_stopPos = { -4000, 0 };
-
-    bool m_shotFlg;
 
     int m_shotNWay;
     int m_shotAllNWay;
@@ -117,7 +115,7 @@ protected:
     int m_texFrameHeight = 64;
 
     // 画面外削除の余白距離
-    static constexpr float kDeleteMargin = 500.0f;
+    static constexpr float kDeleteMargin = 200.0f;
 
     // ヒット時
     static constexpr float kHitStopFrames = 0.05f;

@@ -15,21 +15,7 @@ void Daemon::Init()
 {
 	m_tex = RESOURCEMANAGER.GetTex(TexName::kDaemon_idle);
 
-	if (Random::Chance(0.3))
-	{
-		float deg = GetAngleDeg(m_pos, PLAYERMANAGER.GetPlayer()->GetPos());
-		float rad = DirectX::XMConvertToRadians(deg);
-
-		Math::Vector2 dir = { cos(rad),sin(rad) };
-
-		Math::Vector2 velocity = dir * -kInitVelocity * Random::Range(0.8f, 2.0f);
-		m_velocity = velocity;
-	}
-	else
-	{
-		m_velocity = kInitVelocity * Random::Range(0.8f, 2.0f);
-	}
-
+	m_velocity = kInitVelocity;
 	m_hp = kInitHp;
 	m_score = kScore;
 	m_shotTimer = 0.0f;
@@ -40,7 +26,6 @@ void Daemon::Init()
 	m_bulletColor = kBulletColor;
 	m_bulletAngleSpeed = kBulletAngleSpeed;
 
-	m_shotFlg = Random::Chance(0.5f);
 	m_shotType = (ShotType)Random::Range(0, 3);
 }
 

@@ -30,7 +30,6 @@ void Gr_Summon::Init()
 	m_bulletColor = kBulletColor;
 	m_bulletAngleSpeed = kBulletAngleSpeed;
 
-	m_shotFlg = true;
 	m_shotType = ShotType::Aimed;
 
 	m_preAnimFlg = true;

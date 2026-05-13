@@ -32,7 +32,7 @@ void EnemyManager::Draw()
     }
 }
 
-EnemyBase *EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, bool shotFlg, EnemyBase::ShotType shotType, float scale)
+EnemyBase *EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, EnemyBase::ShotType shotType, float scale)
 {
     std::unique_ptr<EnemyBase> enemy;
 
@@ -55,7 +55,6 @@ EnemyBase *EnemyManager::CreateEnemy(EnemyType type, Math::Vector2 pos, bool sho
     if (enemy)
     {
         enemy->Init();
-        enemy->SetShotFlg(shotFlg);
         enemy->SetShotType(shotType);
         m_enemy.emplace_back(std::move(enemy));
         return m_enemy.back().get();

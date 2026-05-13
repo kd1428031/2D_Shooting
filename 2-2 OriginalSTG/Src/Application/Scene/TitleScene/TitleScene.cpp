@@ -15,7 +15,6 @@ void TitleScene::Init()
 
 	UIMANAGER.Init();      
 	UIMANAGER.CreateUi(UiType::TitleName);
-	UIMANAGER.CreateUi(UiType::GameStart);
 	UIMANAGER.CreateUi(UiType::PressStart);
 	AUDIOM.FadeOutAndPlayNext(SoundName::kTitle, 0.2f, 1.0f, true);
 	FADEMANAGER.FadeIn(1);
@@ -30,11 +29,9 @@ void TitleScene::Update(float dt)
 	AUDIOM.Update();
 	AUDIOM.UpdateFade();
 
-	if (!m_isExiting && (UIMANAGER.IsGameStartButton() || 
-		INPUT.IsKeyTriggered(VK_RETURN)))
+	if (INPUT.IsKeyTriggered(VK_RETURN))
 	{
 		UIMANAGER.Destroy(UiType::TitleName);
-		UIMANAGER.Destroy(UiType::GameStart);
 		UIMANAGER.Destroy(UiType::PressStart);
 		AUDIOM.FadeOutAndPlayNext(SoundName::kGame, 1.0f, 1.0f, true);
 		FADEMANAGER.FadeOut(1);

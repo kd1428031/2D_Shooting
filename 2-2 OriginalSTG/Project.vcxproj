@@ -195,7 +195,6 @@
     <ClInclude Include="Src\Application\Score\ScoreManager.h" />
     <ClInclude Include="Src\Application\TimeManager.h" />
     <ClInclude Include="Src\Application\Ui\BomdWaitCounter.h" />
-    <ClInclude Include="Src\Application\Ui\GameStart.h" />
     <ClInclude Include="Src\Application\Ui\PressMessage.h" />
     <ClInclude Include="Src\Application\Ui\PressStart.h" />
     <ClInclude Include="Src\Application\Ui\RavenWaitCounter.h" />
@@ -263,7 +262,6 @@
     <ClCompile Include="Src\Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Src\Application\TimeManager.cpp" />
     <ClCompile Include="Src\Application\Ui\BomdWaitCounter.cpp" />
-    <ClCompile Include="Src\Application\Ui\GameStart.cpp" />
     <ClCompile Include="Src\Application\Ui\PressStart.cpp" />
     <ClCompile Include="Src\Application\Ui\RavenWaitCounter.cpp" />
     <ClCompile Include="Src\Application\Ui\ScoreDisplay.cpp" />

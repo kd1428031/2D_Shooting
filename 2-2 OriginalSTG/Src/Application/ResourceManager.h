@@ -2,9 +2,12 @@
 
 namespace TexName
 {
+	// 自機
 	constexpr char kPlayer[]			= "player";
 	constexpr char kRaven[]				= "raven";
 	constexpr char kHeart[]				= "heart";
+
+	// 敵
 	constexpr char kDaemon_idle[]		= "daemon";
 	constexpr char kDaemon_hit[]		= "daemon_hit";
 	constexpr char kDaemon_death[]		= "daemon_death";
@@ -15,7 +18,11 @@ namespace TexName
 	constexpr char kGr_Summon_idle[]	= "gr_summon_idle";
 	constexpr char kGr_SummonAppear[]	= "gr_summon_appear";
 	constexpr char kGr_Summon_death[]	= "gr_summon_death";
+
+	// 弾
 	constexpr char kBullet[]			= "bullet";
+
+	// UI
 	constexpr char kBgTitle[]			= "bg_title";
 	constexpr char kBgGame[]			= "bg_game";
 	constexpr char kBgResult[]			= "bg_result";
@@ -23,17 +30,19 @@ namespace TexName
 	constexpr char kPressMessage[]		= "pressMessage";
 	constexpr char kNumber[]			= "number";
 	constexpr char kScore[]				= "score";
+
+	// アイコン
+	constexpr char kRavenIcon[]			= "ravenIcon";
+	constexpr char kSoulLinkText[]		= "soulLinkText";
+
+	// 演出
 	constexpr char kWarning[]			= "warning";
-	constexpr char kStart[]				= "start";
 	constexpr char kFade[]				= "fade";
 	constexpr char kLightning[]			= "lightning";
 	constexpr char kLightningText[]		= "lightningText";
 	constexpr char kLightningIcon[]		= "lightningIcon";
-	constexpr char kRavenIcon[]			= "ravenIcon";
-	constexpr char kSoulLinkText[]		= "soulLinkText";
 	constexpr char kMagicCircle_idle[]	= "magicCircleIdle";
 	constexpr char kMagicCircle_summon[]= "magicCircleSummon";
-	constexpr char kMouseCursor[]		= "mouseCursor";
 }
 
 class ResourceManager

@@ -11,7 +11,7 @@ EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
     m_shotInterval(1.0f), m_shotTimer(m_shotInterval), m_bulletOffset(30.0f), 
     m_bulletSpeed(300.0f), m_bulletScale(2.0f), m_bulletColor(1, 0, 0, 1),
     m_bulletAngle(0.0f), m_bulletAngleSpeed(300.0f), m_shotNWay(0),
-    m_shotType(ShotType::Straight), m_shotFlg(false), m_preUpdateFlg(true)
+    m_shotType(ShotType::Straight), m_preUpdateFlg(true)
 {    
 }
 
@@ -42,7 +42,7 @@ void EnemyBase::Update(float dt)
         if (m_pos.x <  SCENE.screenWidth / 2 && m_pos.x > -SCENE.screenWidth / 2 &&
             m_pos.y <  SCENE.screenHeight / 2 && m_pos.y > -SCENE.screenHeight / 2)
         {
-            if (m_shotFlg)
+            if (m_shotType != ShotType::None)
             {
                 m_shotTimer -= dt;
                 if (m_shotTimer <= 0)
@@ -65,9 +65,8 @@ void EnemyBase::Move(float dt)
         m_pos += m_velocity * dt;
     }
 
-    // 画面外チェック
-    if (m_pos.x > SCENE.screenWidth/2 + kDeleteMargin || m_pos.y > SCENE.screenHeight/2 + kDeleteMargin ||
-        m_pos.x < -SCENE.screenWidth/2 - kDeleteMargin || m_pos.y < -SCENE.screenHeight/2 - kDeleteMargin)
+    // 画面外で死亡
+    if (m_pos.x < -SCENE.screenWidth / 2 - kDeleteMargin)
     {
         m_state = State::Dead;
     }
@@ -82,6 +81,9 @@ void EnemyBase::Shot(float dt)
 {
     switch (m_shotType)
     {
+    case ShotType::None:    // 弾発射しない
+        break;
+
     case ShotType::Straight:
         ShotStraight();
         break;

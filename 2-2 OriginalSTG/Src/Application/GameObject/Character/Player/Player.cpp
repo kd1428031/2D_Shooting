@@ -286,7 +286,7 @@ void Player::UpdateInvincible(float dt)
 void Player::Shot(float dt)
 {
     // íeî≠éÀ
-    m_isShooting = INPUT.IsKeyHeld('Z') || INPUT.IsLeftClick();
+    m_isShooting = INPUT.IsKeyHeld('Z');
 
     // íeî≠éÀä‘äuèàóù
     m_shotTimer -= dt;
@@ -336,7 +336,7 @@ void Player::PenetratShot()
 
 void Player::Bomb(float dt)
 {
-    m_isBomd = INPUT.IsKeyHeld('X') || INPUT.IsRightClick();
+    m_isBomd = INPUT.IsKeyHeld('X');
 
     m_bomdTimer -= 10 * dt;
     if (m_bomdTimer <= 0)m_bomdTimer = 0;

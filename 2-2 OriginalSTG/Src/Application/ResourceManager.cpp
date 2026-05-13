@@ -31,16 +31,14 @@ void ResourceManager::LoadAll()
     m_tex[TexName::kBgGame].Load("Texture/Background/Background1.png");
 
     // Ui
-    m_tex[TexName::ktitleName].Load("Texture/Ui/title.png");
+    m_tex[TexName::ktitleName].Load("Texture/Ui/title6.png");
     m_tex[TexName::kPressMessage].Load("Texture/Ui/pressMessage.png");
     m_tex[TexName::kNumber].Load("Texture/Ui/number.png");
     m_tex[TexName::kScore].Load("Texture/Ui/score.png");
     m_tex[TexName::kWarning].Load("Texture/Ui/warning.png");
-    m_tex[TexName::kStart].Load("Texture/Ui/gamestart.png");
-    m_tex[TexName::kMouseCursor].Load("Texture/Ui/mouse.png");
     m_tex[TexName::kRavenIcon].Load("Texture/Ui/Raven.png");
 
-    // フェード
+    // フェード用
     m_tex[TexName::kFade].Load("Texture/fade/fade.png");
     
     // エフェクト
@@ -50,6 +48,7 @@ void ResourceManager::LoadAll()
     m_tex[TexName::kLightningText].Load("Texture/Effect/Lightning.png");
     m_tex[TexName::kSoulLinkText].Load("Texture/Effect/SoulLink.png");
 
+    // 魔法陣
     m_tex[TexName::kMagicCircle_idle].Load("Texture/Effect/MagicCircleIdle.png");
     m_tex[TexName::kMagicCircle_summon].Load("Texture/Effect/MagicCircleSummon.png");
 }
