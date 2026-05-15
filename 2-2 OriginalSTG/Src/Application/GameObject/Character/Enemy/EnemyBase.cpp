@@ -39,8 +39,8 @@ void EnemyBase::Update(float dt)
             return;
         }
 
-        if (m_pos.x <  SCENE.screenWidth / 2 && m_pos.x > -SCENE.screenWidth / 2 &&
-            m_pos.y <  SCENE.screenHeight / 2 && m_pos.y > -SCENE.screenHeight / 2)
+        if (m_pos.x <  SCENE.GetScreenWidth() / 2 && m_pos.x > -SCENE.GetScreenWidth() / 2 &&
+            m_pos.y <  SCENE.GetScreenHeight() / 2 && m_pos.y > -SCENE.GetScreenHeight() / 2)
         {
             if (m_shotType != ShotType::None)
             {
@@ -66,7 +66,7 @@ void EnemyBase::Move(float dt)
     }
 
     // 画面外で死亡
-    if (m_pos.x < -SCENE.screenWidth / 2 - kDeleteMargin)
+    if (m_pos.x < -SCENE.GetScreenWidth() / 2 - kDeleteMargin)
     {
         m_state = State::Dead;
     }

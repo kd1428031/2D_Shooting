@@ -6,8 +6,8 @@ private:
 
 public:
 
-	const int screenWidth = 1280;
-	const int screenHeight = 720;
+	int GetScreenWidth() const { return m_screenWidth; }
+	int GetScreenHeight() const { return m_screenHeight; }
 
 	// ‰Šúİ’è
 	void Init();
@@ -35,6 +35,9 @@ public:
 		static Scene instance;
 		return instance;
 	}
+
+	static constexpr int m_screenWidth = 1280;
+	static constexpr int m_screenHeight = 720;
 };
 
 #define SCENE Scene::GetInstance()

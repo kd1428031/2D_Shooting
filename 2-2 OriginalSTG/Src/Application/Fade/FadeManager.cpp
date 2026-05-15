@@ -75,7 +75,7 @@ void FadeManager::Update(float dt)
 		}
 	}
 
-	Math::Matrix scaleMat = Math::Matrix::CreateScale(SCENE.screenWidth, SCENE.screenHeight, 1);
+	Math::Matrix scaleMat = Math::Matrix::CreateScale(SCENE.GetScreenWidth(), SCENE.GetScreenHeight(), 1);
 	Math::Matrix transMat = Math::Matrix::CreateTranslation(0, 0, 0);
 	m_mat = scaleMat * transMat;
 }

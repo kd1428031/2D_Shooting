@@ -41,64 +41,8 @@ void Raven::Init()
 
 void Raven::Update(float dt)
 {
-    if (PLAYERMANAGER.GetPlayer()->GetActionFlg())
-    {
-        m_shotTimer -= dt;
-
-        if (m_isShooting)
-        {
-            if (m_shotTimer <= 0.0f)
-            {
-                AUDIOM.PlaySeNumLimit(SoundName::kNShot);
-
-                //int cnt = PLAYERMANAGER.GetDestroyCnt();
-                float rate = 1.0f;
-                /*if (cnt < 20)
-                {
-                    rate = 1.0f;
-                    Shot(dt);
-                }
-                else if (cnt < 40)
-                {
-                    rate = 0.5f;
-                    ShotNWay(3);
-                }*/
-                if(m_powUpFlg)
-                {
-                    rate = 0.33f;
-                    ShotNWay(5);
-                }
-                else
-                {
-                    rate = 1.0f;
-                    Shot(dt);
-                }
-                m_shotTimer = kShotInterval * rate;
-            }
-        }
-    }
-
-    if (m_powUpFlg)
-    {
-        if (m_powUpTimer > 0.0f)
-        {
-            m_powUpTimer -= 10 * dt;
-            PLAYERMANAGER.GetPlayer()->SetMp(PLAYERMANAGER.GetPlayer()->GetMp() - 10 * dt);
-            m_color = { 1,0,0,1 };
-        } 
-        if (m_powUpTimer <= 0.0f || PLAYERMANAGER.GetPlayer()->GetMp() <= 0)
-        {
-            m_powUpFlg = false;
-            m_powUpTimer = kPowUpTimerInterval;
-            m_color = { 1,1,1,1 };
-        }
-    }
-    else
-    {
-        m_powUpTimer = kPowUpTimerInterval;
-        m_color = { 1,1,1,1 };
-    }
-
+    UpdateShot(dt);
+    UpdatePowerUp(dt);
     Move(dt);
     UpdateAnim(dt);
     UpdateMatrix();
@@ -157,6 +101,59 @@ void Raven::UpdateAnim(float dt)
     if (m_animFrame.x > 3)
     {
         m_animFrame.x = 0;
+    }
+}
+
+void Raven::UpdateShot(float dt)
+{
+    if (PLAYERMANAGER.GetPlayer()->GetActionFlg())
+    {
+        m_shotTimer -= dt;
+
+        if (m_isShooting)
+        {
+            if (m_shotTimer <= 0.0f)
+            {
+                AUDIOM.PlaySeNumLimit(SoundName::kNShot);
+
+                float rate = 1.0f;
+                if (m_powUpFlg)
+                {
+                    rate = 0.33f;
+                    ShotNWay(5);
+                }
+                else
+                {
+                    rate = 1.0f;
+                    Shot(dt);
+                }
+                m_shotTimer = kShotInterval * rate;
+            }
+        }
+    }
+}
+
+void Raven::UpdatePowerUp(float dt)
+{
+    if (m_powUpFlg)
+    {
+        if (m_powUpTimer > 0.0f)
+        {
+            m_powUpTimer -= 10 * dt;
+            PLAYERMANAGER.GetPlayer()->SetMp(PLAYERMANAGER.GetPlayer()->GetMp() - 10 * dt);
+            m_color = { 1,0,0,1 };
+        }
+        if (m_powUpTimer <= 0.0f || PLAYERMANAGER.GetPlayer()->GetMp() <= 0)
+        {
+            m_powUpFlg = false;
+            m_powUpTimer = kPowUpTimerInterval;
+            m_color = { 1,1,1,1 };
+        }
+    }
+    else
+    {
+        m_powUpTimer = kPowUpTimerInterval;
+        m_color = { 1,1,1,1 };
     }
 }
 

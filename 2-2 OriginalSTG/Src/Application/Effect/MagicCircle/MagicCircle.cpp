@@ -42,9 +42,6 @@ void MagicCircle::UpdateImpl(float dt)
 		Kill();
 	}
 
-	m_targetPos = PLAYERMANAGER.GetPlayer()->GetPos();
-	m_pos = m_targetPos;
-
 	if (!m_onExitFlg)
 	{
 		if (m_upperFlg)

@@ -1,4 +1,5 @@
 #include "EffectBase.h"
+#include "Application/GameObject/GameObject.h"
 
 EffectBase::EffectBase(Math::Vector2 pos, float scale)
 	: m_pos(pos),
@@ -9,6 +10,19 @@ EffectBase::EffectBase(Math::Vector2 pos, float scale)
 void EffectBase::Update(float dt)
 {
 	if (!m_isAlive)return;
+
+	if (m_owner)
+	{
+		if (m_owner->IsAlive())
+		{
+			m_pos = m_owner->GetPos();
+		}
+		else
+		{
+			m_owner = nullptr;
+			Kill();
+		}
+	}
 
 	UpdateImpl(dt);
 	UpdateMatrix();

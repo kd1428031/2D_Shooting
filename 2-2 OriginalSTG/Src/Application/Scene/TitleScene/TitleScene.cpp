@@ -17,7 +17,7 @@ void TitleScene::Init()
 	UIMANAGER.CreateUi(UiType::TitleName);
 	UIMANAGER.CreateUi(UiType::PressStart);
 	AUDIOM.FadeOutAndPlayNext(SoundName::kTitle, 0.2f, 1.0f, true);
-	FADEMANAGER.FadeIn(1);
+	FADEMANAGER.FadeIn(kFadeTime);
 }
 
 void TitleScene::Update(float dt)
@@ -34,7 +34,7 @@ void TitleScene::Update(float dt)
 		UIMANAGER.Destroy(UiType::TitleName);
 		UIMANAGER.Destroy(UiType::PressStart);
 		AUDIOM.FadeOutAndPlayNext(SoundName::kGame, 1.0f, 1.0f, true);
-		FADEMANAGER.FadeOut(1);
+		FADEMANAGER.FadeOut(kFadeTime);
 		AUDIOM.PlaySe(SoundName::kMenuPush);
 		m_isExiting = true;
 	}

@@ -31,7 +31,7 @@ void GameScene::Init()
 	EFFCTMANAGER.Init();
 	SCOREMANAGER.Init();
 
-	FADEMANAGER.FadeIn(1);
+	FADEMANAGER.FadeIn(kFadeTime);
 
 	ChangePhase(Phase::Phase1);
 
@@ -40,85 +40,8 @@ void GameScene::Init()
 
 void GameScene::Update(float dt)
 {
-	// デバッグキー　以下はリリース時消す=========================
-	// フェーズ1
-	//if (GetAsyncKeyState('U') & 0x8000)
-	//{
-	//	if (!testKey)
-	//	{
-	//		PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
-	//		BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
-	//		ENEMYMANAGER.AllDestroy();
-	//		testKey = true;
-
-	//		ChangePhase(Phase::Phase1);
-	//	}
-	//}
-	//else testKey = false;
-
-	//// フェーズ1Boss
-	//if (GetAsyncKeyState('I') & 0x8000)
-	//{
-	//	if (!testKey2)
-	//	{
-	//		BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
-	//		ENEMYMANAGER.AllDestroy();
-	//		testKey2 = true;
-
-	//		ChangePhase(Phase::Phase1Boss);
-	//	}
-	//}
-	//else testKey2 = false;
-
-	//// フェーズ1Boss
-	//if (GetAsyncKeyState('O') & 0x8000)
-	//{
-	//	if (!testKey2)
-	//	{
-	//		BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
-	//		ENEMYMANAGER.AllDestroy();
-	//		testKey2 = true;
-
-	//		ChangePhase(Phase::Phase2);
-	//	}
-	//}
-	//else testKey2 = false;
-
-	//if (GetAsyncKeyState('P') & 0x8000)
-	//{
-	//	if (!testKey2)
-	//	{
-	//		BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
-	//		ENEMYMANAGER.AllDestroy();
-	//		testKey2 = true;
-
-	//		ChangePhase(Phase::Phase3);
-	//	}
-	//}
-	//else testKey2 = false;
-
-	/*if (GetAsyncKeyState('P') & 0x8000)
-	{
-		if (!testKey2)
-		{
-			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
-			ENEMYMANAGER.AllDestroy();
-			testKey2 = true;
-
-			ChangePhase(Phase::FinalBossIntro);
-		}
-	}*/
-	//// 自機無敵解除
-	//if (GetAsyncKeyState('O') & 0x8000)
-	//{
-	//	if (!testKey3)
-	//	{
-	//		PLAYERMANAGER.GetPlayer()->SetGameoverFlg(true);
-	//	}
-	//}
-	//else testKey3 = false;
-
-	// 以上はリリース時消す=====================================
+	// デバッグ用　必ずリリース時消す=========================
+	DebugKey(dt);
 
 
 	m_phaseTimer += dt;
@@ -167,13 +90,13 @@ void GameScene::Update(float dt)
 		break;
 	}
 
-	// ヒット時画面が赤く
-	if (PLAYERMANAGER.GetPlayer()->IsIsHit() && PLAYERMANAGER.GetPlayer()->IsAlive())
+	// ヒット時画面点滅
+	if (PLAYERMANAGER.GetPlayer()->IsHit() && PLAYERMANAGER.GetPlayer()->IsAlive())
 	{
-		FADEMANAGER.Blink(0.2f, 1.0f, Math::Color(0.8f, 0.2f, 0.2f, 0.0f));
+		FADEMANAGER.Blink(kHitBlinkTime, kHitBlinkSpeed, kHitBlinkColor);
 	}
 
-	// 自機死亡時リザルトへ
+	// 自機死亡時リザルト移行
 	IsGameOver();
 
 	// 更新
@@ -208,29 +131,20 @@ void GameScene::Draw()
 	SHADER.m_spriteShader.SetMatrix(m_tutorialShotMat);
 	SHADER.m_spriteShader.DrawTex_Color(m_tutorialShotTex, rect, m_color);
 
-
 	FADEMANAGER.Draw();
 
-	// 以下デバッグ用
-	/*char PhaseTime[200];
-
-	sprintf_s(PhaseTime, sizeof(PhaseTime), "PhaseTime %.4f", m_phaseTimer);
-
-	SHADER.m_spriteShader.DrawString(340, -270, PhaseTime, Math::Vector4(1, 1, 0, 1));
-
-	char SpawnTime[200];
-
-	sprintf_s(SpawnTime, sizeof(SpawnTime), "SpawnTime %.4f", m_spawnTimer);
-
-	SHADER.m_spriteShader.DrawString(340, -320, SpawnTime, Math::Vector4(1, 1, 0, 1));*/
+	// デバッグ用　必ずリリース時消す=========================
+	DrawDebug();
 }
 
 void GameScene::UpdatePhase1(float dt)
 {
-	if (m_phaseTimer < 20.0f)
+	const auto& param = GetPhaseParam(m_phase);
+
+	if (m_phaseTimer < param.spawnEndTime)
 	{
-		// 敵を全滅か一定時間で敵生成
-		if (ENEMYMANAGER.GetEnemyNum() <= 0 || m_spawnTimer > 10.0f)
+		// 敵全滅か一定時間経過で敵生成
+		if (ENEMYMANAGER.GetEnemyNum() <= 0 || m_spawnTimer > param.spawnInterval)
 		{
 			EnemyBase::ShotType shotType = EnemyBase::ShotType::Straight;
 			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, 300.0f }, shotType);
@@ -246,13 +160,13 @@ void GameScene::UpdatePhase1(float dt)
 	}
 
 	// 一定時間経過後敵全滅でフェーズ移行
-	if (ENEMYMANAGER.GetEnemyNum() <= 0 && m_phaseTimer > 20.0f)
+	if (ENEMYMANAGER.GetEnemyNum() <= 0 && m_phaseTimer > param.spawnEndTime)
 	{
 		ChangePhase(Phase::Phase1Boss);
 	}
 
 	// 一定時間経過でフェーズ強制移行
-	if (m_phaseTimer > 30.0f)
+	if (m_phaseTimer > param.timeLimit)
 	{
 		ChangePhase(Phase::Phase1Boss);
 	}
@@ -276,10 +190,12 @@ void GameScene::UpdatePhase1Boss(float dt)
 
 void GameScene::UpdatePhase2(float dt)
 {
-	if (m_phaseTimer < 30.0f)
+	const auto& param = GetPhaseParam(m_phase);
+
+	if (m_phaseTimer < param.spawnEndTime)
 	{
-		// 敵を全滅か一定時間で敵生成
-		if (ENEMYMANAGER.GetEnemyNum() <= 0 || m_spawnTimer > 5.0f)
+		// 敵全滅か一定時間経過で敵生成
+		if (ENEMYMANAGER.GetEnemyNum() <= 0 || m_spawnTimer > param.spawnInterval)
 		{
 			EnemyBase::ShotType shotType = EnemyBase::ShotType::Rotate;
 			ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640.0f + 50.0f, 150.0f }, shotType)->SetShotInterval(0.2f);
@@ -288,18 +204,19 @@ void GameScene::UpdatePhase2(float dt)
 			shotType = EnemyBase::ShotType::AllRange;
 			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, 300.0f }, shotType)->SetShotAllNWay(8);
 			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, -300.0f },shotType)->SetShotAllNWay(8);
+		
+			m_spawnTimer = 0.0f;
 		}
-		m_spawnTimer = 0.0f;
 	}
 
 	// 一定時間経過後敵全滅でフェーズ移行
-	if (ENEMYMANAGER.GetEnemyNum() <= 0 && m_phaseTimer > 30.0f)
+	if (ENEMYMANAGER.GetEnemyNum() <= 0 && m_phaseTimer > param.spawnEndTime)
 	{
 		ChangePhase(Phase::Phase3);
 	}
 
 	// 一定時間経過でフェーズ強制移行
-	if (m_phaseTimer > 40.0f)
+	if (m_phaseTimer > param.timeLimit)
 	{
 		ChangePhase(Phase::Phase3);
 	}
@@ -307,10 +224,12 @@ void GameScene::UpdatePhase2(float dt)
 
 void GameScene::UpdatePhase3(float dt)
 {
-	if (m_phaseTimer < 30.0f)
+	const auto& param = GetPhaseParam(m_phase);
+
+	if (m_phaseTimer < param.spawnEndTime)
 	{
-		// 敵を全滅か一定時間で敵生成
-		if (ENEMYMANAGER.GetEnemyNum() <= 0 || m_spawnTimer > 10.0f)
+		// 敵全滅か一定時間経過で敵生成
+		if (ENEMYMANAGER.GetEnemyNum() <= 0 || m_spawnTimer > param.spawnInterval)
 		{
 			EnemyBase::ShotType shotType = EnemyBase::ShotType::Aimed;
 			ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640.0f + 50.0f, 150.0f }, shotType)->SetShotInterval(0.5f);
@@ -332,13 +251,13 @@ void GameScene::UpdatePhase3(float dt)
 	}
 
 	// 一定時間経過後敵全滅でフェーズ移行
-	if (ENEMYMANAGER.GetEnemyNum() <= 0 && m_phaseTimer > 30.0f)
+	if (ENEMYMANAGER.GetEnemyNum() <= 0 && m_phaseTimer > param.spawnEndTime)
 	{
 		ChangePhase(Phase::FinalBossIntro);
 	}
 
 	// 一定時間経過でフェーズ強制移行
-	if (m_phaseTimer > 40.0f)
+	if (m_phaseTimer > param.timeLimit)
 	{
 		ChangePhase(Phase::FinalBossIntro);
 	}
@@ -358,7 +277,7 @@ void GameScene::UpdateFinalBoss(float dt)
 	if (!ENEMYMANAGER.IsBossAlive())
 	{
 		ENEMYMANAGER.AllDestroy();
-		FADEMANAGER.FadeOut(1);
+		FADEMANAGER.FadeOut(kFadeTime);
 
 		ChangePhase(Phase::GameClear);
 	}
@@ -413,7 +332,7 @@ void GameScene::ChangePhase(Phase phase)
 		ENEMYMANAGER.AllDestroy();
 		BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
 
-		EnemyType type = (EnemyType)0;
+		EnemyType type = EnemyType::Daemon;
 		EnemyBase::ShotType shotType = EnemyBase::ShotType::None;
 
 		m_oneBoss = ENEMYMANAGER.CreateEnemy(type,
@@ -445,12 +364,112 @@ void GameScene::ChangePhase(Phase phase)
 	}
 }
 
+const GameScene::PhaseParam& GameScene::GetPhaseParam(Phase phase) const
+{
+	return kPhaseParams[(int)phase];
+}
+
 void GameScene::IsGameOver()
 {
 	if (m_phase != Phase::GameOver && m_phase != Phase::GameClear &&
 		!PLAYERMANAGER.GetPlayer()->IsAlive())
 	{
-		FADEMANAGER.FadeOut(1);
+		FADEMANAGER.FadeOut(kFadeTime);
 		ChangePhase(Phase::GameOver);
 	}
+}
+
+void GameScene::DebugKey(float dt)
+{
+	// フェーズ1
+	if (GetAsyncKeyState('T') & 0x8000)
+	{
+		if (!testKey)
+		{
+			PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
+			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+			ENEMYMANAGER.AllDestroy();
+			testKey = true;
+
+			ChangePhase(Phase::Phase1);
+		}
+	}
+	else testKey = false;
+
+	// フェーズ1Boss
+	if (GetAsyncKeyState('Y') & 0x8000)
+	{
+		if (!testKey2)
+		{
+			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+			ENEMYMANAGER.AllDestroy();
+			testKey2 = true;
+
+			ChangePhase(Phase::Phase1Boss);
+		}
+	}
+	else testKey2 = false;
+
+	// フェーズ1Boss
+	if (GetAsyncKeyState('U') & 0x8000)
+	{
+		if (!testKey2)
+		{
+			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+			ENEMYMANAGER.AllDestroy();
+			testKey2 = true;
+
+			ChangePhase(Phase::Phase2);
+		}
+	}
+	else testKey2 = false;
+
+	if (GetAsyncKeyState('I') & 0x8000)
+	{
+		if (!testKey2)
+		{
+			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+			ENEMYMANAGER.AllDestroy();
+			testKey2 = true;
+
+			ChangePhase(Phase::Phase3);
+		}
+	}
+	else testKey2 = false;
+
+	if (GetAsyncKeyState('O') & 0x8000)
+	{
+		if (!testKey2)
+		{
+			BULLETMANAGER.AllDestroy(BulletOwner::Enemy);
+			ENEMYMANAGER.AllDestroy();
+			testKey2 = true;
+
+			ChangePhase(Phase::FinalBossIntro);
+		}
+	}
+	// 自機無敵解除
+	if (GetAsyncKeyState('L') & 0x8000)
+	{
+		if (!testKey3)
+		{
+			PLAYERMANAGER.GetPlayer()->SetGameoverFlg(true);
+		}
+	}
+	else testKey3 = false;
+}
+
+void GameScene::DrawDebug()
+{
+	char PhaseTime[200];
+
+	sprintf_s(PhaseTime, sizeof(PhaseTime), "PhaseTime %.4f", m_phaseTimer);
+
+	SHADER.m_spriteShader.DrawString(340, -270, PhaseTime, Math::Vector4(1, 1, 0, 1));
+
+	char SpawnTime[200];
+
+	sprintf_s(SpawnTime, sizeof(SpawnTime), "SpawnTime %.4f", m_spawnTimer);
+
+	SHADER.m_spriteShader.DrawString(340, -320, SpawnTime, Math::Vector4(1, 1, 0, 1));
 }

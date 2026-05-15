@@ -13,6 +13,8 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void Draw() = 0;
 
-private:
+protected:
+
+	static constexpr float kFadeTime = 1.0f;
 
 };

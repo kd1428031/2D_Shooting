@@ -9,6 +9,16 @@
 #include "Application/Random/Random.h"
 #include "Application/Audio/AudioManager.h"
 
+Player::~Player()
+{
+    if (m_magicCircle)
+    {
+        m_magicCircle->SetOwner(nullptr);
+        m_magicCircle->Kill();
+        m_magicCircle = nullptr;
+    }
+}
+
 void Player::Init()
 {
     m_tex = RESOURCEMANAGER.GetTex(TexName::kPlayer);
@@ -64,6 +74,12 @@ void Player::Update(float dt)
         Death(dt);
         return;
     }
+
+    // ŠO•”‚Åíœ‚³‚ê‚½ê‡‚ÌˆÀ‘Sô
+    if (m_magicCircle && !m_magicCircle->IsAlive())
+    {
+        m_magicCircle = nullptr;
+    }
     
     if (m_mp < kInitMp) m_mp += m_mpRegen;
 
@@ -81,22 +97,21 @@ void Player::Update(float dt)
         RavenBomb(dt);
     }
 
-    if (PLAYERMANAGER.GetRaven()->GetPowUpFlg())
+    auto raven = PLAYERMANAGER.GetRaven();
+    if (raven) 
     {
-        m_uiAlpha += m_uiAlphaBlink * dt;
-        if (m_uiAlpha <= 0.5f || m_uiAlpha >= 1.0f)
+        if (PLAYERMANAGER.GetRaven()->GetPowUpFlg())
         {
-            m_uiAlphaBlink *= -1;
+            m_uiAlpha += m_uiAlphaBlink * dt;
+            if (m_uiAlpha <= 0.5f || m_uiAlpha >= 1.0f)
+            {
+                m_uiAlphaBlink *= -1;
+            }
         }
-    }
-    else
-    {
-        m_uiAlpha = 1.0f;
-    }
-
-    if (m_magicCircle)
-    {
-        m_magicCircle->SetTargetPos(m_pos);
+        else
+        {
+            m_uiAlpha = 1.0f;
+        }
     }
 
     if (m_mp <= 0)m_mp = 0;
@@ -122,19 +137,20 @@ void Player::Draw()
 
 void Player::DrawUi()
 {
-    if (PLAYERMANAGER.GetRaven()->GetPowUpTimer() > 0 && PLAYERMANAGER.GetRaven()->GetPowUpFlg())
+    auto raven = PLAYERMANAGER.GetRaven();
+    if (raven->GetPowUpTimer() > 0 && raven->GetPowUpFlg())
     {
         int digits = 2;
 
         for (int i = 0; i < digits; i++)
         {
-            int digitIndex = ((int)PLAYERMANAGER.GetRaven()->GetPowUpTimer() / (int)pow(10, digits - 1 - i)) % 10;
+            int digitIndex = ((int)raven->GetPowUpTimer() / (int)pow(10, digits - 1 - i)) % 10;
             float srcX = 128 * digitIndex;
 
             Math::Rectangle rect{
                 (int)srcX, 0, 128, 128
             };
-            Math::Vector2 ravenPos = PLAYERMANAGER.GetRaven()->GetPos();
+            Math::Vector2 ravenPos = raven->GetPos();
             Math::Vector2 pos = { ravenPos.x + (float)(i * (128 + -115)) - 10, ravenPos.y + 40 };
             Math::Vector2 size = { 0.25f, 0.25f };
             m_cntMat = CreateMatrix(pos, size, 0);
@@ -143,7 +159,7 @@ void Player::DrawUi()
         }
     }
 
-    Math::Rectangle heartRect;
+    Math::Rectangle heartRect = {}; 
     switch (m_hp)
     {
     case 3:
@@ -188,15 +204,7 @@ void Player::Move(float dt)
     // ’á‘¬E‚‘¬Ø‚è‘Ö‚¦
     if(INPUT.IsKeyTriggered(VK_SHIFT))
     {
-        if (!m_lowFlg)
-        {
-            m_lowFlg = true;
-        }
-        else
-        {
-            m_lowFlg = false;
-        }
-       
+        m_lowFlg = !m_lowFlg;
     }
 
     if (m_lowFlg)
@@ -207,9 +215,10 @@ void Player::Move(float dt)
         if (!m_magicCircle)
         {
             m_magicCircle = EFFCTMANAGER.CreateEffect(EffectType::MagicCircle, m_pos, 0.75f);
+            m_magicCircle->SetOwner(this);
         }
     }
-    else if (!m_lowFlg)
+    else
     {
         m_speed = kHighSpeed;
         m_mpRegen = 5.0f * dt;
@@ -240,10 +249,10 @@ void Player::Move(float dt)
     m_pos += m_velocity * dt;
 
     // ˆÚ“®§ŒÀ
-    if (m_pos.x >=  SCENE.screenWidth/2  - kRadius)m_pos.x =  SCENE.screenWidth/2  - kRadius;
-    if (m_pos.x <= -SCENE.screenWidth/2  + kRadius)m_pos.x = -SCENE.screenWidth/2  + kRadius;
-    if (m_pos.y >=  SCENE.screenHeight/2 - kRadius)m_pos.y =  SCENE.screenHeight/2 - kRadius;
-    if (m_pos.y <= -SCENE.screenHeight/2 + kRadius)m_pos.y = -SCENE.screenHeight/2 + kRadius;
+    if (m_pos.x >=  SCENE.GetScreenWidth() /2  - kRadius)m_pos.x =  SCENE.GetScreenWidth() /2  - kRadius;
+    if (m_pos.x <= -SCENE.GetScreenWidth() /2  + kRadius)m_pos.x = -SCENE.GetScreenWidth() /2  + kRadius;
+    if (m_pos.y >=  SCENE.GetScreenHeight()/2 - kRadius)m_pos.y =  SCENE.GetScreenHeight()/2 - kRadius;
+    if (m_pos.y <= -SCENE.GetScreenHeight()/2 + kRadius)m_pos.y = -SCENE.GetScreenHeight()/2 + kRadius;
 }
 
 void Player::UpdateAnim(float dt)

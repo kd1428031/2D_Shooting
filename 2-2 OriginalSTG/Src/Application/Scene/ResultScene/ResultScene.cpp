@@ -33,7 +33,7 @@ void ResultScene::Init()
 	UIMANAGER.CreateUi(UiType::PressStart);
 
 	PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
-	FADEMANAGER.FadeIn(1);
+	FADEMANAGER.FadeIn(kFadeTime);
 }
 
 void ResultScene::Update(float dt)
@@ -56,7 +56,7 @@ void ResultScene::Update(float dt)
 		if (!m_sceneChangeFlg)
 		{
 			m_sceneChangeFlg = true;
-			FADEMANAGER.FadeOut(1);
+			FADEMANAGER.FadeOut(kFadeTime);
 		}
 	}
 

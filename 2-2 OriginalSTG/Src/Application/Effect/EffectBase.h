@@ -1,5 +1,7 @@
 #pragma once
 
+class GameObject;
+
 enum class EffectType
 {
 	Lightning,
@@ -25,19 +27,20 @@ public:
 	Math::Matrix CreateMatrix(Math::Vector2 offset);
 	Math::Matrix CreateMatrix(Math::Vector2 pos, Math::Vector2 scale, float angle);
 
+	void SetOwner(GameObject* owner) { m_owner = owner; }
+
 	bool IsAlive() const { return m_isAlive; }
 	void Kill();
 	virtual void OnExit();
-	void SetTargetPos(Math::Vector2 targetPos) { m_targetPos = targetPos; }
 
 	virtual EffectType GetEffectType() const = 0;
 
 protected:
 
+	GameObject *m_owner = nullptr;
+
 	// 座標
 	Math::Vector2 m_pos;
-
-	Math::Vector2 m_targetPos = {};
 
 	// 状態
 	bool m_isAlive;

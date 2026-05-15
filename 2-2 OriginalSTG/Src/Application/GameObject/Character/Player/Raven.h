@@ -5,15 +5,6 @@ class Raven : public Character
 {
 public:
 
-    // 状態管理用
-    enum class State
-    {
-        Alive,      // 生存
-        Dying,      // 死亡演出
-        Dead        // 死亡
-    };
-
-
     Raven() = default;
     ~Raven() = default;
 
@@ -23,6 +14,8 @@ public:
 
     void Move(float dt);
     void UpdateAnim(float dt);
+    void UpdateShot(float dt);
+    void UpdatePowerUp(float dt);
 
     void Shot(float dt);
     void ShotNWay(int num);
@@ -59,13 +52,21 @@ private:
     static constexpr int    kTexFrameHeight = 48;
 
     // 弾
-    static constexpr float kShotInterval = 0.5f;               // 発射間隔
+    static constexpr float kShotInterval = 0.5f;                // 発射間隔
     static constexpr float kBulletOffsetX = 30.0f;              // 発射位置
     static constexpr float kBulletSpeed = 1300.0f;              // 速さ
     static constexpr float kBulletScale = 2.0f;                 // サイズ
-    const Math::Color kBulletColor = { 0.8f,0.3f,0.8f,1.0f };     // 色
+    const Math::Color kBulletColor = { 0.8f,0.3f,0.8f,1.0f };   // 色
 
     static constexpr int kBomdInterval = 99;
+
+    // 状態管理用
+    enum class State
+    {
+        Alive,      // 生存
+        Dying,      // 死亡演出
+        Dead        // 死亡
+    };
 
     // 状態・ステータス
     State m_state;
@@ -75,16 +76,14 @@ private:
     float m_animSpeed = kAnimSpeed;
 
     // 弾
-    bool     m_isShooting;
-    float    m_shotTimer;
+    bool    m_isShooting;
+    float   m_shotTimer;
+    float   m_deg;
 
-    float m_deg;
+    float   m_baseAngle = 0.0f; 
+    float   m_spreadAngle = 60.0f;
 
-    float       m_baseAngle = 0.0f; 
-    float       m_spreadAngle = 60.0f;
-
-    bool m_powUpFlg;
-
-    float m_powUpTimer;
+    bool    m_powUpFlg;
+    float   m_powUpTimer;
     static constexpr float kPowUpTimerInterval = 99.0f;
 };

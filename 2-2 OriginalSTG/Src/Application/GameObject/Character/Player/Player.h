@@ -7,28 +7,8 @@ class Player : public Character
 {
 public:
 
-    // ó‘ÔŠÇ——p
-    enum class State
-    {
-        Alive,      // ¶‘¶
-        Invincible, // –³“GŠÔ
-        Dying,      // €–S‰‰o
-        Dead        // €–S
-    };
-
-    enum class ShotType
-    {
-        NormalShot,
-        PenetratShot
-    };
-
-    enum class BombType
-    {
-        Lightning
-    };
-
     Player() = default;
-    ~Player() = default;
+    ~Player();
 
     void Init() override;
     void Update(float dt) override;
@@ -56,16 +36,37 @@ public:
     float GetRadius() const { return kRadius; }
     float GetSpeed() const { return m_speed; }
     float GetMp() const { return m_mp; }
-    int GetBomdWait() { return m_bomdTimer; }
-    int GetRavenBomdWait() { return m_ravenBomdTimer; }
+    int GetBomdWait() const { return m_bomdTimer; }
+    int GetRavenBomdWait() const { return m_ravenBomdTimer; }
     bool GetActionFlg() const { return m_actionFlg; }
 
     bool IsAlive() const override{ return m_state != State::Dead; }
     bool IsInvincible() const { return m_state == State::Invincible; }
-    bool IsIsHit() const { return m_isHit; }
+    bool IsHit() const { return m_isHit; }
 
 private:
     
+    // ó‘ÔŠÇ——p
+    enum class State
+    {
+        Alive,      // ¶‘¶
+        Invincible, // –³“GŠÔ
+        Dying,      // €–S‰‰o
+        Dead        // €–S
+    };
+
+    enum class ShotType
+    {
+        NormalShot,
+        PenetratShot
+    };
+
+    enum class BombType
+    {
+        Lightning,
+        SoulLink
+    };
+
     bool m_isHit = false;
     bool m_gameoverFlg = false;
 

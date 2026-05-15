@@ -60,8 +60,8 @@ void Bullet::Move(float dt)
     m_pos += m_velocity * dt;
 
     // 画面外チェック
-    if (m_pos.x > SCENE.screenWidth/2 + kDeleteMargin || m_pos.y > SCENE.screenHeight/2 + kDeleteMargin ||
-        m_pos.x < -SCENE.screenWidth/2 - kDeleteMargin || m_pos.y < -SCENE.screenHeight/2 - kDeleteMargin)
+    if (m_pos.x > SCENE.GetScreenWidth() /2 + kDeleteMargin || m_pos.y > SCENE.GetScreenHeight() /2 + kDeleteMargin ||
+        m_pos.x < -SCENE.GetScreenWidth() /2 - kDeleteMargin || m_pos.y < -SCENE.GetScreenHeight() /2 - kDeleteMargin)
     {
         Destroy();
     }
