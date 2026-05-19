@@ -31,6 +31,14 @@ void EffectManager::Draw()
     }
 }
 
+void EffectManager::DrawFront()
+{
+    for (auto& p : m_Effect)
+    {
+        p->DrawFront();
+    }
+}
+
 void EffectManager::DrawBack()
 {
     for (auto& p : m_Effect)

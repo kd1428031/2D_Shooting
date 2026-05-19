@@ -9,6 +9,7 @@ void TitleScene::Init()
 {
 	FADEMANAGER.Init();
 	m_isExiting = false;
+	m_sceneChangeFlg = false;
 
 	m_background = SCENEMANAGER.GetBackground();
 	m_background->Init();
@@ -17,7 +18,11 @@ void TitleScene::Init()
 	UIMANAGER.CreateUi(UiType::TitleName);
 	UIMANAGER.CreateUi(UiType::PressStart);
 	AUDIOM.FadeOutAndPlayNext(SoundName::kTitle, 0.2f, 1.0f, true);
+	FADEMANAGER.SetScreenBlack();
 	FADEMANAGER.FadeIn(kFadeTime);
+
+	m_hasBufferedInput = false;
+	m_inputDisableTimer = kInputDisableTime;
 }
 
 void TitleScene::Update(float dt)
@@ -29,7 +34,16 @@ void TitleScene::Update(float dt)
 	AUDIOM.Update();
 	AUDIOM.UpdateFade();
 
-	if (INPUT.IsKeyTriggered(VK_RETURN))
+	m_inputDisableTimer--;
+	if (m_inputDisableTimer <= 0)
+	{
+		if (!m_hasBufferedInput && INPUT.IsAnyKeyTriggered())
+		{
+			m_hasBufferedInput = true;
+		}
+	}
+
+	if (!m_isExiting && m_hasBufferedInput && !FADEMANAGER.IsFading())
 	{
 		UIMANAGER.Destroy(UiType::TitleName);
 		UIMANAGER.Destroy(UiType::PressStart);

@@ -82,6 +82,7 @@ void Player::Update(float dt)
     }
     
     if (m_mp < kInitMp) m_mp += m_mpRegen;
+    else m_lowFlg = false;
 
     if (m_actionFlg)
     {
@@ -119,8 +120,8 @@ void Player::Update(float dt)
     UpdateInvincible(dt);
     UpdateAnim(dt);
     UpdateMatrix();
-    Math::Vector2 pos = { -500.0f,-250.0f };
-    m_heartMat = CreateMatrix(pos, { 4, 4 }, 0);
+    Math::Vector2 pos = { -550.0f,-300.0f };
+    m_heartMat = CreateMatrix(pos, { 3, 3 }, 0);
 }
 
 void Player::Draw()
@@ -193,8 +194,8 @@ void Player::DrawUi()
     float width = 100.0f;
     float mpBar = (m_mp / kInitMp) * width;
     SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
-    SHADER.m_spriteShader.DrawBox(-600 + width, -300, 105, 15, &backColor, true);
-    SHADER.m_spriteShader.DrawBox(-600 + mpBar, -300, mpBar, 10, &gaugeColor, true);
+    SHADER.m_spriteShader.DrawBox(-450 + width, -300, 105, 15, &backColor, true);
+    SHADER.m_spriteShader.DrawBox(-450 + mpBar, -300, mpBar, 10, &gaugeColor, true);
 }
 
 void Player::Move(float dt)
@@ -204,13 +205,13 @@ void Player::Move(float dt)
     // ’á‘¬E‚‘¬Ø‚è‘Ö‚¦
     if(INPUT.IsKeyTriggered(VK_SHIFT))
     {
-        m_lowFlg = !m_lowFlg;
+        if(m_mp < kInitMp)m_lowFlg = !m_lowFlg;
     }
 
     if (m_lowFlg)
     {
         m_speed = kLowSpeed;
-        m_mpRegen = 25.0f * dt;
+        m_mpRegen = 7.5f * dt;
         m_shotType = ShotType::PenetratShot;
         if (!m_magicCircle)
         {
@@ -221,7 +222,7 @@ void Player::Move(float dt)
     else
     {
         m_speed = kHighSpeed;
-        m_mpRegen = 5.0f * dt;
+        m_mpRegen = 2.5f * dt;
         m_shotType = ShotType::NormalShot;
         if (m_magicCircle)
         {
@@ -252,7 +253,7 @@ void Player::Move(float dt)
     if (m_pos.x >=  SCENE.GetScreenWidth() /2  - kRadius)m_pos.x =  SCENE.GetScreenWidth() /2  - kRadius;
     if (m_pos.x <= -SCENE.GetScreenWidth() /2  + kRadius)m_pos.x = -SCENE.GetScreenWidth() /2  + kRadius;
     if (m_pos.y >=  SCENE.GetScreenHeight()/2 - kRadius)m_pos.y =  SCENE.GetScreenHeight()/2 - kRadius;
-    if (m_pos.y <= -SCENE.GetScreenHeight()/2 + kRadius)m_pos.y = -SCENE.GetScreenHeight()/2 + kRadius;
+    if (m_pos.y <= -SCENE.GetScreenHeight()/2 + kRadius+80)m_pos.y = -SCENE.GetScreenHeight()/2 + kRadius+80;
 }
 
 void Player::UpdateAnim(float dt)
@@ -310,7 +311,7 @@ void Player::Shot(float dt)
             m_shotTimer = kShotInterval;
 
             // MPÁ”ï
-            m_mp -= 1;
+            //m_mp -= 1;
 
             if (m_shotSoundTimer <= 0)
             {

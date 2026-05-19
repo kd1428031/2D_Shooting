@@ -22,10 +22,10 @@ private:
     static constexpr int    kInitHp = 30;
     const Math::Vector2     kInitVelocity = { -120.0f, 0.0f };
 
-    static constexpr float  kRadius = 24.0f;
+    static constexpr float  kRadius = 32.0f;
     static constexpr int    kTexFrameWidth = 16.0f;
     static constexpr int    kTexFrameHeight = 24.0f;
-    static constexpr int    kInitScale = 2.0f;
+    static constexpr int    kInitScale = 3.0f;
     static constexpr float  kAnimSpeed = 20.0f;
     static constexpr int    kIdleAnimMax = 5;
     static constexpr int    kDeathAnimMax = 5;

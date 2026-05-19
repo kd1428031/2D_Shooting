@@ -16,7 +16,12 @@ public:
 
 private:
 
+	static constexpr int kInputDisableTime = 12;
+	int m_inputDisableTimer = kInputDisableTime;
+
 	Background* m_background;
 
 	bool m_isExiting;
+
+	bool m_sceneChangeFlg;
 };

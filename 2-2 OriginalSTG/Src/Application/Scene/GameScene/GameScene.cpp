@@ -107,6 +107,7 @@ void GameScene::Update(float dt)
 	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet());
 	EFFCTMANAGER.Update(dt);
 	UIMANAGER.Update(dt);
+
 	FADEMANAGER.Update(dt);
 	INPUT.Update();
 	AUDIOM.Update();
@@ -124,6 +125,10 @@ void GameScene::Draw()
 	ENEMYMANAGER.Draw();
 	BULLETMANAGER.Draw();
 	EFFCTMANAGER.Draw();
+
+	SHADER.m_spriteShader.SetMatrix(Math::Matrix::Identity);
+	SHADER.m_spriteShader.DrawBox(0, -320, 640, 40, &Math::Color(0, 0, 0, 0.75f), true);
+
 	UIMANAGER.Draw();
 	PLAYERMANAGER.DrawUi();
 
@@ -131,6 +136,7 @@ void GameScene::Draw()
 	SHADER.m_spriteShader.SetMatrix(m_tutorialShotMat);
 	SHADER.m_spriteShader.DrawTex_Color(m_tutorialShotTex, rect, m_color);
 
+	EFFCTMANAGER.DrawFront();
 	FADEMANAGER.Draw();
 
 	// デバッグ用　必ずリリース時消す=========================
@@ -147,9 +153,9 @@ void GameScene::UpdatePhase1(float dt)
 		if (ENEMYMANAGER.GetEnemyNum() <= 0 || m_spawnTimer > param.spawnInterval)
 		{
 			EnemyBase::ShotType shotType = EnemyBase::ShotType::Straight;
-			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, 300.0f }, shotType);
+			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, 220.0f }, shotType);
 			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, 0.0f }, shotType);
-			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, -300.0f }, shotType);
+			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 100.0f, -220.0f }, shotType);
 
 			shotType = EnemyBase::ShotType::Aimed;
 			ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640.0f + 50.0f, 150.0f }, shotType);
@@ -202,8 +208,8 @@ void GameScene::UpdatePhase2(float dt)
 			ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640.0f + 50.0f, -150.0f },shotType)->SetShotInterval(0.2f);
 		
 			shotType = EnemyBase::ShotType::AllRange;
-			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, 300.0f }, shotType)->SetShotAllNWay(8);
-			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, -300.0f },shotType)->SetShotAllNWay(8);
+			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, 220.0f }, shotType)->SetShotAllNWay(8);
+			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, -220.0f },shotType)->SetShotAllNWay(8);
 		
 			m_spawnTimer = 0.0f;
 		}
@@ -236,8 +242,8 @@ void GameScene::UpdatePhase3(float dt)
 			ENEMYMANAGER.CreateEnemy(EnemyType::Bat, { 640.0f + 50.0f, -150.0f }, shotType)->SetShotInterval(0.5f);
 
 			shotType = EnemyBase::ShotType::AllRange;
-			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, 300.0f }, shotType)->SetShotAllNWay(5);
-			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, -300.0f }, shotType)->SetShotAllNWay(5);
+			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, 220.0f }, shotType)->SetShotAllNWay(5);
+			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 150.0f, -220.0f }, shotType)->SetShotAllNWay(5);
 		
 			shotType = EnemyBase::ShotType::Aimed;
 			ENEMYMANAGER.CreateEnemy(EnemyType::Daemon, { 640.0f + 125.0f, 75.0f }, shotType)->SetShotInterval(0.75f);
@@ -463,13 +469,13 @@ void GameScene::DrawDebug()
 {
 	char PhaseTime[200];
 
-	sprintf_s(PhaseTime, sizeof(PhaseTime), "PhaseTime %.4f", m_phaseTimer);
+	sprintf_s(PhaseTime, sizeof(PhaseTime), "PhaseTime %.3f", m_phaseTimer);
 
-	SHADER.m_spriteShader.DrawString(340, -270, PhaseTime, Math::Vector4(1, 1, 0, 1));
+	SHADER.m_spriteShader.DrawString(340, 320, PhaseTime, Math::Vector4(1, 1, 0, 1));
 
 	char SpawnTime[200];
 
-	sprintf_s(SpawnTime, sizeof(SpawnTime), "SpawnTime %.4f", m_spawnTimer);
+	sprintf_s(SpawnTime, sizeof(SpawnTime), "SpawnTime %.3f", m_spawnTimer);
 
-	SHADER.m_spriteShader.DrawString(340, -320, SpawnTime, Math::Vector4(1, 1, 0, 1));
+	SHADER.m_spriteShader.DrawString(340, 270, SpawnTime, Math::Vector4(1, 1, 0, 1));
 }

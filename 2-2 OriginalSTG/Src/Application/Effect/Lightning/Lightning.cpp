@@ -22,7 +22,7 @@ void Lightning::Init()
 	UpdateMatrix();
 }
 
-void Lightning::Draw()
+void Lightning::DrawFront()
 {
 	if (!m_isAlive)return;
 	if (m_timer > 20)

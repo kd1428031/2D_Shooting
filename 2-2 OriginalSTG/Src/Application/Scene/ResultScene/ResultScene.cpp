@@ -34,6 +34,9 @@ void ResultScene::Init()
 
 	PLAYERMANAGER.GetPlayer()->SetActionFlg(false);
 	FADEMANAGER.FadeIn(kFadeTime);
+
+	m_hasBufferedInput = false;
+	m_inputDisableTimer = kInputDisableTime;
 }
 
 void ResultScene::Update(float dt)
@@ -51,23 +54,26 @@ void ResultScene::Update(float dt)
 	AUDIOM.Update();
 	AUDIOM.UpdateFade();
 
-	if (INPUT.IsKeyTriggered(VK_RETURN))
+	m_inputDisableTimer--;
+	if (m_inputDisableTimer <= 0)
 	{
-		if (!m_sceneChangeFlg)
+		if (!m_hasBufferedInput && INPUT.IsAnyKeyTriggered())
 		{
-			m_sceneChangeFlg = true;
-			FADEMANAGER.FadeOut(kFadeTime);
+			m_hasBufferedInput = true;
 		}
 	}
 
-	if (m_sceneChangeFlg)
+	if (!m_sceneChangeFlg && FADEMANAGER.IsFadeEnd() && m_hasBufferedInput)
 	{
-		if (FADEMANAGER.IsFadeEnd())
-		{
-			TIMEMANAGER.Start();
-			UIMANAGER.Destroy(UiType::Score);
-			SCENEMANAGER.SetNextScene(SceneManager::SceneType::Title);
-		}
+		m_sceneChangeFlg = true;
+		FADEMANAGER.FadeOut(kFadeTime);
+	}
+
+	if (m_sceneChangeFlg && FADEMANAGER.IsFadeEnd())
+	{
+		TIMEMANAGER.Start();
+		UIMANAGER.Destroy(UiType::Score);
+		SCENEMANAGER.SetNextScene(SceneManager::SceneType::Title);
 	}
 }
 
@@ -83,6 +89,5 @@ void ResultScene::Draw()
 	SHADER.m_spriteShader.DrawBox(0, 0, 640, 360, &Math::Color(0, 0, 0, 0.5f), true);
 
 	UIMANAGER.Draw();
-	//PLAYERMANAGER.DrawUi();
 	FADEMANAGER.Draw();
 }

@@ -9,8 +9,8 @@ public:
 	~Lightning() = default;
 
 	void Init();
-	void Draw() override;
-
+	void Draw() override{}
+	void DrawFront()override;
 	void UpdateImpl(float dt)override;
 
 	EffectType GetEffectType() const { return EffectType::Lightning; }

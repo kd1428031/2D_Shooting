@@ -25,6 +25,8 @@ public:
     void SetSlow(float scale) { m_timeScale = scale; }
     void ResetSpeed() { m_timeScale = 1.0f; }
 
+    float GetDeltaTime();
+
 private:
 
     TimeManager() = default;

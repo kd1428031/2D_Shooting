@@ -20,7 +20,7 @@ public:
 private:
 
 	const Math::Color		kInitColor		= { 0.8f,0.2f,0.8f,1.0f };
-	const Math::Vector2		kInitPos		= { 400, 250 };
+	const Math::Vector2		kInitPos		= { 400, -315 };
 	static constexpr int	kTexFrameWidth	= 128;
 	static constexpr int	kTexFrameHeight = 128;
 	static constexpr float	kInitScale		= 0.5f;

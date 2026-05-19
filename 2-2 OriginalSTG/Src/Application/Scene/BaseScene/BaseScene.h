@@ -17,4 +17,5 @@ protected:
 
 	static constexpr float kFadeTime = 1.0f;
 
+	bool m_hasBufferedInput = false;
 };

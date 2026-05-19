@@ -1,6 +1,7 @@
 #include "System/KdSystem.h"
 
 #include "KdGameWindow.h"
+#include "Application/main.h"
 
 // imguiウィンドウメッセージ処理用
 LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -143,6 +144,13 @@ LRESULT KdGameWindow::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 	//メッセージによって処理を選択
 	//===================================
 	switch (message) {
+
+	case WM_EXITMENULOOP:
+
+		// ポーズからの復帰を通知
+		APP.RequestResumeFrame();
+		break;
+
 	// ホイールスクロール時
 	case WM_MOUSEWHEEL:
 		{

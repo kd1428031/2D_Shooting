@@ -17,6 +17,7 @@ public:
 
 	bool IsKeyHeld(int key) const;
 	bool IsKeyTriggered(int key) const;
+	bool IsAnyKeyTriggered() const;
 
 	void Reset();
 

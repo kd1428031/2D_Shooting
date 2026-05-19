@@ -115,6 +115,15 @@ bool FadeManager::IsFadeEnd()
 	return m_fadeEndFlg;
 }
 
+bool FadeManager::IsFading()
+{
+	if (m_fadeInFlg || m_fadeOutFlg)
+	{
+		return true;
+	}
+	return false;
+}
+
 void FadeManager::Blink(float time, float speed, Math::Color color)
 {
 	m_fadeInFlg = false;
@@ -132,4 +141,10 @@ void FadeManager::Blink(float time, float speed, Math::Color color)
 bool FadeManager::IsBlinkEnd()
 {
 	return m_blinkEnd;
+}
+
+void FadeManager::SetScreenBlack()
+{
+	m_color = kBlack;
+	m_color.A(1.0f);
 }

@@ -20,9 +20,12 @@ public:
     void FadeOut(float fadeSpeed, Math::Color color = {0,0,0,0});
 
     bool IsFadeEnd();
+    bool IsFading();
 
     void Blink(float time, float speed, Math::Color color);
     bool IsBlinkEnd();
+
+    void SetScreenBlack();
 
 private:
 

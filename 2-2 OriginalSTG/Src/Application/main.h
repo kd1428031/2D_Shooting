@@ -18,6 +18,9 @@ public:
 
 	KdGameWindow GetWindowHandle() { return m_window; }
 
+	// ポーズからの復帰通知
+	void RequestResumeFrame() { m_isPauseResumeFrame = true; }
+
 	//=====================================================
 	// グローバルデータ
 	//=====================================================
@@ -29,7 +32,9 @@ public:
 	int				m_fps = 0;					// 現在のFPS値
 	int				m_maxFps = 60;				// 最大FPS
 
-	float m_deltaTime = 0.0f;
+	float			m_deltaTime = 0.0f;
+
+	bool			m_isPauseResumeFrame = false;
 
 private:
 
@@ -41,7 +46,6 @@ private:
 
 	// ゲーム終了フラグ trueで終了する
 	bool		m_endFlag = false;
-
 
 //=====================================================
 // シングルトンパターン

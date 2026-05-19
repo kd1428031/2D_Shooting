@@ -1,7 +1,7 @@
 #include "main.h"
 
 #include "Scene.h"
-
+#include <chrono>
 //===================================================================
 // メイン
 //===================================================================
@@ -154,19 +154,11 @@ void Application::Execute()
 	// 時間
 	DWORD baseTime = timeGetTime();
 	int count = 0;
+	auto lastTime = std::chrono::high_resolution_clock::now();
 
 	// ループ
 	while (1)
 	{
-
-		// 処理開始時間Get
-		DWORD st = timeGetTime();
-
-		// deltaTime計算
-		static DWORD lastTime = timeGetTime();
-		m_deltaTime = (st - lastTime) / 1000.0f;
-		lastTime = st;
-
 		// ゲーム終了指定があるときはループ終了
 		if (m_endFlag)
 		{ 
@@ -187,6 +179,30 @@ void Application::Execute()
 		{
 			break;
 		}
+
+		auto currentTime = std::chrono::high_resolution_clock::now();
+
+		// 前回のフレームからの経過時間を計算（秒単位の float で取得）
+		std::chrono::duration<float> elapsed = currentTime - lastTime;
+		float rawDeltaTime = elapsed.count();
+
+		// 次のフレームのために現在の時間を保存
+		lastTime = currentTime;
+
+		// ポーズ解除時のワープ防止
+		if (m_isPauseResumeFrame)
+		{
+			m_deltaTime = 1.0f / 60.0f;
+			m_isPauseResumeFrame = false;
+		}
+		else
+		{
+			// 処理落ち時のワープ防止
+			m_deltaTime = std::min(rawDeltaTime, 0.05f);
+		}
+
+		// 処理開始時間Get
+		DWORD st = timeGetTime();
 
 		//=========================================
 		//

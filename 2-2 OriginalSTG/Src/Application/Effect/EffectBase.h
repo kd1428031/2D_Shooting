@@ -21,6 +21,7 @@ public:
 	void Update(float dt);
 	virtual void Draw() = 0;
 	virtual void DrawBack(){}
+	virtual void DrawFront(){}
 	virtual void UpdateMatrix();
 	virtual void UpdateImpl(float dt) {};
 

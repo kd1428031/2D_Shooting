@@ -79,7 +79,7 @@ public:
 
 private:
 	AudioManager();
-	~AudioManager();
+	~AudioManager() { Release(); }
 
 	// サウンドデータを管理するマップ (ファイル名 -> 音データ)
 	std::map<std::string, std::shared_ptr<KdSoundEffect>> m_soundMap;

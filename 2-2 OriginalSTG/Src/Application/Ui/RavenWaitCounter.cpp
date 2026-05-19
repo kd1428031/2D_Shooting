@@ -20,10 +20,10 @@ void RavenWaitCounter::Init()
 
 void RavenWaitCounter::UpdateImpl(float dt)
 {
-	Math::Vector2 pos = { -310, -300 };
+	Math::Vector2 pos = { kInitPos.x, -300 };
 	m_iconMat = CreateMatrix(pos, { 0.25f,0.25f, }, 0.0f);
 
-	Math::Vector2 pos2 = { -310, -300 + 30 };
+	Math::Vector2 pos2 = { kInitPos.x, -300 - 30 };
 	m_keyMat = CreateMatrix(pos2, { 0.5f,0.5f, }, 0.0f);
 
 	Player* player = PLAYERMANAGER.GetPlayer();
@@ -65,7 +65,7 @@ void RavenWaitCounter::Draw()
 				(int)srcX, 0, kTexFrameWidth, kTexFrameHeight
 			};
 
-			SHADER.m_spriteShader.SetMatrix(CreateMatrix({ (float)(i * (kTexFrameWidth + kTexFrameOffSet)), 0 }));
+			SHADER.m_spriteShader.SetMatrix(CreateMatrix({ (float)(i * (kTexFrameWidth + kTexFrameOffSet)) + kCountPosOffSet, 0 }));
 			SHADER.m_spriteShader.DrawTex_Color(m_tex, rect, m_color);
 		}
 	}

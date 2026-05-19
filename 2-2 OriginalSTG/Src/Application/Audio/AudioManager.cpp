@@ -4,11 +4,6 @@ AudioManager::AudioManager()
 {
 }
 
-AudioManager::~AudioManager()
-{
-	Release();
-}
-
 void AudioManager::LoadSound(const std::string& name, const std::string& path)
 {
 	// まだロードされていない場合のみロード

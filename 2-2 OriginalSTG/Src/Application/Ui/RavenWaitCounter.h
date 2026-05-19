@@ -18,11 +18,12 @@ public:
 private:
 
 	const Math::Color		kInitColor = { 1.0f,1.0f,1.0f,1.0f };
-	const Math::Vector2		kInitPos = { -318, -300 };
+	const Math::Vector2		kInitPos = { -170, -300 };
 	static constexpr int	kTexFrameWidth = 128;
 	static constexpr int	kTexFrameHeight = 128;
 	static constexpr float	kInitScale = 0.15f;
 	static constexpr int	kTexFrameOffSet = -115;
+	static constexpr int	kCountPosOffSet = -6.75f;
 
 	Math::Matrix m_iconMat;
 	KdTexture* m_iconTex;

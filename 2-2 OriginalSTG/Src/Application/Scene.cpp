@@ -15,9 +15,8 @@ void Scene::Draw2D()
 void Scene::Update()
 {
 	TIMEMANAGER.Update();
-	float dt = APP.m_deltaTime * TIMEMANAGER.m_timeScale;
 
-	SCENEMANAGER.Update(dt);
+	SCENEMANAGER.Update(TIMEMANAGER.GetDeltaTime());
 }
 
 void Scene::Init()
@@ -31,7 +30,6 @@ void Scene::Init()
 
 void Scene::Release()
 {
-	AUDIOM.Release();
 }
 
 void Scene::ImGuiUpdate()

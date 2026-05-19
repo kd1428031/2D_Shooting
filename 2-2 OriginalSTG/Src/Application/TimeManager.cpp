@@ -1,4 +1,5 @@
 #include "TimeManager.h"
+#include "Application/main.h"
 
 void TimeManager::Init()
 {
@@ -32,4 +33,9 @@ void TimeManager::HitStop(int frames)
     {
         m_stopFrames = frames;
     }
+}
+
+float TimeManager::GetDeltaTime()
+{
+    return APP.m_deltaTime * m_timeScale;
 }
