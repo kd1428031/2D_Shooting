@@ -115,6 +115,15 @@
     <Filter Include="Src\Application\Effect\MagicCircle">
       <UniqueIdentifier>{ef6f2dd3-45f4-4a5c-9796-ea209f190004}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Item">
+      <UniqueIdentifier>{0085555b-770a-4fcd-aeac-d4830543d115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Item\ManaPotion">
+      <UniqueIdentifier>{60c86438-a3b7-4445-bf9a-7e426cf235c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\Item\HealthPotion">
+      <UniqueIdentifier>{3a9bcf14-8f86-4380-971a-eda4e1bb037a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -339,6 +348,18 @@
     <ClInclude Include="Src\Application\Effect\MagicCircle\MagicCircle.h">
       <Filter>Src\Application\Effect\MagicCircle</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Item\ItemBase.h">
+      <Filter>Src\Application\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Item\ItemManager.h">
+      <Filter>Src\Application\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Item\HealthPotion\HealthPotion.h">
+      <Filter>Src\Application\GameObject\Item\HealthPotion</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Item\ManaPotion\ManaPotion.h">
+      <Filter>Src\Application\GameObject\Item\ManaPotion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -526,6 +547,18 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Effect\MagicCircle\MagicCircle.cpp">
       <Filter>Src\Application\Effect\MagicCircle</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Item\ItemBase.cpp">
+      <Filter>Src\Application\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Item\ItemManager.cpp">
+      <Filter>Src\Application\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Item\HealthPotion\HealthPotion.cpp">
+      <Filter>Src\Application\GameObject\Item\HealthPotion</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Item\ManaPotion\ManaPotion.cpp">
+      <Filter>Src\Application\GameObject\Item\ManaPotion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

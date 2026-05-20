@@ -26,6 +26,7 @@ public:
     void RavenBomb(float dt);
     void Lightning();
 
+    void Heal(int healValue);
     void TakeDamage(float damage)override;
     void Death(float dt);
 

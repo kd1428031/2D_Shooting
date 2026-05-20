@@ -33,10 +33,10 @@ public:
 		return instance;
 	}
 
-	// 初期化（サウンドデータのロード）
+	// 初期化
 	void Init();
 
-	// 更新（再生終了したSEのメモリ解放）
+	// 更新
 	void Update();
 
 	void UpdateFade();
@@ -78,16 +78,17 @@ public:
 	float GetSeVolume() const { return m_seVol; }
 
 private:
+
 	AudioManager();
 	~AudioManager() { Release(); }
 
-	// サウンドデータを管理するマップ (ファイル名 -> 音データ)
+	// サウンドデータ管理
 	std::map<std::string, std::shared_ptr<KdSoundEffect>> m_soundMap;
 
 	// 現在再生中のBGM
 	std::shared_ptr<KdSoundInstance> m_bgmInst;
 
-	// 再生中のSEリスト (再生が終わるまでインスタンスを保持する必要があるため)
+	// 再生中のSEリスト 
 	std::list<std::shared_ptr<KdSoundInstance>> m_seList;
 
 	// 音量設定
@@ -114,9 +115,7 @@ private:
 	Math::Vector2 m_listenerPos{};
 	Math::Vector2 m_playerPos{};
 
-	// ロード用ヘルパー関数
 	void LoadSound(const std::string& name, const std::string& path);
 };
 
-// マクロ定義：どこからでも AUDIO.PlaySe(...) で呼べるようにする
 #define AUDIOM AudioManager::Instance()

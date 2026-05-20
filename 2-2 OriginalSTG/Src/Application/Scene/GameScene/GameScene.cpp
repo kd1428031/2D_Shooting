@@ -4,6 +4,7 @@
 #include "Application/GameObject/Character/Player/PlayerManager.h"
 #include "Application/GameObject/Character/Enemy/EnemyManager.h"
 #include "Application/GameObject/Bullet/BulletManager.h"
+#include "Application/GameObject/Item/ItemManager.h"
 #include "Application/Ui/UiManager.h"
 #include "Application/TimeManager.h"
 #include "Application/Score/ScoreManager.h"
@@ -104,7 +105,7 @@ void GameScene::Update(float dt)
 	PLAYERMANAGER.Update(dt);
 	ENEMYMANAGER.Update(dt);
 	BULLETMANAGER.Update(dt);
-	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet());
+	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet(), ITEMMANAGER.GetItem());
 	EFFCTMANAGER.Update(dt);
 	UIMANAGER.Update(dt);
 

@@ -182,6 +182,10 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\PlayerManager.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Player\Raven.h" />
     <ClInclude Include="Src\Application\GameObject\GameObject.h" />
+    <ClInclude Include="Src\Application\GameObject\Item\HealthPotion\HealthPotion.h" />
+    <ClInclude Include="Src\Application\GameObject\Item\ItemBase.h" />
+    <ClInclude Include="Src\Application\GameObject\Item\ItemManager.h" />
+    <ClInclude Include="Src\Application\GameObject\Item\ManaPotion\ManaPotion.h" />
     <ClInclude Include="Src\Application\Input\InputManager.h" />
     <ClInclude Include="Src\Application\Random\Random.h" />
     <ClInclude Include="Src\Application\ResourceManager.h" />
@@ -250,6 +254,10 @@
     <ClCompile Include="Src\Application\GameObject\Character\Player\PlayerManager.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Player\Raven.cpp" />
     <ClCompile Include="Src\Application\GameObject\GameObject.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Item\HealthPotion\HealthPotion.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Item\ItemBase.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Item\ItemManager.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Item\ManaPotion\ManaPotion.cpp" />
     <ClCompile Include="Src\Application\Input\InputManager.cpp" />
     <ClCompile Include="Src\Application\Random\Random.cpp" />
     <ClCompile Include="Src\Application\ResourceManager.cpp" />

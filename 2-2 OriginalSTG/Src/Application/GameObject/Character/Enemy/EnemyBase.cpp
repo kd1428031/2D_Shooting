@@ -1,9 +1,10 @@
 #include "EnemyBase.h"
+#include "Application/GameObject/Character/Player/PlayerManager.h"
+#include "Application/GameObject/Bullet/BulletManager.h"
+#include "Application/GameObject/Item/ItemManager.h"
 #include "Application/Scene.h"
 #include "Application/Score/ScoreManager.h"
 #include "Application/TimeManager.h"
-#include "Application/GameObject/Bullet/BulletManager.h"
-#include "Application/GameObject/Character/Player/PlayerManager.h"
 #include "Application/Audio/AudioManager.h"
 
 EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
@@ -279,6 +280,7 @@ void EnemyBase::TakeDamage(float damage)
             m_state = State::Dying;
             SCOREMANAGER.AddScore(m_score);
             PLAYERMANAGER.AddDestroyCnt();
+            ITEMMANAGER.RandomCreateItem(m_pos);
         }
     }
 }

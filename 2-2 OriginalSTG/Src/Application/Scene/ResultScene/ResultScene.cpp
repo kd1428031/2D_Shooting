@@ -46,7 +46,6 @@ void ResultScene::Update(float dt)
 	PLAYERMANAGER.Update(dt);
 	ENEMYMANAGER.Update(dt);
 	BULLETMANAGER.Update(dt);
-	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet());
 	EFFCTMANAGER.Update(dt);
 	UIMANAGER.Update(dt);
 	FADEMANAGER.Update(dt);

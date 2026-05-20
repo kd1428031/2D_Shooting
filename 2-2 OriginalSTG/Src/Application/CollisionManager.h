@@ -3,6 +3,7 @@
 class Player;
 class EnemyBase;
 class Bullet;
+class ItemBase;
 
 class CollisionManager
 {
@@ -18,7 +19,8 @@ public:
 
     void CheckAll(Player* player,
         const std::vector<std::unique_ptr<EnemyBase>>& enemies,
-        const std::vector<std::unique_ptr<Bullet>>& bullets);
+        const std::vector<std::unique_ptr<Bullet>>& bullets,
+        const std::vector<std::unique_ptr<ItemBase>>& itemis);
 
 private:
 
@@ -27,6 +29,7 @@ private:
     void CheckPlayerVsEnemy(Player* player, const std::vector<std::unique_ptr<EnemyBase>>& enemies);
     void CheckEnemyVsPlayerBullet(const std::vector<std::unique_ptr<EnemyBase>>& enemies, const std::vector<std::unique_ptr<Bullet>>& bullets);
     void CheckPlayerVsEnemyBullet(Player* player, const std::vector<std::unique_ptr<Bullet>>& bullets);
+    void CheckPlayerVsItem(Player* player, const std::vector<std::unique_ptr<ItemBase>>& itemis);
 
     bool IsHit(Math::Vector2 posA, float radiusA,
         Math::Vector2 posB, float radiusB);

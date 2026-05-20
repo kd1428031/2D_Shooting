@@ -419,6 +419,11 @@ void Player::Lightning()
     EFFCTMANAGER.CreateEffect(EffectType::LightningText, { 0, 0 }, 1);
 }
 
+void Player::Heal(int healValue)
+{
+    m_hp += healValue;
+}
+
 void Player::TakeDamage(float damage)
 {
     if (m_state == State::Dying || m_state == State::Dead)return;
