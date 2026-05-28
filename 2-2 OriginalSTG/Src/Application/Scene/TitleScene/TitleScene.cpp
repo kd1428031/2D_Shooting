@@ -27,12 +27,12 @@ void TitleScene::Init()
 
 void TitleScene::Update(float dt)
 {
+	AUDIOM.Update();
+	AUDIOM.UpdateFade();
 	INPUT.Update();
 	m_background->Update(dt);
 	UIMANAGER.Update(dt);
 	FADEMANAGER.Update(dt);
-	AUDIOM.Update();
-	AUDIOM.UpdateFade();
 
 	m_inputDisableTimer--;
 	if (m_inputDisableTimer <= 0)

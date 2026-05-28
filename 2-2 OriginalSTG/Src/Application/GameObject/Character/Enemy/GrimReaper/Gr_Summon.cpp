@@ -1,6 +1,7 @@
 #include "Gr_Summon.h"
 #include "Application/ResourceManager.h"
 #include "Application/Random/Random.h"
+#include "Application/Audio/AudioManager.h"
 
 Gr_Summon::Gr_Summon(Math::Vector2 pos, float scale)
 	: EnemyBase(pos, scale)
@@ -27,7 +28,7 @@ void Gr_Summon::Init()
 	m_bulletOffset = kBulletOffsetX;
 	m_bulletSpeed = kBulletSpeed;
 	m_bulletScale = kBulletScale;
-	m_bulletColor = kBulletColor;
+	m_bulletColor = BulletColor::Black;
 	m_bulletAngleSpeed = kBulletAngleSpeed;
 
 	m_shotType = ShotType::Aimed;
@@ -102,6 +103,8 @@ void Gr_Summon::PreDeath()
 
 	m_animFrame.y = 0;
 	m_animFrame.x = 0;
+
+	AUDIOM.PlaySeNumLimit(SoundName::kEnemyDestroy);
 }
 
 void Gr_Summon::Death(float dt)

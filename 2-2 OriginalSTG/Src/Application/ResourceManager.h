@@ -20,7 +20,14 @@ namespace TexName
 	constexpr char kGr_Summon_death[]	= "gr_summon_death";
 
 	// ’e
-	constexpr char kBullet[]			= "bullet";
+	constexpr char kVioletBullet[]			= "violetBullet";
+	constexpr char kPenetratBullet[]		= "penetratBullet";
+	constexpr char kRedBullet[]				= "redBullet";
+	constexpr char kBlackBullet[]			= "blackBullet";
+	constexpr char kCrowBullet[]			= "crowBullet";
+
+	// ƒAƒCƒeƒ€
+	constexpr char kHealthPotion[]		= "healthPotion";
 
 	// UI
 	constexpr char kBgTitle[]			= "bg_title";
@@ -44,6 +51,8 @@ namespace TexName
 	constexpr char kLightningIcon[]		= "lightningIcon";
 	constexpr char kMagicCircle_idle[]	= "magicCircleIdle";
 	constexpr char kMagicCircle_summon[]= "magicCircleSummon";
+	constexpr char kHitEffect[]			= "hitEffect";
+	constexpr char kMpMax[]				= "mpMax";
 	constexpr char kX[]= "x";
 	constexpr char kC[]= "c";
 }

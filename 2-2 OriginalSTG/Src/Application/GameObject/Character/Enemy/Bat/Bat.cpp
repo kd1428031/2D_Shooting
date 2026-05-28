@@ -1,5 +1,6 @@
 #include "Bat.h"
 #include "Application/ResourceManager.h"
+#include "Application/Audio/AudioManager.h"
 #include "Application/Random/Random.h"
 #include "Application/GameObject/Character/Player/PlayerManager.h"
 
@@ -26,7 +27,7 @@ void Bat::Init()
 	m_bulletOffset = kBulletOffsetX;
 	m_bulletSpeed = kBulletSpeed;
 	m_bulletScale = kBulletScale;
-	m_bulletColor = kBulletColor;
+	m_bulletColor = BulletColor::Red;
 	m_bulletAngleSpeed = kBulletAngleSpeed;
 
 	m_shotType = (ShotType)Random::Range(0, 3);
@@ -52,6 +53,8 @@ void Bat::PreDeath()
 {
 	m_animFrame.y = 2;
 	m_animFrame.x = 0;
+
+	AUDIOM.PlaySeNumLimit(SoundName::kEnemyDestroy);
 }
 
 void Bat::Death(float dt)

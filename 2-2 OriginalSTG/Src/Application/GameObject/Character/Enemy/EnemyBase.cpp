@@ -1,7 +1,6 @@
 #include "EnemyBase.h"
 #include "Application/GameObject/Character/Player/PlayerManager.h"
 #include "Application/GameObject/Bullet/BulletManager.h"
-#include "Application/GameObject/Item/ItemManager.h"
 #include "Application/Scene.h"
 #include "Application/Score/ScoreManager.h"
 #include "Application/TimeManager.h"
@@ -10,7 +9,7 @@
 EnemyBase::EnemyBase(Math::Vector2 pos, float scale)
     :Character(pos, scale), m_state(State::Alive), m_score(0), 
     m_shotInterval(1.0f), m_shotTimer(m_shotInterval), m_bulletOffset(30.0f), 
-    m_bulletSpeed(300.0f), m_bulletScale(2.0f), m_bulletColor(1, 0, 0, 1),
+    m_bulletSpeed(300.0f), m_bulletScale(2.0f), m_bulletColor(BulletColor::Red),
     m_bulletAngle(0.0f), m_bulletAngleSpeed(300.0f), m_shotNWay(0),
     m_shotType(ShotType::Straight), m_preUpdateFlg(true)
 {    
@@ -128,12 +127,12 @@ void EnemyBase::ShotStraight()
     BULLETMANAGER.CreateBullet(
         BulletOwner::Enemy,
         BulletType::Normal,
+        m_bulletColor,
         spawnPos,
         velocity,
-        m_bulletScale,
-        m_bulletColor
+        m_bulletScale
     );
-    AUDIOM.PlaySeNumLimit(SoundName::kNShot);
+    AUDIOM.PlaySeNumLimit(SoundName::kEnemyShot);
 }
 
 void EnemyBase::ShotNWay()
@@ -167,13 +166,13 @@ void EnemyBase::ShotNWay()
         BULLETMANAGER.CreateBullet(
             BulletOwner::Enemy,
             BulletType::Normal,
+            m_bulletColor,
             spawnPos,
             velocity,
-            m_bulletScale,
-            m_bulletColor
+            m_bulletScale
         );
     }
-    AUDIOM.PlaySeNumLimit(SoundName::kNShot);
+    AUDIOM.PlaySeNumLimit(SoundName::kWayShot);
 }
 
 void EnemyBase::ShotAllRange()
@@ -199,13 +198,13 @@ void EnemyBase::ShotAllRange()
         BULLETMANAGER.CreateBullet(
             BulletOwner::Enemy,
             BulletType::Normal,
+            m_bulletColor,
             spawnPos,
             velocity,
-            m_bulletScale,
-            m_bulletColor
+            m_bulletScale
         );
     }
-    AUDIOM.PlaySeNumLimit(SoundName::kNShot);
+    AUDIOM.PlaySeNumLimit(SoundName::kEnemyShot);
 }
 
 void EnemyBase::ShotAimed()
@@ -225,22 +224,20 @@ void EnemyBase::ShotAimed()
     BULLETMANAGER.CreateBullet(
         BulletOwner::Enemy,
         BulletType::Normal,
+        m_bulletColor,
         spawnPos,
         velocity,
-        m_bulletScale,
-        m_bulletColor
+        m_bulletScale
     );
-    AUDIOM.PlaySeNumLimit(SoundName::kNShot);
+    AUDIOM.PlaySeNumLimit(SoundName::kEnemyShot);
 }
 
 void EnemyBase::ShotRotate(float dt)
 {
     m_bulletAngle += m_bulletAngleSpeed * dt;
-    if ((int)m_bulletAngle % 45 == 0)
-    {
-        AUDIOM.PlaySeNumLimit(SoundName::kNShot);
 
-    }
+    AUDIOM.PlaySeNumLimit(SoundName::kEnemyShot);
+
     if (m_bulletAngle > 360)
     {
         m_bulletAngle -= 360;
@@ -260,10 +257,10 @@ void EnemyBase::ShotRotate(float dt)
     BULLETMANAGER.CreateBullet(
         BulletOwner::Enemy,
         BulletType::Normal,
+        m_bulletColor,
         spawnPos,
         velocity,
-        m_bulletScale,
-        m_bulletColor
+        m_bulletScale
     );
 }
 
@@ -273,6 +270,7 @@ void EnemyBase::TakeDamage(float damage)
     {
         Character::TakeDamage(damage);
         TIMEMANAGER.HitStop(kHitStopFrames);
+        AUDIOM.PlaySeNumLimit(SoundName::kEnemyHit);
         OnHit();
         if (m_hp <= 0)
         {
@@ -280,7 +278,6 @@ void EnemyBase::TakeDamage(float damage)
             m_state = State::Dying;
             SCOREMANAGER.AddScore(m_score);
             PLAYERMANAGER.AddDestroyCnt();
-            ITEMMANAGER.RandomCreateItem(m_pos);
         }
     }
 }

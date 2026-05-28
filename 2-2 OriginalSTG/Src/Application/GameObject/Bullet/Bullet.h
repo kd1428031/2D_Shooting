@@ -5,7 +5,16 @@ enum class BulletType
 {
     Normal,
     Penetrat,
-    Rotate
+    Rotate,
+};
+
+enum class BulletColor
+{
+    None,
+    Violet,
+    Red,
+    Black,
+    Crow
 };
 
 enum class BulletOwner
@@ -20,7 +29,7 @@ class Bullet : public GameObject
 {
 public:
 
-    Bullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color= { 1,1,1,1 });
+    Bullet(BulletOwner owner, BulletType type, BulletColor color, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f);
     ~Bullet()override;
 
     void Init()             override;
@@ -72,7 +81,7 @@ private:
     static constexpr float  kDeleteMargin        = 500.0f;
     static constexpr int    kTexFrameWidth       = 32;
     static constexpr int    kTexFrameHeight      = 32;
-    static constexpr int    kTexNormalOffsetY    = kTexFrameWidth * 1;
+    static constexpr int    kTexNormalOffsetY    = kTexFrameWidth * 0;
     static constexpr int    kTexNormalOffsetX    = kTexFrameWidth * 0;
     static constexpr int    kPenetrateTexOffsetY = 0;
     static constexpr float  kLifeTimer           = 10.0f;

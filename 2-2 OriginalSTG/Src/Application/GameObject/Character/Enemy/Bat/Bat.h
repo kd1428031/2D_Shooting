@@ -32,10 +32,10 @@ private:
     static constexpr int    kScore = 50;
 
     // 弾
-    static constexpr float  kShotInterval = 0.5f;                     // 発射間隔
-    static constexpr float  kBulletOffsetX = 20.0f;                    // 発射位置
+    static constexpr float  kShotInterval = 0.5f;                    // 発射間隔
+    static constexpr float  kBulletOffsetX = 20.0f;                  // 発射位置
     static constexpr float  kBulletSpeed = 300.0f;                   // 速さ
-    static constexpr float  kBulletScale = 2.0f;                     // サイズ
-    static constexpr float  kBulletAngleSpeed = 600.0f;                     // サイズ
-    const Math::Color       kBulletColor = { 1.0f,0.2f,0.2f,1.0f };  // 色
+    static constexpr float  kBulletScale = 1.0f;                     // サイズ
+    static constexpr float  kBulletAngleSpeed = 600.0f;              // サイズ
+    const Math::Color       kBulletColor = { 1.0f,1.0f,1.0f,1.0f };  // 色
 };

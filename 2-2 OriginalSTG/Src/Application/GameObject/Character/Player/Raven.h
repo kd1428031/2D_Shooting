@@ -55,22 +55,25 @@ private:
     static constexpr float kShotInterval = 0.5f;                // 発射間隔
     static constexpr float kBulletOffsetX = 30.0f;              // 発射位置
     static constexpr float kBulletSpeed = 1300.0f;              // 速さ
-    static constexpr float kBulletScale = 2.0f;                 // サイズ
-    const Math::Color kBulletColor = { 0.8f,0.3f,0.8f,1.0f };   // 色
+    static constexpr float kBulletScale = 1.0f;                 // サイズ
+    const Math::Color kBulletColor = { 1.0f,1.0f,1.0f,1.0f };   // 色
 
     static constexpr int kBomdInterval = 99;
 
     // 状態管理用
     enum class State
     {
-        Alive,      // 生存
-        Dying,      // 死亡演出
-        Dead        // 死亡
+        Alive,     // 生存
+        Down,      // 下へ
+        Stop,      // 溜め
+        Leave,     // 離脱
+        Dead
     };
 
     // 状態・ステータス
     State m_state;
     float m_speed;
+    float m_leaveTimer;
 
     // アニメ
     float m_animSpeed = kAnimSpeed;

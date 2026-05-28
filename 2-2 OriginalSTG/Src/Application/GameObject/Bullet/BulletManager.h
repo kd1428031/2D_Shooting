@@ -17,7 +17,7 @@ public:
     void Update(float dt);
     void Draw();
 
-    void CreateBullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f, Math::Color color = { 1,1,1,1 });
+    void CreateBullet(BulletOwner owner, BulletType type, BulletColor color, Math::Vector2 pos, Math::Vector2 velocity, float scale = 1.0f);
 
     void AllDestroy(BulletOwner owner);
 

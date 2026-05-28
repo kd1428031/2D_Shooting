@@ -4,7 +4,6 @@
 #include "Application/GameObject/Character/Player/PlayerManager.h"
 #include "Application/GameObject/Character/Enemy/EnemyManager.h"
 #include "Application/GameObject/Bullet/BulletManager.h"
-#include "Application/GameObject/Item/ItemManager.h"
 #include "Application/Ui/UiManager.h"
 #include "Application/TimeManager.h"
 #include "Application/Score/ScoreManager.h"
@@ -42,7 +41,7 @@ void GameScene::Init()
 void GameScene::Update(float dt)
 {
 	// デバッグ用　必ずリリース時消す=========================
-	DebugKey(dt);
+	//DebugKey(dt);
 
 
 	m_phaseTimer += dt;
@@ -92,7 +91,8 @@ void GameScene::Update(float dt)
 	}
 
 	// ヒット時画面点滅
-	if (PLAYERMANAGER.GetPlayer()->IsHit() && PLAYERMANAGER.GetPlayer()->IsAlive())
+	if (PLAYERMANAGER.GetPlayer()->IsHit() && PLAYERMANAGER.GetPlayer()->IsAlive() &&
+		PLAYERMANAGER.GetPlayer()->GetHp() > 0)
 	{
 		FADEMANAGER.Blink(kHitBlinkTime, kHitBlinkSpeed, kHitBlinkColor);
 	}
@@ -105,7 +105,7 @@ void GameScene::Update(float dt)
 	PLAYERMANAGER.Update(dt);
 	ENEMYMANAGER.Update(dt);
 	BULLETMANAGER.Update(dt);
-	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet(), ITEMMANAGER.GetItem());
+	COLLISIONMANAGER.CheckAll(PLAYERMANAGER.GetPlayer(), ENEMYMANAGER.GetEnemy(), BULLETMANAGER.GetBullet());
 	EFFCTMANAGER.Update(dt);
 	UIMANAGER.Update(dt);
 
@@ -141,7 +141,7 @@ void GameScene::Draw()
 	FADEMANAGER.Draw();
 
 	// デバッグ用　必ずリリース時消す=========================
-	DrawDebug();
+	//DrawDebug();
 }
 
 void GameScene::UpdatePhase1(float dt)
@@ -379,7 +379,8 @@ const GameScene::PhaseParam& GameScene::GetPhaseParam(Phase phase) const
 void GameScene::IsGameOver()
 {
 	if (m_phase != Phase::GameOver && m_phase != Phase::GameClear &&
-		!PLAYERMANAGER.GetPlayer()->IsAlive())
+		!PLAYERMANAGER.GetPlayer()->IsAlive() && 
+		!PLAYERMANAGER.GetRaven()->IsAlive())
 	{
 		FADEMANAGER.FadeOut(kFadeTime);
 		ChangePhase(Phase::GameOver);

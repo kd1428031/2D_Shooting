@@ -62,7 +62,7 @@ private:
     static constexpr float kMovingSpeed = 200.0f;
 
     // 初期化用定数
-    static constexpr int    kInitHp = 2000;
+    static constexpr int    kInitHp = 6000;
     const Math::Vector2     kInitVelocity = { 0.0f, 0.0f };
 
     // 召喚数上限
@@ -81,7 +81,7 @@ private:
     static constexpr float  kShotInterval = 0.5f;                    // 発射間隔
     static constexpr float  kBulletOffsetX = 100.0f;                 // 発射位置
     static constexpr float  kBulletSpeed = 200.0f;                   // 速さ
-    static constexpr float  kBulletScale = 2.0f;                     // サイズ
+    static constexpr float  kBulletScale = 1.0f;                     // サイズ
     static constexpr float  kBulletAngleSpeed = 600.0f;              // サイズ
-    const Math::Color       kBulletColor = { 0.0f,0.0f,1.0f,1.0f };  // 色
+    const Math::Color       kBulletColor = { 1.0f,1.0f,1.0f,1.0f };  // 色
 };

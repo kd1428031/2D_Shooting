@@ -6,8 +6,12 @@
 #include "Application/Input/InputManager.h"
 #include "Application/TimeManager.h"
 #include "Application/Effect/EffectManager.h"
+#include "Application/Effect/MpMax/MpMax.h"
 #include "Application/Random/Random.h"
 #include "Application/Audio/AudioManager.h"
+#include "Application/Ui/UiManager.h"
+#include "Application/Ui/BomdWaitCounter.h"
+#include "Application/Ui/RavenWaitCounter.h"
 
 Player::~Player()
 {
@@ -62,6 +66,8 @@ void Player::Init()
 
     m_uiAlpha = 1.0f;
 
+    m_uiHeartAlpha = 1.0f;
+
     m_lowFlg = false;
 }
 
@@ -82,17 +88,13 @@ void Player::Update(float dt)
     }
     
     if (m_mp < kInitMp) m_mp += m_mpRegen;
-    else m_lowFlg = false;
 
     if (m_actionFlg)
     {
         Move(dt);
 
         // íeî≠éÀèàóù
-        if (m_mp > 1)
-        {
-            Shot(dt);
-        }
+        Shot(dt);
 
         Bomb(dt);
         RavenBomb(dt);
@@ -113,6 +115,19 @@ void Player::Update(float dt)
         {
             m_uiAlpha = 1.0f;
         }
+    }
+
+    if (m_state == State::Invincible)
+    {
+        m_uiHeartAlpha += m_uiHeartAlphaBlink * dt;
+        if (m_uiHeartAlpha <= 0.5f || m_uiHeartAlpha >= 1.0f)
+        {
+            m_uiHeartAlphaBlink *= -1;
+        }
+    }
+    else
+    {
+        m_uiHeartAlpha = 1.0f;
     }
 
     if (m_mp <= 0)m_mp = 0;
@@ -178,7 +193,7 @@ void Player::DrawUi()
     }
 
     SHADER.m_spriteShader.SetMatrix(m_heartMat);
-    SHADER.m_spriteShader.DrawTex(m_heartTex, heartRect, 1.0f);
+    SHADER.m_spriteShader.DrawTex(m_heartTex, heartRect, m_uiHeartAlpha);
 
     Math::Color backColor = { 0.0f, 0.0f, 0.0f, 1.0f };
 
@@ -205,13 +220,24 @@ void Player::Move(float dt)
     // í·ë¨ÅEçÇë¨êÿÇËë÷Ç¶
     if(INPUT.IsKeyTriggered(VK_SHIFT))
     {
-        if(m_mp < kInitMp)m_lowFlg = !m_lowFlg;
+        m_lowFlg = !m_lowFlg;
+    }
+    if (m_lowFlg && m_mp >= kInitMp)
+    {
+        m_lowFlg = false;
+
+        if (m_magicCircle)
+        {
+            MpMax* mpMax = static_cast<MpMax*>(EFFCTMANAGER.CreateEffect(EffectType::MpMax, m_pos, 1));
+            mpMax->SetOwner(this);
+            AUDIOM.PlaySe(SoundName::kMpMax);
+        }
     }
 
     if (m_lowFlg)
     {
         m_speed = kLowSpeed;
-        m_mpRegen = 7.5f * dt;
+        m_mpRegen = 15.0f * dt;
         m_shotType = ShotType::PenetratShot;
         if (!m_magicCircle)
         {
@@ -222,7 +248,7 @@ void Player::Move(float dt)
     else
     {
         m_speed = kHighSpeed;
-        m_mpRegen = 2.5f * dt;
+        m_mpRegen = 5.0f * dt;
         m_shotType = ShotType::NormalShot;
         if (m_magicCircle)
         {
@@ -301,8 +327,6 @@ void Player::Shot(float dt)
     // íeî≠éÀä‘äuèàóù
     m_shotTimer -= dt;
 
-    m_shotSoundTimer -= dt;
-
     if (m_isShooting)
     {
         if (m_shotTimer <= 0.0f)
@@ -313,11 +337,7 @@ void Player::Shot(float dt)
             // MPè¡îÔ
             //m_mp -= 1;
 
-            if (m_shotSoundTimer <= 0)
-            {
-                AUDIOM.PlaySeNumLimit(SoundName::kNShot);
-                m_shotSoundTimer = kShotSoundInterval;
-            }
+            AUDIOM.PlaySeNumLimit(SoundName::kNShot);        
 
             // íeÇÃéÌóﬁ
             switch (m_shotType)
@@ -334,54 +354,60 @@ void Player::NormalShot()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
     Math::Vector2 dir = { 1, 0 };
-    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Normal, spawnPos, dir * kBulletSpeed, kBulletScale, kBulletColor);
+    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Normal, BulletColor::Violet, spawnPos, dir * kBulletSpeed, kBulletScale);
 }
 
 void Player::PenetratShot()
 {
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
     Math::Vector2 dir = { 1, 0 };
-    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Penetrat, spawnPos, dir * kBulletSpeed, kBulletScale, kBulletColor);
+    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Penetrat, BulletColor::None, spawnPos, dir * kBulletSpeed, kBulletScale);
 }
 
 void Player::Bomb(float dt)
 {
-    m_isBomd = INPUT.IsKeyHeld('X');
+    m_isBomd = INPUT.IsKeyTriggered('X');
 
     m_bomdTimer -= 10 * dt;
     if (m_bomdTimer <= 0)m_bomdTimer = 0;
 
     if (m_isBomd)
     {
-        if (m_bomdTimer <= 0)
+        if (m_bomdTimer <= 0 && m_mp >= 80)
         {
             if (m_bombType == BombType::Lightning)
             {
-                if (m_mp >= 80)
+                m_mp -= 80;
+                m_bomdTimer = kBomdInterval;
+
+                m_invincibleTimer = kInvincibleTime;
+                m_state = State::Invincible;
+
+                Lightning();
+
+                for (int i = 0; i < 3; i++)
                 {
-                    m_mp -= 80;
-                    m_bomdTimer = kBomdInterval;
-
-                    m_invincibleTimer = kInvincibleTime;
-                    m_state = State::Invincible;
-
-                    Lightning();
-
-                    for (int i = 0; i < 3; i++)
-                    {
-                        AUDIOM.PlaySeNumLimit(SoundName::kLighting);
-                    }
+                    AUDIOM.PlaySeNumLimit(SoundName::kLighting);
                 }
             }
+        }
+        // égÇ¶Ç»Ç¢éû
+        else
+        {
+            BomdWaitCounter* bomd = static_cast<BomdWaitCounter*>(UIMANAGER.GetUi(UiType::BomdWaitCounter));
+            bomd->Shake();
+            AUDIOM.PlaySeNumLimit(SoundName::kError);
         }
     }
 }
 
 void Player::RavenBomb(float dt)
 {
-    m_isRavenBomd = INPUT.IsKeyHeld('C');
+    m_isRavenBomd = INPUT.IsKeyTriggered('C');
 
-    if (!PLAYERMANAGER.GetRaven()->GetPowUpFlg())
+    auto raven = PLAYERMANAGER.GetRaven();
+
+    if (!raven->GetPowUpFlg())
     {
         m_ravenBomdTimer -= 10 * dt;
     }
@@ -390,21 +416,22 @@ void Player::RavenBomb(float dt)
 
     if (m_isRavenBomd)
     {
-        if (m_ravenBomdTimer <= 0)
+        if (m_ravenBomdTimer <= 0 && m_mp >= 40 && !raven->GetPowUpFlg())
         {
-            if (!PLAYERMANAGER.GetRaven()->GetPowUpFlg())
-            {
-                if (m_mp >= 40)
-                {
-                    m_mp -= 40;
+            m_mp -= 40;
 
-                    m_ravenBomdTimer = kRavenBomdInterval;
+            m_ravenBomdTimer = kRavenBomdInterval;
 
-                    PLAYERMANAGER.GetRaven()->SetPowUpFlg(true);
+            raven->SetPowUpFlg(true);
 
-                    EFFCTMANAGER.CreateEffect(EffectType::SoulLinkText, { 0, 0 }, 1);
-                }
-            }
+            EFFCTMANAGER.CreateEffect(EffectType::SoulLinkText, { 0, 0 }, 1);
+        }
+        // égÇ¶Ç»Ç¢éû
+        else
+        {
+            RavenWaitCounter* bomd = static_cast<RavenWaitCounter*>(UIMANAGER.GetUi(UiType::RavenBomdWaitCounter));
+            bomd->Shake();
+            AUDIOM.PlaySeNumLimit(SoundName::kError);
         }
     }
 }
@@ -422,6 +449,7 @@ void Player::Lightning()
 void Player::Heal(int healValue)
 {
     m_hp += healValue;
+    if (m_hp >= kInitHp)m_hp = kInitHp;
 }
 
 void Player::TakeDamage(float damage)
@@ -433,7 +461,10 @@ void Player::TakeDamage(float damage)
         m_invincibleTimer = kInvincibleTime;
         m_state = State::Invincible;
 
+        TIMEMANAGER.HitStop(5);
+        EFFCTMANAGER.CreateEffect(EffectType::HitEffect, m_pos, 0.15f);
         AUDIOM.PlaySe(SoundName::kHit);
+        AUDIOM.PlaySe(SoundName::kRing);
         Character::TakeDamage(damage);
         if (m_hp <= 0) m_state = State::Dying;
         m_isHit = true;

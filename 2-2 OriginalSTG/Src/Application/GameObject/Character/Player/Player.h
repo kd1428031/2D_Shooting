@@ -40,8 +40,10 @@ public:
     int GetBomdWait() const { return m_bomdTimer; }
     int GetRavenBomdWait() const { return m_ravenBomdTimer; }
     bool GetActionFlg() const { return m_actionFlg; }
+    int GetHp() const { return m_hp; }
 
     bool IsAlive() const override{ return m_state != State::Dead; }
+    bool IsActive() const { return m_state == State::Alive; }
     bool IsInvincible() const { return m_state == State::Invincible; }
     bool IsHit() const { return m_isHit; }
 
@@ -72,9 +74,6 @@ private:
     bool m_gameoverFlg = false;
 
     bool m_lowFlg;
-
-    float m_shotSoundTimer;
-    static constexpr float kShotSoundInterval = 0.5f;
 
     // 定数
     // 初期値
@@ -108,8 +107,8 @@ private:
     static constexpr float kShotInterval = 0.05f;               // 発射間隔
     static constexpr float kBulletOffsetX = 30.0f;              // 発射位置
     static constexpr float kBulletSpeed = 1300.0f;              // 速さ
-    static constexpr float kBulletScale = 2.0f;                 // サイズ
-    const Math::Color kBulletColor = {0.8f,0.3f,0.8f,1.0f};     // 色
+    static constexpr float kBulletScale = 1.0f;                 // サイズ
+    const Math::Color kBulletColor = { 1.0f,1.0f,1.0f,1.0f};     // 色
 
     static constexpr int kBomdInterval = 99;
     static constexpr int kRavenBomdInterval = 50;
@@ -122,7 +121,12 @@ private:
     bool m_actionFlg;
     KdTexture *m_heartTex;
     Math::Matrix m_heartMat;
+
     float m_uiAlpha;
+    int m_uiAlphaBlink = -1;
+
+    float m_uiHeartAlpha;
+    float m_uiHeartAlphaBlink = -1;
 
     BombType m_bombType;
     bool     m_isBomd;
@@ -143,8 +147,6 @@ private:
 
     KdTexture* m_cntTex;
     Math::Matrix m_cntMat;
-
-    int m_uiAlphaBlink = -1;
 
     EffectBase* m_magicCircle = nullptr;
 };

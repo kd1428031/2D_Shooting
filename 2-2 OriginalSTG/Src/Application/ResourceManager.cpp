@@ -4,7 +4,7 @@ void ResourceManager::LoadAll()
 {
     // 自機
     m_tex[TexName::kPlayer].Load("Texture/Player/Player2.png");
-    m_tex[TexName::kRaven].Load("Texture/Player/Crow.png");
+    m_tex[TexName::kRaven].Load("Texture/Player/Crow_outline.png");
     m_tex[TexName::kHeart].Load("Texture/Player/HealthUI.png");
 
     // 敵
@@ -14,18 +14,25 @@ void ResourceManager::LoadAll()
     m_tex[TexName::kDaemon_death].Load("Texture/Enemy/daemon/DEATH.png");
 
     // Bat
-    m_tex[TexName::kBat].Load("Texture/Enemy/bat/Bat_Sprite_Sheet.png");
+    m_tex[TexName::kBat].Load("Texture/Enemy/bat/Bat_Sprite_Sheet_light.png");
     
     // GrimReaper
-    m_tex[TexName::kGrimReaper_idle].Load("Texture/Enemy/grim_reaper/idle.png");
-    m_tex[TexName::kGrimReaper_death].Load("Texture/Enemy/grim_reaper/death.png");
-    m_tex[TexName::kGrimReaper_summon].Load("Texture/Enemy/grim_reaper/summon.png");
-    m_tex[TexName::kGr_Summon_idle].Load("Texture/Enemy/grim_reaper/summonIdle.png");
-    m_tex[TexName::kGr_SummonAppear].Load("Texture/Enemy/grim_reaper/summonAppear.png");
-    m_tex[TexName::kGr_Summon_death].Load("Texture/Enemy/grim_reaper/summonDeath.png");
+    m_tex[TexName::kGrimReaper_idle].Load("Texture/Enemy/grim_reaper/idle_outline.png");
+    m_tex[TexName::kGrimReaper_death].Load("Texture/Enemy/grim_reaper/death_outline.png");
+    m_tex[TexName::kGrimReaper_summon].Load("Texture/Enemy/grim_reaper/summon_outline.png");
+    m_tex[TexName::kGr_Summon_idle].Load("Texture/Enemy/grim_reaper/summonIdle_outline.png");
+    m_tex[TexName::kGr_SummonAppear].Load("Texture/Enemy/grim_reaper/summonAppear_outline.png");
+    m_tex[TexName::kGr_Summon_death].Load("Texture/Enemy/grim_reaper/summonDeath_outline.png");
     
     // 弾
-    m_tex[TexName::kBullet].Load("Texture/attackEffect1.png");
+    m_tex[TexName::kVioletBullet].Load("Texture/Bullet/VioletBullet.png");
+    m_tex[TexName::kPenetratBullet].Load("Texture/Bullet/attackEffect1.png");
+    m_tex[TexName::kRedBullet].Load("Texture/Bullet/RedBullet.png");
+    m_tex[TexName::kBlackBullet].Load("Texture/Bullet/BlackBullet.png");
+    m_tex[TexName::kCrowBullet].Load("Texture/Bullet/crowBullet .png");
+
+    // アイテム
+    m_tex[TexName::kHealthPotion].Load("Texture/Item/potion_A_red_full.png");
     
     // 背景
     m_tex[TexName::kBgGame].Load("Texture/Background/Background1.png");
@@ -50,6 +57,8 @@ void ResourceManager::LoadAll()
     m_tex[TexName::kLightningIcon].Load("Texture/Effect/lightningIcon.png");
     m_tex[TexName::kLightningText].Load("Texture/Effect/Lightning.png");
     m_tex[TexName::kSoulLinkText].Load("Texture/Effect/SoulLink.png");
+    m_tex[TexName::kHitEffect].Load("Texture/Effect/Circle.png");
+    m_tex[TexName::kMpMax].Load("Texture/Effect/spritesheet.png");
 
     // 魔法陣
     m_tex[TexName::kMagicCircle_idle].Load("Texture/Effect/MagicCircleIdle.png");

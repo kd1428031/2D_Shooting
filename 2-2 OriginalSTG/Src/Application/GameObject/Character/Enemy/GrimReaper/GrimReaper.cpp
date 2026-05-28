@@ -42,7 +42,7 @@ void GrimReaper::Init()
 	m_bulletOffset = kBulletOffsetX;
 	m_bulletSpeed = kBulletSpeed;
 	m_bulletScale = kBulletScale;
-	m_bulletColor = kBulletColor;
+	m_bulletColor = BulletColor::Black;
 	m_bulletAngleSpeed = kBulletAngleSpeed;
 
 	m_shotType = (ShotType)Random::Range(0, 3);
@@ -201,11 +201,23 @@ void GrimReaper::UpdateMove(float dt)
 		m_movingTimer -= dt;
 		if (m_movingTimer > 0)
 		{
-			float deg = GetAngleDeg(m_pos, m_targetPos);
-			float rad = DirectX::XMConvertToRadians(deg);
+			float dist = (m_targetPos - m_pos).Length();
 
-			Math::Vector2 dir = { cos(rad),sin(rad) };
-			m_velocity = dir * kMovingSpeed;
+			if (dist < 5.0f)
+			{
+				m_pos = m_targetPos;
+				m_velocity = { 0,0 };
+				m_moveFlg = false;
+				m_moveTimer = kMoveTimerInterval;
+			}
+			else
+			{
+				float deg = GetAngleDeg(m_pos, m_targetPos);
+				float rad = DirectX::XMConvertToRadians(deg);
+
+				Math::Vector2 dir = { cos(rad), sin(rad) };
+				m_velocity = dir * kMovingSpeed;
+			}
 		}
 		else if (m_movingTimer <= 0)
 		{
@@ -267,7 +279,7 @@ void GrimReaper::PreDeath()
 void GrimReaper::Death(float dt)
 {
 	m_animFrame.x += 15 * dt;
-
+	m_color = { 1,1,1,1 };
 	if (m_deathFlg && m_animFrame.y == 1 && m_animFrame.x > 10)
 	{
 		m_state = State::Dead;

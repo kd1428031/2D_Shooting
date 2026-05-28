@@ -2,13 +2,13 @@
 #include "Application/Scene.h"
 #include "Application/ResourceManager.h"
 
-Bullet::Bullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vector2 velocity, float scale, Math::Color color)
+Bullet::Bullet(BulletOwner owner, BulletType type, BulletColor color, Math::Vector2 pos, Math::Vector2 velocity, float scale)
     : GameObject(pos, scale), m_owner(owner), m_type(type), m_isAlive(true),
     m_lifeTimer(kLifeTimer),m_spinAngle(0.0f)
 {
     m_radius = kRadius;
     m_velocity = velocity;
-    m_color = color;
+    m_color = { 1.0f,1.0f,1.0f,1.0f };
 
     switch (type)
     {
@@ -16,6 +16,24 @@ Bullet::Bullet(BulletOwner owner, BulletType type, Math::Vector2 pos, Math::Vect
     case BulletType::Penetrat:  InitPenetratBullet();   break;
     case BulletType::Rotate:    InitRotateBullet();     break;
     default:break;
+    }
+
+    switch (color)
+    {
+    case BulletColor::None:
+        break;
+    case BulletColor::Violet:
+        m_tex = RESOURCEMANAGER.GetTex(TexName::kVioletBullet);
+        break;
+    case BulletColor::Red:
+        m_tex = RESOURCEMANAGER.GetTex(TexName::kRedBullet);
+        break;
+    case BulletColor::Black:
+        m_tex = RESOURCEMANAGER.GetTex(TexName::kBlackBullet);
+        break;
+    case BulletColor::Crow:
+        m_tex = RESOURCEMANAGER.GetTex(TexName::kCrowBullet);
+        break;
     }
 }
 
@@ -25,7 +43,6 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
-    m_tex = RESOURCEMANAGER.GetTex(TexName::kBullet);
 }
 
 void Bullet::Update(float dt)
@@ -108,16 +125,18 @@ void Bullet::InitNormalBullet()
     else if (m_owner == BulletOwner::Enemy)
     {
         m_texOffsetX = 0;
-        m_texOffsetY = 32 * 1;
+        m_texOffsetY = 0;
     }
     m_damage = kNormalDamage;
 }
 
 void Bullet::InitPenetratBullet()
 {
+    m_tex = RESOURCEMANAGER.GetTex(TexName::kPenetratBullet);
     m_texOffsetX = 0;
     m_texOffsetY = kPenetrateTexOffsetY;
     m_damage = kPenetrateDamage;
+    m_color = { 0.8f,0.2f,0.8f,1.0f };
 }
 
 void Bullet::InitRotateBullet()

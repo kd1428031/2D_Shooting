@@ -16,11 +16,17 @@ void RavenWaitCounter::Init()
 	m_pos = kInitPos;
 	m_scale = kInitScale;
 	m_color = kInitColor;
+
+	m_shakeTimer = 0.0f;
+	m_shakeBlinkTimer = 0.0f;
+	m_shakePow = 0;
+	m_shakeFlg = false;
+	m_shake = false;
 }
 
 void RavenWaitCounter::UpdateImpl(float dt)
 {
-	Math::Vector2 pos = { kInitPos.x, -300 };
+	Math::Vector2 pos = { kInitPos.x + m_shakePow, -300 };
 	m_iconMat = CreateMatrix(pos, { 0.25f,0.25f, }, 0.0f);
 
 	Math::Vector2 pos2 = { kInitPos.x, -300 - 30 };
@@ -36,6 +42,36 @@ void RavenWaitCounter::UpdateImpl(float dt)
 	else
 	{
 		m_iconColor.A(1.0f);
+	}
+
+	// 揺れ演出
+	if (m_shakeFlg)
+	{
+		if (m_shakeTimer > 0)
+		{
+			m_shakeTimer -= dt;
+			m_shakeBlinkTimer -= dt;
+
+			if (!m_shake)
+			{
+				m_shakePow = 1;
+			}
+			else
+			{
+				m_shakePow = -1;
+			}
+
+			if (m_shakeBlinkTimer <= 0)
+			{
+				m_shakeBlinkTimer = 0.05f;
+				m_shake = !m_shake;
+			}
+		}
+		else
+		{
+			m_shakeFlg = false;
+			m_shakePow = 0;
+		}
 	}
 }
 
@@ -69,4 +105,13 @@ void RavenWaitCounter::Draw()
 			SHADER.m_spriteShader.DrawTex_Color(m_tex, rect, m_color);
 		}
 	}
+}
+
+void RavenWaitCounter::Shake()
+{
+	m_shakeFlg = true;
+	m_shake = true;
+	m_shakeTimer = 0.5f;
+	m_shakeBlinkTimer = 0.1f;
+	m_shakePow = 0.0f;
 }

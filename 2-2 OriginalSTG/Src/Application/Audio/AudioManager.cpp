@@ -1,4 +1,4 @@
-#include "AudioManager.h"
+ï»¿#include "AudioManager.h"
 
 AudioManager::AudioManager()
 {
@@ -6,7 +6,7 @@ AudioManager::AudioManager()
 
 void AudioManager::LoadSound(const std::string& name, const std::string& path)
 {
-	// ‚Ü‚¾ƒ[ƒh‚³‚ê‚Ä‚¢‚È‚¢ê‡‚Ì‚İƒ[ƒh
+	// ã¾ã ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã¦ã„ãªã„å ´åˆã®ã¿ãƒ­ãƒ¼ãƒ‰
 	if (m_soundMap.find(name) == m_soundMap.end())
 	{
 		auto sound = std::make_shared<KdSoundEffect>();
@@ -22,35 +22,45 @@ void AudioManager::Init()
 	LoadSound(SoundName::kTitle,"Sound/PerituneMaterial_Entangle.wav");
 	LoadSound(SoundName::kGame,"Sound/Traume.wav");
 	LoadSound(SoundName::kLastboss,"Sound/Battle02.wav");
-	LoadSound(SoundName::kResult,"Sound/—„‚İ.wav");
-	LoadSound(SoundName::kNShot,"Sound/ƒVƒ‡ƒbƒg.wav");
-	LoadSound(SoundName::kLighting,"Sound/—‹–‚–@4.wav");
-	LoadSound(SoundName::kHit,"Sound/Œy‚¢ƒpƒ“ƒ`1.wav");
+	LoadSound(SoundName::kResult,"Sound/æ·€ã¿.wav");
+	LoadSound(SoundName::kNShot,"Sound/ã‚·ãƒ§ãƒƒãƒˆ1.wav");
+	LoadSound(SoundName::kCrowShot,"Sound/ã‚·ãƒ§ãƒƒãƒˆ1_B_minor__bpm_100.wav");
+	LoadSound(SoundName::kEnemyShot,"Sound/ã‚·ãƒ§ãƒƒãƒˆ.wav");
+	LoadSound(SoundName::kWayShot,"Sound/ã‚·ãƒ§ãƒƒãƒˆ.wav");
+	LoadSound(SoundName::kLighting,"Sound/é›·é­”æ³•4.wav");
+	LoadSound(SoundName::kHit,"Sound/è»½ã„ãƒ‘ãƒ³ãƒ1.wav");
+	LoadSound(SoundName::kEnemyDestroy,"Sound/386862__profmudkip__8-bit-explosion.wav");
+	LoadSound(SoundName::kEnemyHit,"Sound/hit.wav");
 	LoadSound(SoundName::kMenuPush,"Sound/decide3.wav");
-	LoadSound(SoundName::kMenuHover,"Sound/cursor3.wav");
+	LoadSound(SoundName::kResultPush,"Sound/decide9.wav");
 	LoadSound(SoundName::kHeartbeat,"Sound/maou_se_sound_heartbeat01.wav");
-	LoadSound(SoundName::kChain,"Sound/ƒ`ƒF[ƒ“E½03.wav");
+	LoadSound(SoundName::kChain,"Sound/ãƒã‚§ãƒ¼ãƒ³ãƒ»é–03.wav");
+	LoadSound(SoundName::kRing,"Sound/715784__dustywind__magic-whoosh.wav");
+	LoadSound(SoundName::kFlapWings,"Sound/389634__stubb__wing-flap-1.wav");
+	LoadSound(SoundName::kRavenTakeoff,"Sound/389634__stubb__wing-flap-1_hard.wav");
+	LoadSound(SoundName::kError,"Sound/ãƒ“ãƒ¼ãƒ—éŸ³4.wav");
+	LoadSound(SoundName::kMpMax,"Sound/å›å¾©é­”æ³•1.wav");
 }	
 
 void AudioManager::Update()
 {
-	// Ä¶‚ªI—¹‚µ‚½SEƒCƒ“ƒXƒ^ƒ“ƒX‚ğƒŠƒXƒg‚©‚çíœ‚µ‚Äƒƒ‚ƒŠ‰ğ•ú
-	m_seList.remove_if([](std::shared_ptr<KdSoundInstance>& se) {
-		return se->IsPlay() == false;
+	m_seFrameCount.clear();
+	m_seList.remove_if([](PlayingSe& se) {
+		return se.instance->IsPlay() == false;
 		});
 }
 
 void AudioManager::UpdateFade()
 {
-	// ƒtƒF[ƒh’†‚©Šm”F
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ã‹ç¢ºèª
 	if (m_bgmFade.active)
 	{
 		if (m_bgmFade.fadeIn)
 		{
-			// ƒtƒF[ƒhƒCƒ“ˆ—
+			// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³å‡¦ç†
 			m_bgmFade.currentVol += m_bgmFade.speed;
 
-			// ƒtƒF[ƒhƒCƒ“I—¹”»’è
+			// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³çµ‚äº†åˆ¤å®š
 			if (m_bgmFade.currentVol >= m_bgmFade.targetVol)
 			{
 				m_bgmFade.currentVol = m_bgmFade.targetVol;
@@ -60,24 +70,24 @@ void AudioManager::UpdateFade()
 		}
 		else
 		{
-			// ƒtƒF[ƒhƒAƒEƒgˆ—
+			// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå‡¦ç†
 			m_bgmFade.currentVol -= m_bgmFade.speed;
 
-			// ƒtƒF[ƒhƒAƒEƒgI—¹”»’è
+			// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆçµ‚äº†åˆ¤å®š
 			if (m_bgmFade.currentVol <= m_bgmFade.targetVol)
 			{
 				m_bgmFade.currentVol = m_bgmFade.targetVol;
 				m_bgmFade.active = false;
 				m_bgmFade.end = true;
 
-				// Š®—¹‚µ‚½‚ç’â~
+				// å®Œäº†ã—ãŸã‚‰åœæ­¢
 				StopBgm();
 			}
 		}
 
 		if (m_bgmInst)
 		{
-			// ÀÛ‚Ì‰¹—Ê‚É”½‰f
+			// å®Ÿéš›ã®éŸ³é‡ã«åæ˜ 
 			m_bgmInst->SetVolume(m_bgmFade.currentVol);
 		}
 	}
@@ -95,13 +105,13 @@ void AudioManager::UpdateFade()
 
 void AudioManager::PlayBgm(const std::string& resName, bool loop)
 {
-	// Šù‚É‰½‚©Ä¶’†‚È‚ç~‚ß‚é
+	// æ—¢ã«ä½•ã‹å†ç”Ÿä¸­ãªã‚‰æ­¢ã‚ã‚‹
 	StopBgm();
 
-	// ƒ}ƒbƒv‚©‚çƒf[ƒ^‚ğ’T‚·
+	// ãƒãƒƒãƒ—ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’æ¢ã™
 	if (m_soundMap.find(resName) != m_soundMap.end())
 	{
-		// Ä¶—pƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+		// å†ç”Ÿç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 		m_bgmInst = m_soundMap[resName]->CreateInstance(false);
 		if (m_bgmInst) {
 			m_bgmInst->SetVolume(m_bgmVol);
@@ -123,16 +133,24 @@ void AudioManager::PlaySe(const std::string& resName, bool loop)
 {
 	if (m_soundMap.find(resName) != m_soundMap.end())
 	{
-		// SE—pƒCƒ“ƒXƒ^ƒ“ƒX¶¬
 		auto instance = m_soundMap[resName]->CreateInstance(false);
-		if (instance) {
-			
+		if (instance)
+		{
 			instance->SetVolume(m_seVol);
-			if (resName == "bomb")instance->SetVolume(m_seVol * 0.45f);
 			instance->Play(loop);
 
-			// Ä¶ƒŠƒXƒg‚É’Ç‰Á‚µ‚ÄAÄ¶’†‚Í”jŠü‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚é
-			m_seList.push_back(instance);
+			m_seList.push_back({ resName, instance, 1.0f });
+		}
+	}
+}
+
+void AudioManager::StopSe(const std::string& name)
+{
+	for (auto& se : m_seList)
+	{
+		if (se.name == name && se.instance)
+		{
+			se.instance->Stop();
 		}
 	}
 }
@@ -141,57 +159,39 @@ void AudioManager::PlaySeNumLimit(const std::string& resName, bool loop)
 {
 	if (m_soundMap.find(resName) == m_soundMap.end()) return;
 
-	// ¡–Â‚Á‚Ä‚¢‚éSE”
-	int playingCount = static_cast<int>(m_seList.size());
+	if (m_seFrameCount[resName] >= 1) return;
+	m_seFrameCount[resName]++;
 
-	// 1‰¹‚ ‚½‚è‚Ì‰¹—Ê‚ğŒvZiã‚ªˆê”Ô©‘Rj
-	float mixRate = 1.0f / std::sqrtf(playingCount + 1.0f);
+	// åŒã˜SEã ã‘ã‚«ã‚¦ãƒ³ãƒˆ
+	int playingCount = 0;
+	for (auto& se : m_seList)
+	{
+		if (se.name == resName && se.instance->IsPlay())
+		{
+			playingCount++;
+		}
+	}
+
+	// éŸ³é‡æ¸›è¡°
+	float mixRate = 1.0f / (1.0f + playingCount * 0.15f);
+
+	// ä¸‹é™
+	const float minRate = 0.4f;
+	if (mixRate < minRate)
+	{
+		mixRate = minRate;
+	}
 
 	float finalVolume = m_seVol * mixRate;
-
-	// ”O‚Ì‚½‚ßãŒÀ
-	if (finalVolume > m_seVol)
-		finalVolume = m_seVol;
 
 	auto instance = m_soundMap[resName]->CreateInstance(false);
 	if (instance)
 	{
 		instance->SetVolume(finalVolume);
 		instance->Play(loop);
-		m_seList.push_back(instance);
+
+		m_seList.push_back({ resName, instance, mixRate });
 	}
-}
-
-void AudioManager::PlaySePos(const std::string& name,const Math::Vector2& sePos,bool loop)
-{
-	if (m_soundMap.find(name) == m_soundMap.end()) return;
-
-	auto instance = m_soundMap[name]->CreateInstance(false);
-	if (!instance) return;
-
-	// --- ©‹@Šî€‚Å‹——£ŒvZ ---
-	Math::Vector2 diff = sePos - m_playerPos;
-	float distance = diff.Length();
-
-	const float maxDistance = 500.0f;
-
-	// ‰“‚·‚¬‚½‚çÄ¶‚µ‚È‚¢iŒy—Ê‰»j
-	if (distance >= maxDistance) return;
-
-	float volumeRate = 1.0f - (distance / maxDistance);
-	if (volumeRate < 0.0f) volumeRate = 0.0f;
-
-	float finalVol = m_seVol * volumeRate;
-
-	instance->SetVolume(finalVol);
-	instance->Play(loop);
-
-	m_seList.push_back(instance);
-}
-
-void AudioManager::SetPlayerPos(const Math::Vector2& pos)
-{
-	m_playerPos = pos;
 }
 
 void AudioManager::FadeInBgm(const std::string& resName, float fadeTime, bool loop)
@@ -202,7 +202,7 @@ void AudioManager::FadeInBgm(const std::string& resName, float fadeTime, bool lo
 
 	if (m_soundMap.find(resName) == m_soundMap.end()) return;
 
-	// š m_bgmInst ‚É‘ã“ü‚·‚é
+	// â˜… m_bgmInst ã«ä»£å…¥ã™ã‚‹
 	m_bgmInst = m_soundMap[resName]->CreateInstance(false);
 	if (!m_bgmInst) return;
 
@@ -230,25 +230,25 @@ void AudioManager::FadeOutBgm(float fadeTime)
 {
 	m_bgmFade = {};
 
-	// ƒtƒF[ƒhó‘Ô‚ğON
+	// ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…‹ã‚’ON
 	m_bgmFade.active = true;
 	m_bgmFade.fadeIn = false;
 	m_bgmFade.end = false;
 
-	// ƒtƒF[ƒhŠJn‰¹—Ê
+	// ãƒ•ã‚§ãƒ¼ãƒ‰é–‹å§‹éŸ³é‡
 	m_bgmFade.currentVol = GetBgmVolume();
 
-	// ƒtƒF[ƒhI—¹‰¹—Ê
+	// ãƒ•ã‚§ãƒ¼ãƒ‰çµ‚äº†éŸ³é‡
 	m_bgmFade.targetVol = 0.0f;
 
-	// 1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌŒ¸­—Ê‚ğİ’è
+	// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®æ¸›å°‘é‡ã‚’è¨­å®š
 	if (fadeTime <= 0.0f)
 	{
 		m_bgmFade.speed = m_bgmFade.currentVol;
 	}
 	else
 	{
-		// fadeTime•b‚ÅAŒ»İ‚Ì‰¹—Ê‚©‚ç0‚ÖƒtƒF[ƒhƒAƒEƒg‚·‚é
+		// fadeTimeç§’ã§ã€ç¾åœ¨ã®éŸ³é‡ã‹ã‚‰0ã¸ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã™ã‚‹
 		m_bgmFade.speed = m_bgmFade.currentVol / (fadeTime * 60.0f);
 	}
 }
@@ -262,20 +262,21 @@ void AudioManager::FadeOutAndPlayNext(const std::string& nextBgm, float fadeOutT
 	FadeOutBgm(fadeOutTime);
 }
 
-void AudioManager::PauseBGM()
+void AudioManager::PauseBGM() 
 {
-	if (!m_bgmInst->IsPause()) {
+	if (m_bgmInst && !m_bgmInst->IsPause()) 
+	{
 		m_bgmInst->Pause();
 	}
 }
 
-void AudioManager::ResumeBGM()
+void AudioManager::ResumeBGM() 
 {
-	if(m_bgmInst->IsPause()){
+	if (m_bgmInst && m_bgmInst->IsPause()) 
+	{
 		m_bgmInst->Resume();
 	}
 }
-
 
 void AudioManager::Release()
 {
@@ -291,8 +292,13 @@ void AudioManager::SetBgmVolume(float vol)
 
 	m_bgmVol = vol;
 
-	// Ä¶’†‚ÌBGM‚ª‚ ‚ê‚Î‘¦À‚É”½‰f
-	if (m_bgmInst) {
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ä¸­ãªã‚‰ç›®æ¨™å€¤ã ã‘å¤‰æ›´
+	if (m_bgmFade.active)
+	{
+		m_bgmFade.targetVol = m_bgmVol;
+	}
+	else if (m_bgmInst)
+	{
 		m_bgmInst->SetVolume(m_bgmVol);
 	}
 }
@@ -304,8 +310,11 @@ void AudioManager::SetSeVolume(float vol)
 
 	m_seVol = vol;
 
-	// Ä¶’†‚Ì‚·‚×‚Ä‚ÌSE‚É‚à”½‰f‚³‚¹‚é‚È‚çƒŠƒXƒg‚ğ‰ñ‚·
-	for (auto& se : m_seList) {
-		if (se) se->SetVolume(m_seVol);
+	for (auto& se : m_seList)
+	{
+		if (se.instance)
+		{
+			se.instance->SetVolume(m_seVol * se.volumeRate);
+		}
 	}
 }

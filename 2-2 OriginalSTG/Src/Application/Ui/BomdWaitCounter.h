@@ -13,11 +13,12 @@ public:
 	void UpdateImpl(float dt)override;
 	void Draw() override;
 
+	void Shake();
+
 	UiType GetUiType() const { return UiType::BomdWaitCounter; }
 
 private:
 
-	//const Math::Color		kInitColor = { 0.8f,0.2f,0.8f,1.0f };
 	const Math::Color		kInitColor = { 1.0f,1.0f,1.0f,1.0f };
 	const Math::Vector2		kInitPos = { -210, -300 };
 	static constexpr int	kTexFrameWidth = 128;
@@ -26,11 +27,17 @@ private:
 	static constexpr int	kTexFrameOffSet = -115;
 	static constexpr int	kCountPosOffSet = -6.0f;
 
-	Math::Matrix m_iconMat;
-	KdTexture* m_iconTex;
-	Math::Color m_iconColor = { 1.0f,1.0f,1.0f,1.0f };
+	Math::Matrix	m_iconMat;
+	KdTexture*		m_iconTex;
+	Math::Color		m_iconColor = { 1.0f,1.0f,1.0f,1.0f };
 
-	Math::Matrix m_keyMat;
-	KdTexture* m_keyTex;
-	Math::Color m_keyColor = { 0.8f,0.2f,0.8f,1.0f };
+	Math::Matrix	m_keyMat;
+	KdTexture*		m_keyTex;
+	Math::Color		m_keyColor = { 0.8f,0.2f,0.8f,1.0f };
+
+	float			m_shakeTimer;
+	float			m_shakeBlinkTimer;
+	int				m_shakePow;
+	bool			m_shakeFlg;
+	bool			m_shake;
 };

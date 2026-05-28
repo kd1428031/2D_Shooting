@@ -3,6 +3,8 @@
 #include "Lightning/LightningText.h"
 #include "SoulLink/SoulLinkText.h"
 #include "MagicCircle/MagicCircle.h"
+#include "HitEffect/HitEffect.h"
+#include "MpMax/MpMax.h"
 
 void EffectManager::Init()
 {
@@ -67,6 +69,14 @@ EffectBase* EffectManager::CreateEffect(EffectType type, Math::Vector2 pos, floa
 
     case EffectType::MagicCircle:
         effectBase = std::make_unique<MagicCircle>(pos, scale);
+        break;
+
+    case EffectType::HitEffect:
+        effectBase = std::make_unique<HitEffect>(pos, scale);
+        break;
+
+    case EffectType::MpMax:
+        effectBase = std::make_unique<MpMax>(pos, scale);
         break;
 
     default:

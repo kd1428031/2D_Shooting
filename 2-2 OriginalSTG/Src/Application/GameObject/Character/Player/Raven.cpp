@@ -44,7 +44,12 @@ void Raven::Update(float dt)
     UpdateShot(dt);
     UpdatePowerUp(dt);
     Move(dt);
-    UpdateAnim(dt);
+
+    if (m_state != State::Stop)
+    {
+        UpdateAnim(dt);
+    }
+
     UpdateMatrix();
 }
 
@@ -57,7 +62,7 @@ void Raven::Draw()
         (int)m_animFrame.y * kTexFrameHeight, kTexFrameWidth, kTexFrameHeight
     };
 
-    if (m_powUpFlg)
+    if (m_powUpFlg && PLAYERMANAGER.GetPlayer()->IsAlive())
     {
         Math::Vector2 playerPos = PLAYERMANAGER.GetPlayer()->GetPos();
         Math::Color color = { 1,0,1,1 };
@@ -75,38 +80,93 @@ void Raven::Move(float dt)
     float dist = toPlayer.Length();
     toPlayer.Normalize();
 
-    float minDist = 45.0f;
-    float maxDist = 55.0f;
+    if (PLAYERMANAGER.GetPlayer()->IsAlive())
+    {
+        float minDist = 45.0f;
+        float maxDist = 55.0f;
 
-    if (dist > maxDist)
-    {
-        m_velocity = toPlayer * m_speed;
+        if (dist > maxDist)
+        {
+            m_velocity = toPlayer * m_speed;
+        }
+        else if (dist < minDist)
+        {
+            m_velocity = -toPlayer * m_speed;
+        }
+        else
+        {
+            m_velocity = { 0,0 };
+        }
     }
-    else if (dist < minDist)
+
+    else if (m_state == Raven::State::Alive && !PLAYERMANAGER.GetPlayer()->IsAlive())
     {
-        m_velocity = -toPlayer * m_speed;
+        m_state = Raven::State::Down;
+        m_leaveTimer = 1.0f;
     }
-    else
+
+    switch (m_state)
     {
-        m_velocity = { 0,0 };
+    case Raven::State::Down:
+    
+        m_leaveTimer -= dt;
+        m_velocity = { 0, -30.0f };
+
+        if (m_leaveTimer <= 0)
+        {
+            m_state = Raven::State::Stop;
+            m_leaveTimer = 0.5f;
+            m_animFrame.x = 0.0f;
+           AUDIOM.StopSe(SoundName::kFlapWings);
+        }
+        break;
+
+    case Raven::State::Stop:
+
+        m_leaveTimer -= dt;
+        m_velocity = { 0, 0.0f };
+
+        if (m_leaveTimer <= 0)
+        {
+            m_state = Raven::State::Leave;
+            m_leaveTimer = 1.5f;
+            AUDIOM.PlaySe(SoundName::kRavenTakeoff);
+        }
+        break;
+
+    case Raven::State::Leave:
+
+        m_leaveTimer -= dt;
+        m_velocity = { m_speed, m_speed };
+        
+        if (m_leaveTimer <= 0 || m_pos.y > 360.0f + 200.0f)
+        {
+            m_state = Raven::State::Dead;
+        }
+        break;
     }
 
     m_pos += m_velocity * dt;
 }
 
 void Raven::UpdateAnim(float dt)
-{
+{        
     m_animFrame.x += m_animSpeed * dt;
 
     if (m_animFrame.x > 3)
     {
         m_animFrame.x = 0;
+
+        if (m_state == State::Down)
+        {
+            AUDIOM.PlaySe(SoundName::kFlapWings);
+        }
     }
 }
 
 void Raven::UpdateShot(float dt)
 {
-    if (PLAYERMANAGER.GetPlayer()->GetActionFlg())
+    if (PLAYERMANAGER.GetPlayer()->GetActionFlg() && PLAYERMANAGER.GetPlayer()->IsAlive())
     {
         m_shotTimer -= dt;
 
@@ -114,7 +174,6 @@ void Raven::UpdateShot(float dt)
         {
             if (m_shotTimer <= 0.0f)
             {
-                AUDIOM.PlaySeNumLimit(SoundName::kNShot);
 
                 float rate = 1.0f;
                 if (m_powUpFlg)
@@ -143,7 +202,7 @@ void Raven::UpdatePowerUp(float dt)
             PLAYERMANAGER.GetPlayer()->SetMp(PLAYERMANAGER.GetPlayer()->GetMp() - 10 * dt);
             m_color = { 1,0,0,1 };
         }
-        if (m_powUpTimer <= 0.0f || PLAYERMANAGER.GetPlayer()->GetMp() <= 0)
+        if (m_powUpTimer <= 0.0f)
         {
             m_powUpFlg = false;
             m_powUpTimer = kPowUpTimerInterval;
@@ -159,9 +218,11 @@ void Raven::UpdatePowerUp(float dt)
 
 void Raven::Shot(float dt)
 {
+    AUDIOM.PlaySeNumLimit(SoundName::kCrowShot);
+
     Math::Vector2 spawnPos = m_pos + Math::Vector2(kBulletOffsetX, 0);
     Math::Vector2 dir = { 1, 0 };
-    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Normal, spawnPos, dir * kBulletSpeed, kBulletScale, kBulletColor);
+    BULLETMANAGER.CreateBullet(BulletOwner::Player, BulletType::Normal, BulletColor::Crow, spawnPos, dir * kBulletSpeed, kBulletScale);
 }
 
 void Raven::ShotNWay(int num)
@@ -180,6 +241,8 @@ void Raven::ShotNWay(int num)
 
     for (int i = 0; i < num; i++)
     {
+        AUDIOM.PlaySeNumLimit(SoundName::kCrowShot);
+
         float angle = startAngle + angleStep * i;
         float rad = DirectX::XMConvertToRadians(angle);
 
@@ -195,10 +258,10 @@ void Raven::ShotNWay(int num)
         BULLETMANAGER.CreateBullet(
             BulletOwner::Player,
             BulletType::Normal,
+            BulletColor::Crow,
             spawnPos,
             velocity,
-            kBulletScale,
-            kBulletColor
+            kBulletScale
         );
     }
 }

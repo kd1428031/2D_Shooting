@@ -7,7 +7,9 @@ enum class EffectType
 	Lightning,
 	LightningText,
 	SoulLinkText,
-	MagicCircle
+	MagicCircle,
+	HitEffect,
+	MpMax
 };
 
 class EffectBase

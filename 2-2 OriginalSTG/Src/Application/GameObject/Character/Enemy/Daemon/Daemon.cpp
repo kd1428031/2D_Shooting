@@ -1,5 +1,6 @@
 #include "Daemon.h"
 #include "Application/ResourceManager.h"
+#include "Application/Audio/AudioManager.h"
 #include "Application/Random/Random.h"
 #include "Application/GameObject/Character/Player/PlayerManager.h"
 
@@ -23,7 +24,7 @@ void Daemon::Init()
 	m_bulletOffset = kBulletOffsetX;
 	m_bulletSpeed = kBulletSpeed;
 	m_bulletScale = kBulletScale;
-	m_bulletColor = kBulletColor;
+	m_bulletColor = BulletColor::Red;
 	m_bulletAngleSpeed = kBulletAngleSpeed;
 
 	m_shotType = (ShotType)Random::Range(0, 3);
@@ -49,6 +50,8 @@ void Daemon::PreDeath()
 {
 	m_tex = RESOURCEMANAGER.GetTex(TexName::kDaemon_death);
 	m_animFrame.x = 0;
+
+	AUDIOM.PlaySeNumLimit(SoundName::kEnemyDestroy);
 }
 
 void Daemon::Death(float dt)

@@ -41,6 +41,8 @@ void ResultScene::Init()
 
 void ResultScene::Update(float dt)
 {
+	AUDIOM.Update();
+	AUDIOM.UpdateFade();
 	TIMEMANAGER.Stop();
 	m_background->Update(dt);
 	PLAYERMANAGER.Update(dt);
@@ -50,8 +52,6 @@ void ResultScene::Update(float dt)
 	UIMANAGER.Update(dt);
 	FADEMANAGER.Update(dt);
 	INPUT.Update();
-	AUDIOM.Update();
-	AUDIOM.UpdateFade();
 
 	m_inputDisableTimer--;
 	if (m_inputDisableTimer <= 0)
@@ -66,6 +66,7 @@ void ResultScene::Update(float dt)
 	{
 		m_sceneChangeFlg = true;
 		FADEMANAGER.FadeOut(kFadeTime);
+		AUDIOM.PlaySe(SoundName::kResultPush);
 	}
 
 	if (m_sceneChangeFlg && FADEMANAGER.IsFadeEnd())

@@ -1,5 +1,6 @@
 #pragma once
 #include "Application/GameObject/Character/Character.h"
+#include "Application/GameObject/Bullet/Bullet.h"
 
 class EnemyBase : public Character
 {
@@ -85,6 +86,8 @@ public:
 
 protected:
 
+    BulletColor m_bulletColor;
+
     State m_state;
     ShotType m_shotType;
     EnemyTag m_enemyTag = EnemyTag::Normal;
@@ -105,7 +108,6 @@ protected:
     float       m_bulletOffset;
     float       m_bulletSpeed;
     float       m_bulletScale;
-    Math::Color m_bulletColor;
     float       m_bulletAngle;
     float       m_bulletAngleSpeed;
     float       m_baseAngle = 180.0f; // デフォルト左向き

@@ -15,12 +15,22 @@ namespace SoundName
 	constexpr char kLastboss[] = "lastboss";
 	constexpr char kResult[] = "result";
 	constexpr char kNShot[] = "normalshot";
+	constexpr char kCrowShot[] = "crowshot";
+	constexpr char kEnemyShot[] = "enemyshot";
+	constexpr char kWayShot[] = "Wayshot";
 	constexpr char kLighting[] = "lighting";
 	constexpr char kHit[] = "hit";
+	constexpr char kEnemyDestroy[] = "enemyDestroy";
+	constexpr char kEnemyHit[] = "enemyhit";
 	constexpr char kMenuPush[] = "menuPush";
-	constexpr char kMenuHover[] = "menuHover";
+	constexpr char kResultPush[] = "resultPush";
 	constexpr char kHeartbeat[] = "heartbeat";
 	constexpr char kChain[] = "chain";
+	constexpr char kRing[] = "ring";
+	constexpr char kFlapWings[] = "flapwings";
+	constexpr char kRavenTakeoff[] = "raventakeoff";
+	constexpr char kError[] = "error";
+	constexpr char kMpMax[] = "mpmax";
 }
 
 class AudioManager
@@ -43,20 +53,18 @@ public:
 
 	// BGM再生
 	void PlayBgm(const std::string& resName, bool loop = true);
+
 	// BGM停止
 	void StopBgm();
 
 	// SE再生
 	void PlaySe(const std::string& resName, bool loop = false);
 
+	// SE停止
+	void StopSe(const std::string& name);
+
 	// 同時再生時減衰用Se再生
 	void PlaySeNumLimit(const std::string& resName, bool loop = false);
-
-	// 距離減衰用Se再生
-	void PlaySePos(const std::string& name, const Math::Vector2& sePos, bool loop = false);
-
-	// 自機位置把握用
-	void SetPlayerPos(const Math::Vector2& pos);
 
 	// Bgmのフェードイン
 	void FadeInBgm(const std::string& resName, float fadeTime, bool loop = false);
@@ -89,7 +97,16 @@ private:
 	std::shared_ptr<KdSoundInstance> m_bgmInst;
 
 	// 再生中のSEリスト 
-	std::list<std::shared_ptr<KdSoundInstance>> m_seList;
+	struct PlayingSe
+	{
+		std::string name;
+		std::shared_ptr<KdSoundInstance> instance;
+		float volumeRate = 1.0f;
+	};
+
+	std::list<PlayingSe> m_seList;
+
+	std::unordered_map<std::string, int> m_seFrameCount; // 今フレームの再生回数
 
 	// 音量設定
 	float m_bgmVol = 0.3f;
@@ -113,7 +130,6 @@ private:
 	float m_fadeInTime = 0.0f;
 	bool m_nextBgmLoop = false;
 	Math::Vector2 m_listenerPos{};
-	Math::Vector2 m_playerPos{};
 
 	void LoadSound(const std::string& name, const std::string& path);
 };

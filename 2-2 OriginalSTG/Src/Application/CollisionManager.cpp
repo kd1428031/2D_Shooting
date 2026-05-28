@@ -2,12 +2,10 @@
 #include "Application/GameObject/Character/Player/Player.h"
 #include "Application/GameObject/Character/Enemy/EnemyBase.h"
 #include "Application/GameObject/Bullet/Bullet.h"
-#include "Application/GameObject/Item/ItemBase.h"
 
 void CollisionManager::CheckAll(Player* player,
     const std::vector<std::unique_ptr<EnemyBase>>& enemies,
-    const std::vector<std::unique_ptr<Bullet>>& bullets,
-    const std::vector<std::unique_ptr<ItemBase>>& itemis)
+    const std::vector<std::unique_ptr<Bullet>>& bullets)
 {
     // “G vs Ž©‹@’e
     CheckEnemyVsPlayerBullet(enemies, bullets);
@@ -20,9 +18,6 @@ void CollisionManager::CheckAll(Player* player,
 
     // Ž©‹@ vs “G’e
     CheckPlayerVsEnemyBullet(player, bullets);
-
-    // Ž©‹@ vs ƒAƒCƒeƒ€
-    CheckPlayerVsItem(player, itemis);
 }
 
 void CollisionManager::CheckPlayerVsEnemy(Player* player, const std::vector<std::unique_ptr<EnemyBase>>& enemies)
@@ -30,6 +25,7 @@ void CollisionManager::CheckPlayerVsEnemy(Player* player, const std::vector<std:
     for (auto& enemy : enemies)
     {
         if (!enemy->IsActive()) continue;
+        if (!player->IsActive()) continue;
 
         if (IsHit(player->GetPos(), player->GetRadius(),
             enemy->GetPos(), enemy->GetRadius()))
@@ -85,20 +81,6 @@ void CollisionManager::CheckPlayerVsEnemyBullet(Player* player, const std::vecto
         {
             player->TakeDamage(1);
             bullet->Destroy();
-        }
-    }
-}
-
-void CollisionManager::CheckPlayerVsItem(Player* player, const std::vector<std::unique_ptr<ItemBase>>& itemis)
-{
-    for (auto& item : itemis)
-    {
-        if (!item->IsAlive()) continue;
-
-        if (IsHit(player->GetPos(), player->GetRadius(),
-            item->GetPos(), item->GetRadius()))
-        {
-            item->OnHit(player);
         }
     }
 }

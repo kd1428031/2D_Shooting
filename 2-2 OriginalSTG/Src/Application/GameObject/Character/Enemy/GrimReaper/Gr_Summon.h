@@ -38,9 +38,9 @@ private:
     static constexpr float  kShotInterval = 1.0f;                     // 発射間隔
     static constexpr float  kBulletOffsetX = 20.0f;                    // 発射位置
     static constexpr float  kBulletSpeed = 200.0f;                   // 速さ
-    static constexpr float  kBulletScale = 2.0f;                     // サイズ
+    static constexpr float  kBulletScale = 1.0f;                     // サイズ
     static constexpr float  kBulletAngleSpeed = 600.0f;                     // サイズ
-    const Math::Color       kBulletColor = { 0.6f,0.2f,0.2f,1.0f };  // 色
+    const Math::Color       kBulletColor = { 1.0f,1.0f,1.0f,1.0f };  // 色
 
     bool m_preAnimFlg;
     bool m_deathFlg;
